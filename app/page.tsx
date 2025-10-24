@@ -21,15 +21,6 @@ export default function Home() {
 
       <div className="container">
         <section className="featured-performance">
-          <div className="performance-image">
-            <Image
-              src="/orchestra-performance.jpg"
-              alt="オーケストラの演奏風景"
-              width={1200}
-              height={800}
-              className="featured-image"
-            />
-          </div>
           <div className="performance-content">
             <h3>次回公演：春の定期演奏会</h3>
             <p>ベートーヴェン：交響曲第7番</p>
