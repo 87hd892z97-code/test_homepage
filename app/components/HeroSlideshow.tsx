@@ -20,15 +20,10 @@ const images = [
 
 export default function HeroSlideshow() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setCurrentIndex((current) => (current + 1) % images.length);
-        setIsTransitioning(false);
-      }, 500); // フェードアウト完了後に画像切り替え
+      setCurrentIndex((current) => (current + 1) % images.length);
     }, 5000); // 5秒ごとに切り替え
 
     return () => clearInterval(timer);
@@ -36,20 +31,15 @@ export default function HeroSlideshow() {
 
   return (
     <div className="hero-image" style={{ position: 'relative', width: '100%', height: '100%' }}>
-      {images.map((image, index) => (
-        <div
-          key={image.src}
-          className={`hero-slide ${
-            index === currentIndex ? 'active' : ''
-          } ${isTransitioning ? 'transitioning' : ''}`}
-          style={{ position: 'relative', width: '100%', height: '100%' }}
-        >
+      <div className="hero-slide-container">
+        {images.map((image, index) => (
           <Image
+            key={image.src}
             src={image.src}
             alt={image.alt}
             fill
-            priority={index === 0}
-            className="hero-bg-image"
+            priority={true}
+            className={`hero-bg-image ${index === currentIndex ? 'active' : ''}`}
             sizes="100vw"
             style={{
               objectFit: 'cover',
@@ -60,8 +50,8 @@ export default function HeroSlideshow() {
               e.currentTarget.style.display = 'none';
             }}
           />
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

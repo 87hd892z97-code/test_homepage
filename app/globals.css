@@ -543,22 +543,10 @@ body{
   height: 100%;
 }
 
-.hero-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
+.hero-slide-container {
+  position: relative;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.hero-slide.active {
-  opacity: 1;
-}
-
-.hero-slide.transitioning {
-  opacity: 0;
 }
 
 .hero-bg-image {
@@ -569,6 +557,14 @@ body{
   height: 100%;
   object-fit: cover;
   object-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 1;
+}
+
+.hero-bg-image.active {
+  opacity: 1;
+  z-index: 2;
 }
 
 .hero-bg-image::before {
