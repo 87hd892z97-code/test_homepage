@@ -33,7 +33,6 @@ export default function ConcertsPage() {
         <h3>今後の公演</h3>
         {/* 読み込み中は Skeleton を表示 */}
         <Suspense fallback={<Skeleton lines={3} />}>
-          {/* @ts-expect-error Async Server Component */}
           <UpcomingList />
         </Suspense>
 
