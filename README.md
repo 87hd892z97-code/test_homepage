@@ -1,5 +1,35 @@
-## Next.js App Router Course - Starter
+# 横浜国立大学管弦楽団 公式ウェブサイト
 
-This is the starter template for the Next.js App Router Course. It contains the starting code for the dashboard application.
+横浜国立大学管弦楽団の公式ウェブサイトです。
 
-For more information, see the [course curriculum](https://nextjs.org/learn) on the Next.js Website.
+## 機能
+
+- 団紹介
+- 演奏会情報
+- 練習案内
+- お問い合わせ
+- サイト内検索
+
+## 技術スタック
+
+- Next.js 15
+- React 18
+- TypeScript
+- Tailwind CSS
+- Vercel
+
+## 開発環境のセットアップ
+
+```bash
+# 依存関係のインストール
+pnpm install
+
+# 開発サーバーの起動
+pnpm dev
+```
+
+[http://localhost:3000](http://localhost:3000) でアプリケーションを確認できます。
+
+## デプロイ
+
+Vercelで自動デプロイされています。
