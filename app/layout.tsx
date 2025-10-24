@@ -37,7 +37,7 @@ export default function RootLayout({
             
             <nav className="main-nav">
               <Link href="/about">団紹介</Link>
-              <Link href="/concert">演奏会情報</Link>
+              <Link href="/concerts">演奏会情報</Link>
               <Link href="/join">練習案内</Link>
               <Link href="/contact">お問い合わせ</Link>
               <SearchBar />
