@@ -3,5 +3,10 @@
   "outputDirectory": ".next",
   "installCommand": "pnpm install",
   "framework": "nextjs",
-  "nodeVersion": "22.x"
+  "nodeVersion": "22.x",
+  "functions": {
+    "app/api/**/*.ts": {
+      "runtime": "nodejs22.x"
+    }
+  }
 }
