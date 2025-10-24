@@ -5,13 +5,13 @@ import { useState, useEffect } from 'react';
 
 const images = [
   {
-    src: '/MinatoMiraiHall.jpg', // /public直下に配置
+    src: '/MInatoMIraiHall1.jpg', // /public直下に配置
     alt: 'みなとみらいホールでの演奏会',
     width: 1920,
     height: 1080
   },
   {
-    src: '/AprikoHall.jpg', // /public直下に配置
+    src: '/ApurikoHall.jpg', // /public直下に配置
     alt: 'アプリコホールでの演奏会',
     width: 1920,
     height: 1080
@@ -54,6 +54,10 @@ export default function HeroSlideshow() {
             style={{
               objectFit: 'cover',
               objectPosition: 'center'
+            }}
+            onError={(e) => {
+              console.error('Image failed to load:', image.src);
+              e.currentTarget.style.display = 'none';
             }}
           />
         </div>
