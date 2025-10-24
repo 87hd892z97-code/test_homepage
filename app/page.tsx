@@ -1,24 +1,45 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import Image from 'next/image';
 import ContactForm from './components/ContactForm';
 import UpcomingConcerts from './components/UpcomingConcerts';
 import NewsSection from './components/NewsSection';
+import HeroSlideshow from './components/HeroSlideshow';
 
 export default function Home() {
   return (
     <>
       <section className="hero-section">
+        <HeroSlideshow />
         <div className="hero-content">
           <h2>2024シーズン</h2>
           <p className="lead">音楽で描く、新しい物語</p>
-          <a href="/concerts" className="cta-button">
+          <Link href="/concerts" className="cta-button">
             公演スケジュール
-          </a>
+          </Link>
         </div>
       </section>
 
       <div className="container">
+        <section className="featured-performance">
+          <div className="performance-image">
+            <Image
+              src="/orchestra-performance.jpg"
+              alt="オーケストラの演奏風景"
+              width={1200}
+              height={800}
+              className="featured-image"
+            />
+          </div>
+          <div className="performance-content">
+            <h3>次回公演：春の定期演奏会</h3>
+            <p>ベートーヴェン：交響曲第7番</p>
+            <p>2024年4月15日（月）開演</p>
+            <Link href="/concerts" className="more-info-button">
+              詳細はこちら
+            </Link>
+          </div>
+        </section>
+
         <section className="featured-content">
           <div className="upcoming-concerts">
             <h3>近日公演</h3>

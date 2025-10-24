@@ -1,4 +1,13 @@
 import './globals.css';
+import Link from 'next/link';
+import Image from 'next/image';
+import SearchBar from './components/SearchBar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '横浜国立大学管弦楽団',
+  description: '横浜国立大学管弦楽団の公式ウェブサイトです。',
+};
 
 export default function RootLayout({
   children,
@@ -8,29 +17,30 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
+        <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>
         <header className="site-header">
-          <div className="top-bar">
-            <div className="container">
-              <div className="language-selector">
-                <span>JA</span> | <a href="#">EN</a>
-              </div>
-              <div className="auth-links">
-                <a href="#">ログイン</a>
-                <a href="#" className="btn-ticket">チケット購入</a>
-              </div>
+          <div className="main-navigation container">
+            <div className="header-left">
+              <Link href="/" className="site-title">
+                <Image
+                  src="/ynuorch-icon.jpg"
+                  alt="横浜国立大学管弦楽団"
+                  width={200}
+                  height={60}
+                  className="site-logo"
+                />
+              </Link>
             </div>
-          </div>
-          <div className="main-header container">
-            <h1 className="site-title">Virtual Philharmonic</h1>
+            
             <nav className="main-nav">
-              <a href="/concerts">公演</a>
-              <a href="/orchestra">楽団</a>
-              <a href="/education">教育プログラム</a>
-              <a href="/media">メディア</a>
-              <a href="/support">支援</a>
+              <Link href="/about">団紹介</Link>
+              <Link href="/concert">演奏会情報</Link>
+              <Link href="/join">練習案内</Link>
+              <Link href="/contact">お問い合わせ</Link>
+              <SearchBar />
             </nav>
           </div>
         </header>
@@ -38,31 +48,8 @@ export default function RootLayout({
         <main>{children}</main>
 
         <footer className="site-footer">
-          <div className="container footer-content">
-            <div className="footer-section">
-              <h4>お問い合わせ</h4>
-              <p>contact@virtual-philharmonic.jp</p>
-              <p>Tel: 03-XXXX-XXXX</p>
-            </div>
-            <div className="footer-section">
-              <h4>フォローする</h4>
-              <div className="social-links">
-                <a href="#">Twitter</a>
-                <a href="#">Facebook</a>
-                <a href="#">Instagram</a>
-              </div>
-            </div>
-            <div className="footer-section">
-              <h4>情報</h4>
-              <a href="#">プレス</a>
-              <a href="#">採用情報</a>
-              <a href="#">アクセス</a>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <div className="container">
-              <p>© {new Date().getFullYear()} Virtual Philharmonic</p>
-            </div>
+          <div className="container">
+            <p>© {new Date().getFullYear()} 横浜国立大学管弦楽団</p>
           </div>
         </footer>
       </body>
