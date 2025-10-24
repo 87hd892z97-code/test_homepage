@@ -1,33 +1,85 @@
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import ContactForm from './components/ContactForm';
 
-export default function Page() {
+export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
-        {/* <AcmeLogo /> */}
-      </div>
-      <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
-          <p className={`text-xl text-gray-800 md:text-3xl md:leading-normal`}>
-            <strong>Welcome to Acme.</strong> This is the example for the{' '}
-            <a href="https://nextjs.org/learn/" className="text-blue-500">
-              Next.js Learn Course
-            </a>
-            , brought to you by Vercel.
+    <>
+      <section className="hero">
+        <div className="container">
+          <h2 className="hero-title">響きあう、学びと音楽</h2>
+          <p className="hero-lead">
+            私たちは大学で活動する学生オーケストラです。定期演奏会や学内イベントでの演奏を通じて、音楽の魅力を伝えます。
           </p>
-          <Link
-            href="/login"
-            className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
-          >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
-          </Link>
         </div>
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          {/* Add Hero Images Here */}
+      </section>
+
+      <section id="about" className="section">
+        <div className="container">
+          {/* 見出しを紹介ページへリンク */}
+          <h3>
+            <Link href="/about">私たちについて</Link>
+          </h3>
+          <p>
+            300名を超える卒業生を持つ歴史あるオーケストラです。クラシックの名曲から現代曲まで幅広いレパートリーを誇ります。学生同士で編成・運営を行い、演奏技術と協調性を育んでいます。
+          </p>
         </div>
-      </div>
-    </main>
+      </section>
+
+      <section id="concerts" className="section">
+        <div className="container">
+          <h3>
+            <Link href="/concerts">今後の公演</Link>
+          </h3>
+          <ul className="concert-list">
+            <li>
+              <strong>春の定期演奏会</strong> — 2026-04-15 / 大学ホール
+            </li>
+            <li>
+              <strong>学園祭コンサート</strong> — 2026-09-10 / 屋外ステージ
+            </li>
+            <li>
+              <strong>クリスマス・コンサート</strong> — 2026-12-20 / 大学ホール
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="members" className="section">
+        <div className="container">
+          <h3>
+            <Link href="/members">メンバー（一部）</Link>
+          </h3>
+          <div className="members-grid">
+            <div className="member-card">
+              <div className="avatar">Vn</div>
+              <p className="member-name">山田 太郎 — 第1ヴァイオリン</p>
+            </div>
+            <div className="member-card">
+              <div className="avatar">Vc</div>
+              <p className="member-name">鈴木 花子 — チェロ</p>
+            </div>
+            <div className="member-card">
+              <div className="avatar">Pf</div>
+              <p className="member-name">田中 次郎 — ピアノ</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="section">
+        <div className="container">
+          <h3>
+            <Link href="/contact">連絡先</Link>
+          </h3>
+          <p>見学や公演依頼は以下のアドレスへご連絡ください。</p>
+          <p className="contact-email">orchestra@example.edu</p>
+
+          {/* ContactForm は Client コンポーネントとしてそのまま利用 */}
+          <ContactForm />
+        </div>
+      </section>
+    </>
   );
 }

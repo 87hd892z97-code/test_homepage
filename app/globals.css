@@ -1,0 +1,214 @@
+:root{
+  --bg:#f7f7fb;
+  --card:#ffffff;
+  --accent:#2b6cb0;
+  --muted:#666;
+  --container-width:1100px;
+  --radius:8px;
+  --gap:1rem;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body,#__next{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:#111;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.6;
+}
+
+.container{
+  max-width:var(--container-width);
+  margin:0 auto;
+  padding:1rem;
+}
+
+/* Header */
+.site-header{
+  background:linear-gradient(90deg, #274a7b, #2b6cb0);
+  color:white;
+  padding:0.75rem 0;
+}
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+}
+.site-title{margin:0; font-size:1.25rem;}
+.site-title a{
+  color:inherit;
+  text-decoration:none;
+  display:inline-block;
+}
+.site-nav a{
+  color:rgba(255,255,255,0.95);
+  margin-left:1rem;
+  text-decoration:none;
+  font-weight:600;
+  padding:0.5rem 0.6rem; /* タップ領域を拡張 */
+  border-radius:6px;
+  display:inline-block;
+}
+.site-nav a:hover,
+.site-nav a:focus{
+  opacity:0.95;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.06);
+  outline: none;
+}
+
+/* Hero */
+.hero{
+  background:linear-gradient(180deg, rgba(43,108,176,0.06), transparent);
+  padding:2rem 0;
+  margin-bottom:1rem;
+}
+.hero-title{margin:0 0 0.5rem 0; font-size:1.5rem; color:var(--accent)}
+.hero-lead{margin:0; color:var(--muted)}
+
+/* Sections */
+.section{background:var(--card); border-radius:var(--radius); padding:1rem; margin-bottom:1rem}
+.section h3{margin-top:0}
+
+/* Concerts */
+.concert-list{list-style:none; padding:0; margin:0}
+.concert-list li{padding:0.5rem 0; border-bottom:1px solid #eee}
+
+/* Members */
+.members-grid{display:flex; gap:1rem; flex-wrap:wrap}
+.member-card{
+  flex:1 1 200px;
+  background:#fbfbff;
+  padding:0.75rem;
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+}
+.avatar{
+  width:48px; height:48px; border-radius:6px;
+  background:var(--accent); color:white; display:flex;
+  align-items:center; justify-content:center; font-weight:700;
+}
+
+/* Contact form */
+.contact-form{display:grid; gap:0.5rem; margin-top:0.5rem}
+.contact-form label{display:flex; flex-direction:column; font-size:0.9rem; color:var(--muted)}
+.contact-form input, .contact-form textarea{
+  padding:0.5rem; border:1px solid #ddd; border-radius:6px; margin-top:0.25rem;
+}
+.contact-form input:focus,
+.contact-form textarea:focus,
+.site-nav a:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(43,108,176,0.12);
+  border-color: var(--accent);
+}
+.contact-form button{
+  width:140px; padding:0.6rem; background:var(--accent); color:white; border:0; border-radius:6px; cursor:pointer;
+}
+.contact-form button:hover{opacity:0.95}
+
+/* Footer */
+.site-footer{padding:1rem 0; color:var(--muted)}
+.footer-inner{display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap}
+.small{font-size:0.85rem}
+
+/* Skeleton */
+.skeleton {
+  display:block;
+  gap:0.6rem;
+  padding:0.6rem 0;
+}
+.skeleton-row{
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  margin-bottom:0.5rem;
+}
+.skeleton-avatar{
+  width:48px;
+  height:48px;
+  border-radius:6px;
+  background:linear-gradient(90deg,#e8eef7,#f4f7fb,#e8eef7);
+  background-size:200% 100%;
+  animation: shimmer 1.2s linear infinite;
+}
+.skeleton-line-wrapper{margin:0.35rem 0}
+.skeleton-line{
+  height:12px;
+  border-radius:6px;
+  background:linear-gradient(90deg,#e9eef6,#f6f9fc,#e9eef6);
+  background-size:200% 100%;
+  animation: shimmer 1.2s linear infinite;
+}
+.skeleton-line.short{width:40%}
+.skeleton-line:not(.short){width:100%}
+
+/* shimmer */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Responsive */
+@media (max-width:720px){
+  .header-inner{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  /* ナビを折り返し表示してボタン風に */
+  .site-nav{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.4rem;
+    margin-top:0.5rem;
+  }
+  .site-nav a{
+    margin-left:0; /* 親で gap を使うためリセット */
+    margin-top:0;
+    padding:0.6rem 0.8rem;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .container{ padding:0.75rem; }
+  .hero-title{ font-size:1.25rem; }
+  .members-grid{ flex-direction:column; }
+  .member-card{ flex:1 1 100%; }
+  .contact-form button{ width:100%; } /* ボタンを横幅いっぱいにして押しやすく */
+
+  /* スケルトンのアバターと行のサイズ調整（モバイル） */
+  .skeleton-avatar{ width:44px; height:44px; }
+  .skeleton-line{ height:11px; }
+}
+
+/* さらに狭い画面（小スマホ）向けの微調整 */
+@media (max-width:480px){
+  .site-title{ font-size:1rem; }
+  .hero{ padding:1.2rem 0; }
+  .hero-title{ font-size:1.1rem; }
+  .site-nav a{ font-size:0.95rem; padding:0.55rem 0.7rem; }
+  .container{ padding:0.5rem; }
+  .concert-list li{ padding:0.65rem 0; }
+  .member-card{ gap:0.6rem; padding:0.6rem; }
+  .avatar{ width:44px; height:44px; border-radius:6px; }
+  .skeleton-avatar{ width:44px; height:44px; }
+  .skeleton-line{ height:10px; }
+
+  /* フォーム要素のタップ領域確保 */
+  .contact-form input,
+  .contact-form textarea{
+    font-size:1rem;
+  }
+  .contact-form button{
+    padding:0.8rem;
+    font-size:1rem;
+  }
+}
+
+/* ...existing code... */
