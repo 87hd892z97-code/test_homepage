@@ -30,7 +30,7 @@ body{
 .site-header{
   background: white;
   color: #333;
-  padding:0.75rem 0;
+  padding:0.5rem 0;
 }
 .header-inner{
   display:flex;
@@ -131,7 +131,7 @@ body{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
 }
 
 .main-nav {
@@ -1108,7 +1108,8 @@ body{
   }
 
   .container{ padding:0.5rem; }
-  .main-navigation { padding:0.5rem 0; }
+  .main-navigation { padding:0.25rem 0; }
+  .site-header { padding:0.25rem 0; }
   .hero-title{ font-size:1.25rem; }
   .members-grid{ flex-direction:column; }
   .member-card{ flex:1 1 100%; }
@@ -1126,7 +1127,8 @@ body{
   .hero-title{ font-size:1.1rem; }
   .site-nav a{ font-size:0.85rem; padding:0.35rem 0.5rem; }
   .container{ padding:0.25rem; }
-  .main-navigation { padding:0.3rem 0; }
+  .main-navigation { padding:0.15rem 0; }
+  .site-header { padding:0.15rem 0; }
   .concert-list li{ padding:0.65rem 0; }
   .member-card{ gap:0.6rem; padding:0.6rem; }
   .avatar{ width:44px; height:44px; border-radius:6px; }
