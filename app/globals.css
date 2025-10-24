@@ -1109,6 +1109,8 @@ body{
 
   .container{ padding:0.5rem; }
   .main-navigation { padding:0.25rem 0; }
+  .main-nav { gap:1rem; }
+  .main-nav a { font-size:0.8rem; }
   .site-header { padding:0.25rem 0; }
   .hero-title{ font-size:1.25rem; }
   .members-grid{ flex-direction:column; }
@@ -1126,6 +1128,8 @@ body{
   .hero{ padding:1.2rem 0; }
   .hero-title{ font-size:1.1rem; }
   .site-nav a{ font-size:0.85rem; padding:0.35rem 0.5rem; }
+  .main-nav { gap:0.8rem; }
+  .main-nav a { font-size:0.75rem; }
   .container{ padding:0.25rem; }
   .main-navigation { padding:0.15rem 0; }
   .site-header { padding:0.15rem 0; }
