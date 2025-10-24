@@ -2,18 +2,50 @@ import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import ContactForm from './components/ContactForm';
+import UpcomingConcerts from './components/UpcomingConcerts';
+import NewsSection from './components/NewsSection';
 
 export default function Home() {
   return (
     <>
-      <section className="hero">
-        <div className="container">
-          <h2 className="hero-title">響きあう、学びと音楽</h2>
-          <p className="hero-lead">
-            私たちは大学で活動する学生オーケストラです。定期演奏会や学内イベントでの演奏を通じて、音楽の魅力を伝えます。
-          </p>
+      <section className="hero-section">
+        <div className="hero-content">
+          <h2>2024シーズン</h2>
+          <p className="lead">音楽で描く、新しい物語</p>
+          <a href="/concerts" className="cta-button">
+            公演スケジュール
+          </a>
         </div>
       </section>
+
+      <div className="container">
+        <section className="featured-content">
+          <div className="upcoming-concerts">
+            <h3>近日公演</h3>
+            <UpcomingConcerts />
+          </div>
+          <div className="news">
+            <h3>最新ニュース</h3>
+            <NewsSection />
+          </div>
+        </section>
+
+        <section className="highlights">
+          <h3>ハイライト</h3>
+          <div className="highlights-grid">
+            <div className="highlight-card">
+              <img src="/images/education.jpg" alt="教育プログラム" />
+              <h4>教育プログラム</h4>
+              <p>次世代の音楽家を育成</p>
+            </div>
+            <div className="highlight-card">
+              <img src="/images/digital-concert.jpg" alt="デジタルコンサート" />
+              <h4>デジタルコンサート</h4>
+              <p>オンラインで体験する演奏会</p>
+            </div>
+          </div>
+        </section>
+      </div>
 
       <section id="about" className="section">
         <div className="container">

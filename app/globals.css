@@ -60,6 +60,45 @@ body{
   outline: none;
 }
 
+/* 新しいヘッダースタイル */
+.top-bar {
+  background: #1a1a1a;
+  color: white;
+  padding: 0.5rem 0;
+}
+
+.main-header {
+  background: white;
+  padding: 1rem 0;
+}
+
+.main-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.main-nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+.main-nav a:hover::after {
+  width: 100%;
+}
+
 /* Hero */
 .hero{
   background:linear-gradient(180deg, rgba(43,108,176,0.06), transparent);
@@ -211,4 +250,130 @@ body{
   }
 }
 
-/* ...existing code... */
+/* ヒーローセクション */
+.hero-section {
+  height: 80vh;
+  background-image: url('/images/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.hero-content {
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.hero-content h2 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 2rem;
+}
+
+/* フィーチャードコンテンツ */
+.featured-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+/* ハイライト */
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.highlight-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.highlight-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* フォーム改善 */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+input.error,
+textarea.error {
+  border-color: #dc2626;
+}
+
+/* コンサートカード */
+.concert-card {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
+}
+
+.concert-image {
+  flex: 0 0 200px;
+  height: 200px;
+}
+
+.concert-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.concert-info {
+  flex: 1;
+}
+
+.concert-date {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.ticket-button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .concert-card {
+    flex-direction: column;
+  }
+  
+  .concert-image {
+    width: 100%;
+    flex: 0 0 auto;
+  }
+}
