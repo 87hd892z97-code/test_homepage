@@ -25,6 +25,19 @@ body{
   padding-top: 80px; /* Account for fixed header */
 }
 
+/* Mobile body padding adjustment */
+@media (max-width: 720px) {
+  body {
+    padding-top: 60px; /* Reduced for mobile header */
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 50px; /* Even more reduced for small mobile */
+  }
+}
+
 p, li, span, div {
   font-size: 1.1rem;
   line-height: 1.7;
@@ -1351,10 +1364,20 @@ h1,h2,h3,h4,h5,h6{
     display: none;
   }
 
+  /* Reduce header height on mobile */
+  .site-header {
+    padding: 0.25rem 0;
+  }
+
+  .main-navigation {
+    padding: 0.25rem 0;
+  }
+
   /* Mobile hero section - smaller height to show full image */
   .hero-section {
     height: 60vh;
     min-height: 400px;
+    margin-top: -60px; /* Offset the reduced body padding */
   }
 
   .hero-content {
@@ -1738,13 +1761,16 @@ h1,h2,h3,h4,h5,h6{
   .main-nav { gap:0.8rem; }
   .main-nav a { font-size:0.75rem; color: white; padding: 0.3rem 0.6rem; }
   .container{ padding:0.25rem; }
-  .main-navigation { padding:0.15rem 0; }
-  .site-header { padding:0.15rem 0; }
+  
+  /* Even more compact header for small mobile */
+  .main-navigation { padding:0.1rem 0; }
+  .site-header { padding:0.1rem 0; }
   
   /* Small mobile hero section - even smaller height */
   .hero-section {
     height: 50vh;
     min-height: 300px;
+    margin-top: -50px; /* Offset the reduced body padding */
   }
   
   /* Mobile menu adjustments for small screens */
