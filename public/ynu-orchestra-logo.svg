@@ -1,0 +1,23 @@
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left F-clef -->
+  <path d="M15 10 C15 5, 20 3, 25 5 C30 7, 33 13, 30 20 C27 27, 20 30, 15 30 C10 30, 5 27, 5 23 C5 20, 7 17, 10 15 C13 13, 17 13, 20 15 C23 17, 25 20, 25 23 C25 27, 20 30, 15 30" 
+        fill="none" 
+        stroke="white" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  
+  <!-- Right F-clef (mirrored) -->
+  <path d="M185 10 C185 5, 180 3, 175 5 C170 7, 167 13, 170 20 C173 27, 180 30, 185 30 C190 30, 195 27, 195 23 C195 20, 193 17, 190 15 C187 13, 183 13, 180 15 C177 17, 175 20, 175 23 C175 27, 180 30, 185 30" 
+        fill="none" 
+        stroke="white" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  
+  <!-- YNU Text -->
+  <text x="100" y="22" text-anchor="middle" font-family="serif" font-size="20" font-weight="400" fill="white">YNU</text>
+  
+  <!-- ORCHESTRA Text -->
+  <text x="100" y="42" text-anchor="middle" font-family="serif" font-size="14" font-weight="300" fill="white">ORCHESTRA</text>
+</svg>

@@ -12,12 +12,30 @@
 *{box-sizing:border-box}
 html,body,#__next{height:100%}
 body{
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   margin:0;
   background:var(--bg);
   color:#111;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   line-height:1.6;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  font-size: 1.1rem;
+  padding-top: 80px; /* Account for fixed header */
+}
+
+p, li, span, div {
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.02em;
 }
 
 .container{
@@ -28,9 +46,61 @@ body{
 
 /* Header */
 .site-header{
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+  color: white;
+  padding:0.5rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  transition: all 0.3s ease;
+}
+
+/* Fixed header for non-homepage */
+.site-header:not(.home-header) {
   background: white;
   color: #333;
-  padding:0.5rem 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.site-header:not(.home-header) .main-nav a {
+  color: var(--accent);
+}
+
+.site-header:not(.home-header) .main-nav::after {
+  background: var(--accent);
+}
+
+.site-header:not(.home-header) .search-toggle {
+  color: var(--accent);
+}
+
+.site-header:not(.home-header) .search-toggle:hover {
+  background-color: rgba(43, 108, 176, 0.1);
+}
+
+/* Scrolled state for homepage */
+.site-header.home-header.scrolled {
+  background: white;
+  color: #333;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.site-header.home-header.scrolled .main-nav a {
+  color: var(--accent);
+}
+
+.site-header.home-header.scrolled .main-nav::after {
+  background: var(--accent);
+}
+
+.site-header.home-header.scrolled .search-toggle {
+  color: var(--accent);
+}
+
+.site-header.home-header.scrolled .search-toggle:hover {
+  background-color: rgba(43, 108, 176, 0.1);
 }
 .header-inner{
   display:flex;
@@ -49,6 +119,7 @@ body{
   height: 50px;
   width: auto;
   object-fit: contain;
+  color: white; /* Always white color */
 }
 .site-nav a{
   color:#333;
@@ -137,29 +208,38 @@ body{
 .main-nav {
   display: flex;
   gap: 2rem;
-}
-
-.main-nav a {
-  color: #333;
-  text-decoration: none;
-  font-weight: 500;
   position: relative;
 }
 
-.main-nav a::after {
+.main-nav::after {
   content: '';
   position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--accent);
-  transition: width 0.3s;
+  bottom: 0;
+  left: var(--underline-left, 0px);
+  width: var(--underline-width, 0px);
+  height: 1px;
+  background: white;
+  transition: all 0.8s ease-in-out;
+  z-index: 1;
 }
 
-.main-nav a:hover::after {
-  width: 100%;
+.main-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 300;
+  position: relative;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: -0.01em;
+  font-size: 1rem;
 }
+
+.main-nav a:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ホームページ以外のページでのナビゲーション - 削除済み（固定ヘッダーで処理） */
 
 /* Search Bar Styles */
 .search-container {
@@ -169,7 +249,7 @@ body{
 .search-toggle {
   background: none;
   border: none;
-  color: #333;
+  color: white;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 6px;
@@ -180,7 +260,7 @@ body{
 }
 
 .search-toggle:hover {
-  background-color: rgba(43,108,176,0.1);
+  background-color: rgba(255,255,255,0.1);
 }
 
 .search-overlay {
@@ -219,7 +299,7 @@ body{
 .search-input {
   flex: 1;
   padding: 0.75rem 1rem;
-  border: 2px solid #ddd;
+  border: 1px solid #ddd;
   border-radius: 6px;
   font-size: 1rem;
   outline: none;
@@ -351,6 +431,304 @@ body{
 .no-results p,
 .no-query p {
   margin: 0.5rem 0;
+}
+
+/* Donation Page Styles */
+.donation-intro {
+  margin-bottom: 3rem;
+}
+
+.donation-intro .lead {
+  font-size: 1.2rem;
+  color: var(--muted);
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.donation-purpose {
+  margin-bottom: 3rem;
+}
+
+.purpose-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.purpose-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.purpose-card h3 {
+  color: var(--accent);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.donation-amounts {
+  margin-bottom: 3rem;
+}
+
+.amount-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.amount-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.amount-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.amount-card .amount {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.donation-methods {
+  margin-bottom: 3rem;
+}
+
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.method-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.method-card h3 {
+  color: var(--accent);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.bank-info p {
+  margin: 0.5rem 0;
+  font-family: monospace;
+  background: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.donation-benefits {
+  margin-bottom: 3rem;
+}
+
+.donation-contact {
+  background: var(--light-gray);
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.donation-note {
+  background: #fff3cd;
+  padding: 2rem;
+  border-radius: 12px;
+  border-left: 4px solid #ffc107;
+}
+
+.note-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.note-content li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ffeaa7;
+}
+
+.note-content li:last-child {
+  border-bottom: none;
+}
+
+.note-content li::before {
+  content: "•";
+  color: var(--accent);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+/* Recruit Page Styles */
+.recruit-intro {
+  margin-bottom: 3rem;
+}
+
+.recruit-intro .lead {
+  font-size: 1.2rem;
+  color: var(--muted);
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.recruitment-info {
+  margin-bottom: 3rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.info-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.info-card h3 {
+  color: var(--accent);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.recruitment-process {
+  margin-bottom: 3rem;
+}
+
+.process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.step-number {
+  background: var(--accent);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.step-content h3 {
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.recruitment-benefits {
+  margin-bottom: 3rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.benefit-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-card h3 {
+  color: var(--accent);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.contact-recruit {
+  background: var(--light-gray);
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.contact-info {
+  margin: 1.5rem 0;
+}
+
+.contact-info p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 400;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1e4a72;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.btn-secondary:hover {
+  background: var(--accent);
+  color: white;
+  transform: translateY(-2px);
 }
 
 /* Concerts Page Styles */
@@ -497,11 +875,11 @@ body{
   display: inline-block;
   background: transparent;
   color: var(--accent);
-  border: 2px solid var(--accent);
+  border: 1px solid var(--accent);
   padding: 0.6rem 1.5rem;
   border-radius: 8px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 400;
   transition: all 0.3s ease;
 }
 
@@ -647,7 +1025,7 @@ body{
   color: var(--accent);
   margin-bottom: 2rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
 }
 
 .page-content section {
@@ -676,6 +1054,54 @@ body{
   font-weight: bold;
   color: var(--accent);
   min-width: 80px;
+}
+
+/* Executive Committee */
+.executive-committee {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.committee-member {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.committee-member .position {
+  display: block;
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.committee-member .name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+.committee-member .affiliation {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+  font-style: italic;
+}
+
+.committee-member .profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin: 0 auto 1rem auto;
+  display: block;
+  border: 2px solid var(--accent);
 }
 
 /* Practice Schedule */
@@ -718,26 +1144,25 @@ body{
 /* ヒーローセクション */
 .hero-section {
   position: relative;
-  height: 80vh;
+  height: 100vh;
   min-height: 600px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: -80px; /* Offset the body padding */
 }
 
 .hero-content {
   position: absolute;
-  top: 50%;
-  left: 10%;
-  transform: translateY(-50%);
-  text-align: left;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
   color: white;
   z-index: 10;
-  background: rgba(0, 0, 0, 0.2);
   padding: 2rem;
   border-radius: 12px;
-  backdrop-filter: blur(5px);
   max-width: 500px;
 }
 
@@ -745,12 +1170,13 @@ body{
   font-size: 2.5rem;
   margin-bottom: 1rem;
   font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .hero-content .lead {
   font-size: 1.2rem;
   margin-bottom: 2rem;
-  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .cta-button {
@@ -760,7 +1186,7 @@ body{
   padding: 1rem 2rem;
   border-radius: 8px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 1.1rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(43, 108, 176, 0.3);
@@ -811,7 +1237,7 @@ body{
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
 
@@ -822,8 +1248,16 @@ body{
     align-items:flex-start;
   }
 
+  /* Mobile hero section - smaller height to show full image */
+  .hero-section {
+    height: 60vh;
+    min-height: 400px;
+  }
+
   .hero-content {
-    left: 5%;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
     padding: 1.5rem;
     margin: 1rem;
     max-width: calc(100% - 2rem);
@@ -831,10 +1265,12 @@ body{
 
   .hero-content h2 {
     font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   }
 
   .hero-content .lead {
     font-size: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
   }
 
   .cta-button {
@@ -1008,6 +1444,74 @@ body{
     margin: 0;
   }
 
+  /* Executive Committee mobile */
+  .executive-committee {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .committee-member {
+    padding: 1rem;
+  }
+
+  .committee-member .position {
+    font-size: 0.85rem;
+  }
+
+  .committee-member .name {
+    font-size: 1rem;
+  }
+
+  .committee-member .affiliation {
+    font-size: 0.85rem;
+  }
+
+  .committee-member .profile-image {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0.8rem;
+  }
+
+  /* Donation page mobile */
+  .purpose-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .purpose-card {
+    padding: 1.5rem;
+  }
+
+  .amount-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .amount-card {
+    padding: 1.5rem;
+  }
+
+  .amount-card .amount {
+    font-size: 1.5rem;
+  }
+
+  .method-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .method-card {
+    padding: 1.5rem;
+  }
+
+  .donation-contact {
+    padding: 1.5rem;
+  }
+
+  .donation-note {
+    padding: 1.5rem;
+  }
+
   /* ContactFormのスマホ対応 */
   .contact-form {
     max-width: 100%;
@@ -1110,7 +1614,7 @@ body{
   .container{ padding:0.5rem; }
   .main-navigation { padding:0.25rem 0; }
   .main-nav { gap:1rem; }
-  .main-nav a { font-size:0.8rem; }
+  .main-nav a { font-size:0.8rem; color: white; padding: 0.4rem 0.8rem; }
   .site-header { padding:0.25rem 0; }
   .hero-title{ font-size:1.25rem; }
   .members-grid{ flex-direction:column; }
@@ -1129,10 +1633,33 @@ body{
   .hero-title{ font-size:1.1rem; }
   .site-nav a{ font-size:0.85rem; padding:0.35rem 0.5rem; }
   .main-nav { gap:0.8rem; }
-  .main-nav a { font-size:0.75rem; }
+  .main-nav a { font-size:0.75rem; color: white; padding: 0.3rem 0.6rem; }
   .container{ padding:0.25rem; }
   .main-navigation { padding:0.15rem 0; }
   .site-header { padding:0.15rem 0; }
+  
+  /* Small mobile hero section - even smaller height */
+  .hero-section {
+    height: 50vh;
+    min-height: 300px;
+  }
+  
+  .hero-content {
+    bottom: 3%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem;
+    margin: 0.5rem;
+    max-width: calc(100% - 1rem);
+  }
+  .hero-content h2 {
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+  .hero-content .lead {
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  }
   .concert-list li{ padding:0.65rem 0; }
   .member-card{ gap:0.6rem; padding:0.6rem; }
   .avatar{ width:44px; height:44px; border-radius:6px; }
@@ -1264,6 +1791,58 @@ body{
 
   .member-card .small {
     font-size: 0.75rem;
+  }
+
+  /* Executive Committee small mobile */
+  .executive-committee {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .committee-member {
+    padding: 0.8rem;
+  }
+
+  .committee-member .position {
+    font-size: 0.8rem;
+  }
+
+  .committee-member .name {
+    font-size: 0.95rem;
+  }
+
+  .committee-member .affiliation {
+    font-size: 0.8rem;
+  }
+
+  .committee-member .profile-image {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.6rem;
+  }
+
+  /* Donation page small mobile */
+  .amount-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .amount-card {
+    padding: 1rem;
+  }
+
+  .amount-card .amount {
+    font-size: 1.3rem;
+  }
+
+  .purpose-card,
+  .method-card {
+    padding: 1rem;
+  }
+
+  .donation-contact,
+  .donation-note {
+    padding: 1rem;
   }
 
   /* フォーム要素のタップ領域確保 */

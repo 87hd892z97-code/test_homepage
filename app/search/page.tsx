@@ -29,7 +29,7 @@ function SearchContent() {
     // 模擬的な検索結果（実際の実装では、APIやデータベースから検索）
     const mockResults: SearchResult[] = [
       {
-        title: '団紹介',
+        title: '楽団紹介',
         url: '/about',
         description: '横浜国立大学管弦楽団の歴史、活動内容、団員構成について',
         type: 'page'

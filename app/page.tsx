@@ -22,9 +22,9 @@ export default function Home() {
       <div className="container">
         <section className="featured-performance">
           <div className="performance-content">
-            <h3>次回公演：春の定期演奏会</h3>
-            <p>ベートーヴェン：交響曲第7番</p>
-            <p>2024年4月15日（月）開演</p>
+            <h3>次回公演：第125回定期演奏会</h3>
+            <p>マーラー：交響曲第1番「巨人」</p>
+            <p>2025年12月21日（日）開場12:45 開演13:30 カルッツ川崎 ホール</p>
             <Link href="/concerts" className="more-info-button">
               詳細はこちら
             </Link>
@@ -87,28 +87,6 @@ export default function Home() {
               <strong>クリスマス・コンサート</strong> — 2026-12-20 / 大学ホール
             </li>
           </ul>
-        </div>
-      </section>
-
-      <section id="members" className="section">
-        <div className="container">
-          <h3>
-            <Link href="/members">メンバー（一部）</Link>
-          </h3>
-          <div className="members-grid">
-            <div className="member-card">
-              <div className="avatar">Vn</div>
-              <p className="member-name">山田 太郎 — 第1ヴァイオリン</p>
-            </div>
-            <div className="member-card">
-              <div className="avatar">Vc</div>
-              <p className="member-name">鈴木 花子 — チェロ</p>
-            </div>
-            <div className="member-card">
-              <div className="avatar">Pf</div>
-              <p className="member-name">田中 次郎 — ピアノ</p>
-            </div>
-          </div>
         </div>
       </section>
 

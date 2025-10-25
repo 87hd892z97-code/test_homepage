@@ -1,7 +1,5 @@
 import './globals.css';
-import Link from 'next/link';
-import Image from 'next/image';
-import SearchBar from './components/SearchBar';
+import Header from './components/Header';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -19,31 +17,12 @@ export default function RootLayout({
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body>
-        <header className="site-header">
-          <div className="main-navigation container">
-            <div className="header-left">
-              <Link href="/" className="site-title">
-                <Image
-                  src="/ynuorch-icon.jpg"
-                  alt="横浜国立大学管弦楽団"
-                  width={200}
-                  height={60}
-                  className="site-logo"
-                />
-              </Link>
-            </div>
-            
-            <nav className="main-nav">
-              <Link href="/about">団紹介</Link>
-              <Link href="/concerts">演奏会情報</Link>
-              <Link href="/join">練習案内</Link>
-              <Link href="/contact">お問い合わせ</Link>
-              <SearchBar />
-            </nav>
-          </div>
-        </header>
+        <Header />
 
         <main>{children}</main>
 
