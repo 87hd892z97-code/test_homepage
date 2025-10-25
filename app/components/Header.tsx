@@ -97,8 +97,20 @@ export default function Header() {
 
       {/* Mobile menu overlay */}
       {isMobileMenuOpen && (
-        <div className="mobile-menu-overlay">
-          <nav className="mobile-menu">
+        <div 
+          className="mobile-menu-overlay"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <nav className="mobile-menu" onClick={(e) => e.stopPropagation()}>
+            {/* Close button */}
+            <button 
+              className="mobile-menu-close"
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-label="メニューを閉じる"
+            >
+              ×
+            </button>
+            
             <Link href="/about" className="mobile-menu-link">楽団紹介</Link>
             <Link href="/concerts" className="mobile-menu-link">演奏会情報</Link>
             <Link href="/donation" className="mobile-menu-link">寄付について</Link>

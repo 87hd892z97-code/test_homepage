@@ -30,65 +30,7 @@ export default function Home() {
             </Link>
           </div>
         </section>
-
-        <section className="featured-content">
-          <div className="upcoming-concerts">
-            <h3>近日公演</h3>
-            <UpcomingConcerts />
-          </div>
-          <div className="news">
-            <h3>最新ニュース</h3>
-            <NewsSection />
-          </div>
-        </section>
-
-        <section className="highlights">
-          <h3>ハイライト</h3>
-          <div className="highlights-grid">
-            <div className="highlight-card">
-              <img src="/images/education.jpg" alt="教育プログラム" />
-              <h4>教育プログラム</h4>
-              <p>次世代の音楽家を育成</p>
-            </div>
-            <div className="highlight-card">
-              <img src="/images/digital-concert.jpg" alt="デジタルコンサート" />
-              <h4>デジタルコンサート</h4>
-              <p>オンラインで体験する演奏会</p>
-            </div>
-          </div>
-        </section>
       </div>
-
-      <section id="about" className="section">
-        <div className="container">
-          {/* 見出しを紹介ページへリンク */}
-          <h3>
-            <Link href="/about">私たちについて</Link>
-          </h3>
-          <p>
-            300名を超える卒業生を持つ歴史あるオーケストラです。クラシックの名曲から現代曲まで幅広いレパートリーを誇ります。学生同士で編成・運営を行い、演奏技術と協調性を育んでいます。
-          </p>
-        </div>
-      </section>
-
-      <section id="concerts" className="section">
-        <div className="container">
-          <h3>
-            <Link href="/concerts">今後の公演</Link>
-          </h3>
-          <ul className="concert-list">
-            <li>
-              <strong>春の定期演奏会</strong> — 2026-04-15 / 大学ホール
-            </li>
-            <li>
-              <strong>学園祭コンサート</strong> — 2026-09-10 / 屋外ステージ
-            </li>
-            <li>
-              <strong>クリスマス・コンサート</strong> — 2026-12-20 / 大学ホール
-            </li>
-          </ul>
-        </div>
-      </section>
 
       <section id="contact" className="section">
         <div className="container">
