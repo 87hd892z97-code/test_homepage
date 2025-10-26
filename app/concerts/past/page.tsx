@@ -176,6 +176,18 @@ export default function PastConcertsPage() {
   const [expandedGroups, setExpandedGroups] = useState<Record<number, boolean>>({});
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const hasInitialized = useRef(false);
+
+  // Add class to body when image modal is open to keep header visible
+  useEffect(() => {
+    if (selectedImage) {
+      document.body.classList.add('image-modal-open');
+    } else {
+      document.body.classList.remove('image-modal-open');
+    }
+    return () => {
+      document.body.classList.remove('image-modal-open');
+    };
+  }, [selectedImage]);
   
   // グループを展開してトップへスクロール
   const handleGroupClick = (decade: number) => {

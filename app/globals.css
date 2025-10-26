@@ -32,7 +32,7 @@ body{
 /* Mobile body padding adjustment */
 @media (max-width: 720px) {
   body {
-    padding-top: 65px; /* Adjusted for mobile header */
+    padding-top: 70px; /* Adjusted for mobile header */
     max-width: 100vw;
     overflow-x: hidden;
   }
@@ -51,7 +51,7 @@ body{
 
 @media (max-width: 480px) {
   body {
-    padding-top: 60px; /* Adjusted for small mobile header */
+    padding-top: 65px; /* Adjusted for small mobile header */
     max-width: 100vw;
     overflow-x: hidden;
   }
@@ -172,8 +172,7 @@ h1,h2,h3,h4,h5,h6{
 .mobile-menu-close {
   position: fixed;
   right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 1rem;
   background: none;
   border: none;
   color: white;
@@ -183,6 +182,16 @@ h1,h2,h3,h4,h5,h6{
   line-height: 1;
   transition: color 0.3s ease;
   z-index: 1001;
+  transform-origin: top right;
+  animation: menuExpand 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mobile menu close button should be at top right corner */
+@media (max-width: 720px) {
+  .mobile-menu-close {
+    top: 2.8rem;
+    right: 1rem;
+  }
 }
 
 .mobile-menu-close:hover {
@@ -234,10 +243,20 @@ h1,h2,h3,h4,h5,h6{
 @media (max-width: 720px) {
   .site-header {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), all 0.3s ease;
+    min-height: 60px; /* Fixed height to avoid layout shift */
+  }
+
+  .main-navigation {
+    min-height: 60px;
   }
 
   .site-header.header-hidden {
     transform: translateY(-100%);
+  }
+
+  /* Keep header visible when image modal is open */
+  body.image-modal-open .site-header {
+    transform: translateY(0) !important;
   }
 }
 
@@ -1791,11 +1810,11 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
 
   /* Reduce header height on mobile */
   .site-header {
-    padding: 0.3rem 0;
+    padding: 0.5rem 0;
   }
 
   .main-navigation {
-    padding: 0.3rem 0;
+    padding: 0.5rem 0;
   }
 
   /* Reduce logo size on mobile */
@@ -2246,8 +2265,8 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
   .container{ padding:0.25rem; }
   
   /* Even more compact header for small mobile */
-  .main-navigation { padding:0.2rem 0; }
-  .site-header { padding:0.2rem 0; }
+  .main-navigation { padding:0.35rem 0; }
+  .site-header { padding:0.35rem 0; }
 
   /* Even smaller logo on small mobile */
   .site-logo {
@@ -2648,6 +2667,14 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
   justify-content: center;
   border-radius: 50%;
   transition: background-color 0.3s ease;
+}
+
+/* Adjust close button position on mobile to avoid header overlap */
+@media (max-width: 720px) {
+  .image-modal-close {
+    top: -50px;
+    right: 1rem;
+  }
 }
 
 .image-modal-close:hover {
