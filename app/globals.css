@@ -30,11 +30,19 @@ body{
   body {
     padding-top: 60px; /* Reduced for mobile header */
   }
+
+  .page-content {
+    padding-top: 2rem;
+  }
 }
 
 @media (max-width: 480px) {
   body {
-    padding-top: 50px; /* Even more reduced for small mobile */
+    padding-top: 55px; /* Reduced for small mobile header */
+  }
+
+  .page-content {
+    padding-top: 1.5rem;
   }
 }
 
@@ -86,6 +94,11 @@ h1,h2,h3,h4,h5,h6{
 
 /* Ensure hamburger is visible on non-homepage */
 .site-header:not(.home-header) .hamburger span {
+  background: var(--accent);
+}
+
+/* Hamburger should be blue when home-header is scrolled */
+.site-header.home-header.scrolled .hamburger span {
   background: var(--accent);
 }
 
@@ -1726,13 +1739,24 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
     display: none;
   }
 
+  /* Hide sidebar toggle button on mobile (sublevel-layer is not used on mobile) */
+  .sidebar-toggle-nav {
+    display: none;
+  }
+
   /* Reduce header height on mobile */
   .site-header {
-    padding: 0.25rem 0;
+    padding: 0.15rem 0;
   }
 
   .main-navigation {
-    padding: 0.25rem 0;
+    padding: 0.15rem 0;
+  }
+
+  /* Reduce logo size on mobile */
+  .site-logo {
+    width: 150px;
+    height: auto;
   }
 
   /* Mobile hero section - smaller height to show full image */
@@ -2170,8 +2194,14 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
   .container{ padding:0.25rem; }
   
   /* Even more compact header for small mobile */
-  .main-navigation { padding:0.1rem 0; }
-  .site-header { padding:0.1rem 0; }
+  .main-navigation { padding:0.05rem 0; }
+  .site-header { padding:0.05rem 0; }
+
+  /* Even smaller logo on small mobile */
+  .site-logo {
+    width: 120px;
+    height: auto;
+  }
   
   /* Small mobile hero section - even smaller height */
   .hero-section {

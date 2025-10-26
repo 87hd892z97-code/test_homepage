@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -175,6 +175,7 @@ function PastConcertCard({ concert, date, venue, conductor, pieces, cancelled, c
 export default function PastConcertsPage() {
   const [expandedGroups, setExpandedGroups] = useState<Record<number, boolean>>({});
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const hasInitialized = useRef(false);
   
   // グループを展開してトップへスクロール
   const handleGroupClick = (decade: number) => {
@@ -212,19 +213,31 @@ export default function PastConcertsPage() {
   
 
   // 全演奏会データを取得（第1回から）
-  const allConcerts = getAllPastConcerts().reverse();
+  const allConcerts = useMemo(() => getAllPastConcerts().reverse(), []);
 
   // 10回ごとにグループ化（第1回から開始）
-  const concertsByDecade = allConcerts.reduce((acc, concert, index) => {
-    const groupIndex = Math.floor(index / 10);
-    if (!acc[groupIndex]) {
-      acc[groupIndex] = [];
-    }
-    acc[groupIndex].push(concert);
-    return acc;
-  }, {} as Record<number, typeof allConcerts>);
+  const concertsByDecade = useMemo(() => {
+    return allConcerts.reduce((acc, concert, index) => {
+      const groupIndex = Math.floor(index / 10);
+      if (!acc[groupIndex]) {
+        acc[groupIndex] = [];
+      }
+      acc[groupIndex].push(concert);
+      return acc;
+    }, {} as Record<number, typeof allConcerts>);
+  }, [allConcerts]);
 
-  const decades = Object.keys(concertsByDecade).map(Number).sort((a, b) => b - a);
+  const decades = useMemo(() => {
+    return Object.keys(concertsByDecade).map(Number).sort((a, b) => b - a);
+  }, [concertsByDecade]);
+
+  // 初期状態で最初のグループ（最新）を展開
+  useEffect(() => {
+    if (!hasInitialized.current && decades.length > 0) {
+      setExpandedGroups({ [decades[0]]: true });
+      hasInitialized.current = true;
+    }
+  }, [decades]);
 
   // 第○回～第○回の範囲を取得する関数
   const getConcertRange = (concerts: typeof allConcerts) => {
