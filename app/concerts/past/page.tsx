@@ -292,12 +292,6 @@ export default function PastConcertsPage() {
           onClick={() => setSelectedImage(null)}
         >
           <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
-            <button 
-              className="image-modal-close"
-              onClick={() => setSelectedImage(null)}
-            >
-              ×
-            </button>
             <Image
               src={selectedImage}
               alt="拡大画像"
