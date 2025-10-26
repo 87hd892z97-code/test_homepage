@@ -11,6 +11,9 @@
 
 *{box-sizing:border-box}
 html,body,#__next{height:100%}
+html {
+  overflow-x: hidden;
+}
 body{
   font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   margin:0;
@@ -23,26 +26,40 @@ body{
   letter-spacing: -0.01em;
   font-size: 1.1rem;
   padding-top: 80px; /* Account for fixed header */
+  overflow-x: hidden;
 }
 
 /* Mobile body padding adjustment */
 @media (max-width: 720px) {
   body {
-    padding-top: 60px; /* Reduced for mobile header */
+    padding-top: 65px; /* Adjusted for mobile header */
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   .page-content {
     padding-top: 2rem;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 }
 
 @media (max-width: 480px) {
   body {
-    padding-top: 55px; /* Reduced for small mobile header */
+    padding-top: 60px; /* Adjusted for small mobile header */
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   .page-content {
     padding-top: 1.5rem;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 }
 
@@ -63,6 +80,8 @@ h1,h2,h3,h4,h5,h6{
   max-width:var(--container-width);
   margin:0 auto;
   padding:1rem;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* Mobile Menu Styles */
@@ -135,12 +154,26 @@ h1,h2,h3,h4,h5,h6{
   gap: 2rem;
   text-align: center;
   position: relative;
+  transform-origin: top right;
+  animation: menuExpand 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes menuExpand {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .mobile-menu-close {
   position: fixed;
-  top: 1rem;
   right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: none;
   color: white;
@@ -193,7 +226,19 @@ h1,h2,h3,h4,h5,h6{
   left: 0;
   right: 0;
   z-index: 20;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, all 0.3s ease;
+  transform: translateY(0);
+}
+
+/* Header hide/show animation on mobile */
+@media (max-width: 720px) {
+  .site-header {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), all 0.3s ease;
+  }
+
+  .site-header.header-hidden {
+    transform: translateY(-100%);
+  }
 }
 
 /* Fixed header for non-homepage */
@@ -1746,11 +1791,11 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
 
   /* Reduce header height on mobile */
   .site-header {
-    padding: 0.15rem 0;
+    padding: 0.3rem 0;
   }
 
   .main-navigation {
-    padding: 0.15rem 0;
+    padding: 0.3rem 0;
   }
 
   /* Reduce logo size on mobile */
@@ -1790,9 +1835,16 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
     font-size: 0.9rem;
   }
 
+  .concerts-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
   .concert-card {
     margin-bottom: 1rem;
     flex-direction: column;
+    width: 100%;
+    max-width: 100%;
   }
 
   .concert-image {
@@ -2194,8 +2246,8 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
   .container{ padding:0.25rem; }
   
   /* Even more compact header for small mobile */
-  .main-navigation { padding:0.05rem 0; }
-  .site-header { padding:0.05rem 0; }
+  .main-navigation { padding:0.2rem 0; }
+  .site-header { padding:0.2rem 0; }
 
   /* Even smaller logo on small mobile */
   .site-logo {
@@ -2254,6 +2306,11 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
     padding: 0 1rem;
   }
 
+  .concerts-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
   .concert-image {
     height: 180px;
     flex: none;
@@ -2264,6 +2321,11 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
   .concert-content {
     padding: 0.6rem;
     flex: none;
+  }
+
+  .concert-card {
+    width: 100%;
+    max-width: 100%;
   }
 
   .concert-card .concert-image {

@@ -11,6 +11,8 @@ export default function Header() {
   const isHomePage = pathname === '/';
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   
   const isPastConcertsPage = pathname?.startsWith('/concerts/past');
 
@@ -37,6 +39,37 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
+  // Header hide/show on scroll (mobile only)
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const isMobile = window.innerWidth <= 720;
+
+      if (isMobile) {
+        if (currentScrollY > 100) { // Only hide after scrolling down a bit
+          if (currentScrollY > lastScrollY) {
+            // Scrolling down
+            setHeaderVisible(false);
+          } else if (currentScrollY < lastScrollY) {
+            // Scrolling up
+            setHeaderVisible(true);
+          }
+        } else {
+          // Near top, always show header
+          setHeaderVisible(true);
+        }
+      } else {
+        // Desktop always show
+        setHeaderVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -58,7 +91,8 @@ export default function Header() {
   const headerClasses = [
     'site-header',
     isHomePage ? 'home-header' : '',
-    isHomePage && isScrolled ? 'scrolled' : ''
+    isHomePage && isScrolled ? 'scrolled' : '',
+    !headerVisible ? 'header-hidden' : ''
   ].filter(Boolean).join(' ');
 
   return (
