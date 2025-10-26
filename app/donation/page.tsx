@@ -114,12 +114,10 @@ export default function DonationPage() {
         <h2>お問い合わせ</h2>
         <p>寄付に関するご質問やご相談がございましたら、お気軽にお問い合わせください。</p>
         <div className="contact-info">
-          <p><strong>メール:</strong> donation@ynuorch.example.edu</p>
-          <p><strong>電話:</strong> 045-123-4567（平日 9:00-17:00）</p>
+          <p><strong>メール:</strong> info@ynuorch.com</p>
           <p><strong>担当:</strong> 運営委員長 鈴木 是雄</p>
         </div>
         <div className="cta-buttons">
-          <a href="/contact" className="btn-primary">お問い合わせフォーム</a>
           <a href="/concerts" className="btn-secondary">演奏会情報を見る</a>
         </div>
       </section>

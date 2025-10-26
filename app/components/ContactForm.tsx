@@ -35,12 +35,39 @@ export default function ContactForm() {
 
     setSubmitting(true);
     try {
-      await new Promise((r) => setTimeout(r, 700));
-      alert('送信が完了しました。ありがとうございます！');
-      setName('');
-      setEmail('');
-      setMessage('');
-      setErrors({});
+      // タイムアウト設定（30秒）
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+        }),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('お問い合わせを受け付けました。確認メールをお送りします。ありがとうございます！');
+        setName('');
+        setEmail('');
+        setMessage('');
+        setErrors({});
+      } else {
+        alert(`送信に失敗しました: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('送信エラー:', error);
+      alert('送信に失敗しました。しばらく時間をおいて再度お試しください。');
     } finally {
       setSubmitting(false);
     }

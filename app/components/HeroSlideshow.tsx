@@ -11,7 +11,7 @@ const images = [
     height: 1080
   },
   {
-    src: '/ApurikoHall.jpg', // /public直下に配置
+    src: '/KyurianHall.jpg', // /public直下に配置
     alt: 'アプリコホールでの演奏会',
     width: 1920,
     height: 1080

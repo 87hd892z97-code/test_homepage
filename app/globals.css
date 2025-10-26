@@ -172,7 +172,7 @@ h1,h2,h3,h4,h5,h6{
 
 /* Header */
 .site-header{
-  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+  background: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
   color: white;
   padding:0.5rem 0;
   position: fixed;
@@ -188,9 +188,19 @@ h1,h2,h3,h4,h5,h6{
   background: white;
   color: #333;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  overflow: visible;
 }
 
 .site-header:not(.home-header) .main-nav a {
+  color: #333;
+  text-shadow: none;
+}
+
+.site-header:not(.home-header) .main-nav a.active {
+  color: var(--accent);
+}
+
+.site-header:not(.home-header) .main-nav a:hover {
   color: var(--accent);
 }
 
@@ -214,11 +224,43 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .site-header.home-header.scrolled .main-nav a {
+  color: #333;
+  text-shadow: none;
+}
+
+.site-header.home-header.scrolled .main-nav a.active {
+  color: var(--accent);
+}
+
+.site-header.home-header.scrolled .main-nav a:hover {
   color: var(--accent);
 }
 
 .site-header.home-header.scrolled .main-nav::after {
   background: var(--accent);
+}
+
+/* ホームページ初期状態でのナビゲーション */
+.site-header.home-header .main-nav a {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.site-header.home-header .main-nav a.active {
+  color: white;
+}
+
+.site-header.home-header .main-nav::after {
+  background: white;
+}
+
+.site-header.home-header .main-nav a:hover {
+  color: white;
+}
+
+/* ホームページ初期状態で下線を表示 */
+.site-header.home-header .main-nav::after {
+  opacity: 1 !important;
 }
 
 .site-header.home-header.scrolled .search-toggle {
@@ -241,11 +283,59 @@ h1,h2,h3,h4,h5,h6{
   display:inline-block;
 }
 
+/* Override site-title styles for logo button */
+.site-title.logo-button {
+  margin: 0 !important;
+  font-size: inherit !important;
+}
+
+/* Logo Button Styles */
+.logo-button {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: -0.5rem; /* Offset padding to maintain layout */
+  min-height: 44px; /* Minimum touch target size */
+  min-width: 44px;
+  background: transparent;
+  border: none;
+  text-decoration: none !important;
+}
+
 .site-logo {
-  height: 50px;
+  height: 60px;
   width: auto;
   object-fit: contain;
-  color: white; /* Always white color */
+  background: transparent !important;
+  mix-blend-mode: normal !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  display: block;
+  opacity: 1;
+  pointer-events: none; /* Prevent logo from interfering with button events */
+}
+
+/* Logo color adjustment for non-homepage pages */
+.site-header:not(.home-header) .site-logo {
+  filter: brightness(0) saturate(100%) invert(17%) sepia(100%) saturate(1000%) hue-rotate(200deg) brightness(1.2) contrast(1.1) !important;
+}
+
+.site-header.home-header.scrolled .site-logo {
+  filter: brightness(0) saturate(100%) invert(17%) sepia(100%) saturate(1000%) hue-rotate(200deg) brightness(1.2) contrast(1.1) !important;
+}
+
+.site-title {
+  background: transparent !important;
+  display: inline-block;
+}
+
+.site-title img {
+  background: transparent !important;
+  mix-blend-mode: normal !important;
 }
 .site-nav a{
   color:#333;
@@ -280,6 +370,8 @@ h1,h2,h3,h4,h5,h6{
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  flex-shrink: 0;
+  margin-right: auto;
 }
 
 .language-selector {
@@ -336,11 +428,37 @@ h1,h2,h3,h4,h5,h6{
   display: flex;
   gap: 2rem;
   position: relative;
+  flex-wrap: nowrap;
+  margin-right: 3rem;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
+/* Reduce margin for past concerts page since hamburger is there */
+body:has(.sidebar-toggle-nav) .main-nav {
+  margin-right: 3rem;
+}
+
+.main-nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 300;
+  position: relative;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: -0.01em;
+  font-size: 1rem;
+}
+
+.main-nav a.active {
+  color: var(--accent);
+}
+
+.main-nav {
+  position: relative;
+}
+
+.main-nav a {
+  position: relative;
 }
 
 .main-nav::after {
@@ -350,25 +468,93 @@ h1,h2,h3,h4,h5,h6{
   left: var(--underline-left, 0px);
   width: var(--underline-width, 0px);
   height: 1px;
-  background: white;
-  transition: all 0.8s ease-in-out;
-  z-index: 1;
-}
-
-.main-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: 300;
-  position: relative;
-  padding: 0.5rem 1rem;
-  transition: all 0.3s ease;
-  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  letter-spacing: -0.01em;
-  font-size: 1rem;
+  background: var(--accent);
+  opacity: var(--underline-opacity, 1);
+  transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: left, width;
+  transform: translateZ(0); /* GPU加速 */
 }
 
 .main-nav a:hover {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--accent);
+}
+
+/* Sidebar toggle button in nav - for past concerts page - Dior style */
+.sidebar-toggle-nav {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.5rem;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  flex-shrink: 0;
+  z-index: 10;
+  animation: hamburgerIntro 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes hamburgerIntro {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) scale(0) rotate(-180deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1) rotate(0deg);
+  }
+}
+
+.sidebar-toggle-nav .hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  width: 14px;
+  height: 10px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.sidebar-toggle-nav .hamburger span {
+  display: block;
+  height: 1.5px;
+  width: 100%;
+  background: var(--accent);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+/* Active state - spread two lines apart when open */
+body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger {
+  gap: 4px;
+}
+
+body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(1) {
+  transform: translateY(-2px);
+}
+
+body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
+  transform: translateY(2px);
+}
+
+/* Hover effect */
+.sidebar-toggle-nav:hover .hamburger span {
+  background: var(--accent);
+  opacity: 0.7;
 }
 
 /* ホームページ以外のページでのナビゲーション - 削除済み（固定ヘッダーで処理） */
@@ -864,16 +1050,8 @@ h1,h2,h3,h4,h5,h6{
 }
 
 /* Concerts Page Styles */
-.concerts-intro {
+.s-intro {
   margin-bottom: 3rem;
-}
-
-.concerts-intro .lead {
-  font-size: 1.2rem;
-  color: var(--muted);
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
 }
 
 .concerts-grid {
@@ -884,11 +1062,17 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .concert-card {
-  background: white;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: none;
   border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(43, 108, 176, 0.1);
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: row;
+  min-height: 300px;
+  align-items: stretch;
+  gap: 0;
 }
 
 .concert-card:hover {
@@ -898,8 +1082,12 @@ h1,h2,h3,h4,h5,h6{
 
 .concert-image {
   position: relative;
-  height: 250px;
+  height: 100%;
   overflow: hidden;
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 300px;
+  max-width: 50%;
 }
 
 .concert-img {
@@ -909,19 +1097,94 @@ h1,h2,h3,h4,h5,h6{
   transition: transform 0.3s ease;
 }
 
-.concert-card:hover .concert-img {
+.concert-img-contain {
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+  transition: transform 0.3s ease;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* 125期画像専用のコンテナスタイル */
+.concert-card .concert-image {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 300px;
+  max-width: 50%;
+  height: 100%;
+  border-radius: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.concert-card .concert-content {
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  margin-left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 280px;
+  max-width: 50%;
+}
+
+.concert-card .concert-title {
+  color: var(--accent);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.concert-card .concert-subtitle {
+  color: #666;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.concert-card .concert-img-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.concert-card:hover .concert-img,
+.concert-card:hover .concert-img-contain {
   transform: scale(1.05);
 }
 
 .concert-status {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.5rem;
+  right: 0.5rem;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 600;
   color: white;
+  z-index: 10;
 }
 
 .concert-status.upcoming {
@@ -934,6 +1197,10 @@ h1,h2,h3,h4,h5,h6{
 
 .concert-content {
   padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .concert-title {
@@ -1085,6 +1352,12 @@ h1,h2,h3,h4,h5,h6{
   align-items:center; justify-content:center; font-weight:700;
 }
 
+/* Contact Section */
+#contact h2,
+#contact h2 a {
+  color: var(--accent) !important;
+}
+
 /* Contact form */
 .contact-form{display:grid; gap:0.5rem; margin-top:0.5rem}
 .contact-form label{display:flex; flex-direction:column; font-size:0.9rem; color:var(--muted)}
@@ -1107,6 +1380,49 @@ h1,h2,h3,h4,h5,h6{
 .site-footer{padding:1rem 0; color:var(--muted)}
 .footer-inner{display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap}
 .small{font-size:0.85rem}
+
+/* Footer Social Links */
+.footer-social {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  color: var(--accent);
+}
+
+.social-link svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* Mobile Footer */
+@media (max-width: 720px) {
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .footer-social {
+    justify-content: center;
+  }
+  
+  .social-link svg {
+    width: 24px;
+    height: 24px;
+  }
+}
 
 /* Skeleton */
 .skeleton {
@@ -1145,9 +1461,17 @@ h1,h2,h3,h4,h5,h6{
   100% { background-position: -200% 0; }
 }
 
+/* Concert card skeleton animation */
+.skeleton-image,
+.skeleton-line {
+  background: linear-gradient(90deg, #e9ecef 25%, #f8f9fa 50%, #e9ecef 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
 /* Page Content */
 .page-content {
-  padding: 2rem 0;
+  padding: 3rem 0 2rem 0;
   max-width: 800px;
   margin: 0 auto;
 }
@@ -1305,6 +1629,11 @@ h1,h2,h3,h4,h5,h6{
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
+/* Hero spacer to push content below fixed hero */
+.hero-spacer {
+  height: 100vh;
+}
+
 .hero-content .lead {
   font-size: 1.2rem;
   margin-bottom: 2rem;
@@ -1433,21 +1762,37 @@ h1,h2,h3,h4,h5,h6{
     font-size: 1rem;
   }
 
-  .concerts-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
   .concert-card {
     margin-bottom: 1rem;
+    flex-direction: column;
   }
 
   .concert-image {
-    height: 200px;
+    height: 250px;
+    flex: none;
+    width: 100%;
+    max-width: 100%;
   }
 
   .concert-content {
     padding: 1rem;
+    flex: none;
+  }
+
+  .concert-card .concert-image {
+    min-width: 100%;
+    max-width: 100%;
+    height: 250px;
+    margin-bottom: 1rem;
+  }
+
+  .concert-card .concert-content {
+    padding: 1.5rem;
+    margin-left: 0;
+    flex: none;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
   }
 
   .concert-title {
@@ -1841,11 +2186,31 @@ h1,h2,h3,h4,h5,h6{
   }
 
   .concert-image {
-    height: 180px;
+    height: 220px;
+    flex: none;
+    width: 100%;
+    max-width: 100%;
   }
 
   .concert-content {
     padding: 0.8rem;
+    flex: none;
+  }
+
+  .concert-card .concert-image {
+    min-width: 100%;
+    max-width: 100%;
+    height: 220px;
+    margin-bottom: 0.8rem;
+  }
+
+  .concert-card .concert-content {
+    padding: 1rem;
+    margin-left: 0;
+    flex: none;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
   }
 
   .concert-title {
@@ -2021,5 +2386,662 @@ h1,h2,h3,h4,h5,h6{
   .contact-form button{
     padding:0.8rem;
     font-size:1rem;
+  }
+}
+
+/* コンサートページのセクション */
+.upcoming-concerts {
+  margin-bottom: 3rem;
+}
+
+.past-concerts {
+  margin-bottom: 3rem;
+}
+
+/* 過去の演奏会ページのレイアウト */
+.sublevel-layer-wrapper {
+  position: fixed;
+  top: 100px;
+  right: 1rem;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.sublevel-layer {
+  position: sticky;
+  top: 100px;
+  width: 280px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  height: fit-content;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: opacity 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+  pointer-events: auto;
+}
+
+.sublevel-layer.expanded {
+  justify-content: flex-start;
+}
+
+/* .past-concerts-contentは .page-contentと同じスタイルを使用 */
+
+/* 過去の演奏会カードの画像 */
+.past-concert-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.past-concert-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.past-concert-image-wrapper:hover .past-concert-image {
+  transform: scale(1.05);
+}
+
+.past-concert-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.past-concert-image-wrapper:hover .past-concert-image-overlay {
+  opacity: 1;
+}
+
+.past-concert-image-overlay span {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* 画像モーダル */
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.image-modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-modal-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.image-modal-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.image-modal-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hide sublevel layer when body has sidebar-hidden class */
+body.sidebar-hidden .sublevel-layer {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar-toggle-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+  z-index: 10;
+  padding: 0.5rem;
+  box-shadow: 0 2px 8px rgba(43, 108, 176, 0.2);
+  margin-top: 1.5rem;
+  margin-bottom: auto;
+  align-self: center;
+}
+
+.sidebar-toggle-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(43, 108, 176, 0.3);
+  background: #1e4a72;
+}
+
+.sidebar-toggle-button:active {
+  transform: scale(1.02);
+}
+
+.sidebar-toggle-button:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Hamburger icon styles for sidebar */
+.sidebar-toggle-button .hamburger {
+  width: 20px;
+  height: 18px;
+  transition: all 0.3s ease-out;
+}
+
+.sidebar-toggle-button .hamburger span {
+  background: white;
+  transition: all 0.3s ease-out;
+}
+
+.sublevel-layer .sidebar-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+}
+
+.sidebar-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-group-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.sidebar-group-button:hover {
+  background: rgba(43, 108, 176, 0.08);
+  border-color: var(--accent);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(43, 108, 176, 0.15);
+  border-radius: 8px;
+}
+
+.sidebar-group-button:active {
+  transform: translateX(2px);
+  transition: transform 0.1s ease-out;
+}
+
+.sidebar-group-button:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sidebar-group-button.active {
+  background: rgba(43, 108, 176, 0.12);
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateX(8px);
+  box-shadow: 0 6px 16px rgba(43, 108, 176, 0.2);
+  font-weight: 600;
+}
+
+
+.sidebar-no-results {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 1rem;
+  opacity: 1;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+.sidebar-toggle-icon {
+  font-size: 1.2rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* 10回ごとにグループ化 */
+.concerts-by-decade {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  flex: 1;
+}
+
+.decade-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: margin-bottom 0.3s ease;
+}
+
+.decade-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  width: 100%;
+}
+
+.decade-toggle:hover {
+  opacity: 0.8;
+}
+
+.decade-toggle:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.decade-heading {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0;
+}
+
+.toggle-icon {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
+.past-concerts-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.past-concerts-header-wrapper h2 {
+  margin: 0;
+}
+
+.past-concerts-link {
+  font-size: 0.95rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.past-concerts-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(43, 108, 176, 0.2);
+}
+
+/* 過去の演奏会ページ */
+.past-concerts-header {
+  margin-bottom: 3rem;
+}
+
+.past-concerts-intro {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.past-concerts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  overflow: hidden;
+  max-width: var(--container-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.past-concerts-grid.expandable {
+  max-height: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out,
+              margin-bottom 0.3s ease-out;
+}
+
+.past-concerts-grid.expanded {
+  max-height: 100000px;
+  margin-bottom: 3rem;
+  overflow: visible;
+}
+
+.card-wrapper {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease-out,
+              transform 0.3s ease-out;
+  display: flex;
+}
+
+.past-concerts-grid.expanded .card-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.past-concert-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.past-concert-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.past-concert-header {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.past-concert-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--accent);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.past-concert-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.past-concert-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.past-concert-date {
+  font-weight: 500;
+  color: #333;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.past-concert-venue {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.past-concert-conductor,
+.past-concert-choir,
+.past-concert-soprano,
+.past-concert-mezzo-soprano,
+.past-concert-alto,
+.past-concert-tenor,
+.past-concert-bass-baritone {
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.past-concert-soloist {
+  margin: 0;
+}
+
+.past-concert-soloist > div {
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.past-concert-card.cancelled {
+  opacity: 0.6;
+  position: relative;
+}
+
+.past-concert-card.cancelled::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(0, 0, 0, 0.03) 10px,
+    rgba(0, 0, 0, 0.03) 20px
+  );
+  pointer-events: none;
+}
+
+.past-concert-pieces {
+  margin-top: 0.5rem;
+}
+
+.past-concert-pieces-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.past-concert-pieces-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.past-concert-piece {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  padding-left: 0;
+  position: relative;
+}
+
+.past-concert-piece::before {
+  content: '・';
+  position: absolute;
+  left: -0.75rem;
+}
+
+.past-concerts-footer {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+/* Mobile styles for past concerts */
+@media (max-width: 720px) {
+  .concerts-by-decade {
+    gap: 2rem;
+  }
+
+  .decade-section {
+    gap: 1rem;
+  }
+
+  .decade-heading {
+    font-size: 1.5rem;
+  }
+
+  .toggle-icon {
+    font-size: 1.5rem;
+  }
+
+  .sublevel-layer-wrapper {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .sublevel-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-height: none;
+    margin-bottom: 2rem;
+  }
+
+  .sidebar-title {
+    font-size: 1.1rem;
+  }
+
+  .sidebar-group-button {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .past-concerts-header-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .past-concerts-link {
+    width: 100%;
+    text-align: center;
+  }
+
+  .past-concerts-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .past-concerts-intro {
+    font-size: 0.95rem;
+  }
+
+  .past-concerts-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding: 0;
+  }
+
+  .past-concert-card {
+    padding: 1.2rem;
+  }
+
+  .past-concert-title {
+    font-size: 1.15rem;
+  }
+
+  .past-concert-date {
+    font-size: 0.95rem;
+  }
+
+  .past-concert-venue {
+    font-size: 0.9rem;
+  }
+
+  .past-concert-pieces-label {
+    font-size: 0.9rem;
+  }
+
+  .past-concert-piece {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .past-concert-card {
+    padding: 1rem;
+  }
+
+  .past-concert-title {
+    font-size: 1.05rem;
   }
 }

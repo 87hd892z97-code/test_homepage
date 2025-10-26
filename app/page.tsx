@@ -24,7 +24,7 @@ export default function Home() {
           <div className="performance-content">
             <h3>次回公演：第125回定期演奏会</h3>
             <p>マーラー：交響曲第1番「巨人」</p>
-            <p>2025年12月21日（日）開場12:45 開演13:30 カルッツ川崎 ホール</p>
+            <p>2025年12月21日（日）開場12:45 開演13:30 カルッツかわさき ホール</p>
             <Link href="/concerts" className="more-info-button">
               詳細はこちら
             </Link>
@@ -35,10 +35,9 @@ export default function Home() {
       <section id="contact" className="section">
         <div className="container">
           <h3>
-            <Link href="/contact">連絡先</Link>
+            <Link href="/contact">お問い合わせ</Link>
           </h3>
-          <p>見学や公演依頼は以下のアドレスへご連絡ください。</p>
-          <p className="contact-email">orchestra@example.edu</p>
+          <p>公演依頼、演奏会について等、当団に関するお問い合わせは以下のフォームよりお願いいたします。</p>
 
           {/* ContactForm は Client コンポーネントとしてそのまま利用 */}
           <ContactForm />

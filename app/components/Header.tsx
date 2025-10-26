@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import SearchBar from './SearchBar';
 import NavigationEffect from './NavigationEffect';
 
 export default function Header() {
@@ -12,6 +11,15 @@ export default function Header() {
   const isHomePage = pathname === '/';
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  const isPastConcertsPage = pathname?.startsWith('/concerts/past');
+
+  const handleLogoKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      window.location.href = '/';
+    }
+  };
 
   useEffect(() => {
     if (!isHomePage) return;
@@ -58,25 +66,78 @@ export default function Header() {
       <header className={headerClasses}>
         <div className="main-navigation container">
           <div className="header-left">
-            <Link href="/" className="site-title">
+            <Link 
+              href="/" 
+              className="site-title logo-button" 
+              role="button" 
+              aria-label="ホームページに戻る"
+              tabIndex={0}
+              onKeyDown={handleLogoKeyDown}
+            >
               <Image
-                src="/ynu-orch-icon-white.png"
+                src="/ynu_orch-logo.svg"
                 alt="横浜国立大学管弦楽団"
                 width={200}
                 height={60}
                 className="site-logo"
+                priority
               />
             </Link>
           </div>
           
           <nav className="main-nav">
-            <Link href="/about">楽団紹介</Link>
-            <Link href="/concerts">演奏会情報</Link>
-            <Link href="/donation">寄付について</Link>
-            <Link href="/recruit">団員募集</Link>
-            <Link href="/contact">お問い合わせ</Link>
-            <SearchBar />
+            <Link 
+              href="/about" 
+              className={pathname === '/about' ? 'active' : ''}
+            >
+              楽団紹介
+            </Link>
+            <Link 
+              href="/concerts" 
+              className={pathname === '/concerts' ? 'active' : ''}
+            >
+              演奏会情報
+            </Link>
+            <Link 
+              href="/donation" 
+              className={pathname === '/donation' ? 'active' : ''}
+            >
+              寄付について
+            </Link>
+            <Link 
+              href="/recruit" 
+              className={pathname === '/recruit' ? 'active' : ''}
+            >
+              団員募集
+            </Link>
+            <Link 
+              href="/contact" 
+              className={pathname === '/contact' ? 'active' : ''}
+            >
+              お問い合わせ
+            </Link>
           </nav>
+          
+          {/* Sidebar toggle button for past concerts page - on the right */}
+          {isPastConcertsPage && (
+            <button
+              className="sidebar-toggle-nav"
+              onClick={() => {
+                const isHidden = document.body.classList.contains('sidebar-hidden');
+                if (isHidden) {
+                  document.body.classList.remove('sidebar-hidden');
+                } else {
+                  document.body.classList.add('sidebar-hidden');
+                }
+              }}
+              aria-label="演奏会グループを開閉"
+            >
+              <span className="hamburger">
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+          )}
           
           {/* Mobile menu button */}
           <button 
@@ -116,9 +177,6 @@ export default function Header() {
             <Link href="/donation" className="mobile-menu-link">寄付について</Link>
             <Link href="/recruit" className="mobile-menu-link">団員募集</Link>
             <Link href="/contact" className="mobile-menu-link">お問い合わせ</Link>
-            <div className="mobile-search">
-              <SearchBar />
-            </div>
           </nav>
         </div>
       )}
