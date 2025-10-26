@@ -1,4 +1,6 @@
-import React, { Suspense } from 'react';
+'use client';
+
+import React, { Suspense, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Skeleton from '../components/Skeleton';
@@ -24,7 +26,9 @@ function ConcertCardSkeleton() {
 }
 
 // 個別のカードコンポーネント
-async function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: boolean }) {
+function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: boolean }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
   // 画像の読み込みを待つ
   const concertNumber = concert.title.match(/第(\d+)回/)?.[1] || '';
   let imageSrc = getConcertImagePath(`第${concertNumber}回`, undefined, concert.subtitle) || "/RegularConcertPoster/ynuorch-icon.jpg";
@@ -47,7 +51,7 @@ async function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: 
       <div className="concert-content">
         <h3 className="concert-title">{concert.title}</h3>
         <p className="concert-subtitle">{concert.subtitle}</p>
-        <div className="concert-details">
+        <div className={`concert-details ${isExpanded ? 'expanded' : ''}`}>
           <div className="detail-item">
             <span className="detail-label">日時</span>
             <span className="detail-value">{concert.date} {concert.time || ''}</span>
@@ -86,6 +90,13 @@ async function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: 
             )}
           </div>
         )}
+        <button 
+          className="mobile-expand-button"
+          onClick={() => setIsExpanded(!isExpanded)}
+          aria-expanded={isExpanded}
+        >
+          {isExpanded ? '詳細を閉じる' : '詳細を見る'}
+        </button>
       </div>
     </div>
   );
