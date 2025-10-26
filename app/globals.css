@@ -1819,7 +1819,7 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
 
   /* Reduce logo size on mobile */
   .site-logo {
-    width: 150px;
+    width: 170px;
     height: auto;
   }
 
@@ -2270,7 +2270,7 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
 
   /* Even smaller logo on small mobile */
   .site-logo {
-    width: 120px;
+    width: 140px;
     height: auto;
   }
   
