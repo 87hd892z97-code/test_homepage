@@ -6,7 +6,7 @@ async function main() {
   console.log('Starting migration of all past concert data to database...\n');
 
   // 全過去の演奏会データをインポート
-  const { getAllPastConcerts } = require('../app/concerts/past/data');
+  const { getAllPastConcerts } = await import('../app/concerts/past/data.js');
   const concerts = getAllPastConcerts();
 
   console.log(`Found ${concerts.length} concerts to migrate\n`);

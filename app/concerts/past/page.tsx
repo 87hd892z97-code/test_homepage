@@ -284,6 +284,43 @@ export default function PastConcertsPage() {
     return `第${lastConcert}回～第${firstConcert}回`;
   };
 
+  // スケルトンコンポーネント
+  const SkeletonCard = () => (
+    <div className="past-concert-card">
+      <div className="past-concert-header">
+        <div className="skeleton-line" style={{ height: '24px', width: '80%', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
+      </div>
+      <div style={{ backgroundColor: '#e9ecef', height: '200px', borderRadius: '8px', marginBottom: '12px' }}></div>
+      <div className="past-concert-body">
+        <div className="past-concert-info">
+          <div className="skeleton-line" style={{ height: '16px', width: '70%', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
+          <div className="skeleton-line" style={{ height: '16px', width: '90%', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
+          <div className="skeleton-line" style={{ height: '16px', width: '60%', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
+        </div>
+        <div className="past-concert-pieces">
+          <div className="skeleton-line" style={{ height: '16px', width: '50px', marginBottom: '8px', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            <li><div className="skeleton-line" style={{ height: '14px', width: '100%', marginBottom: '4px', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div></li>
+            <li><div className="skeleton-line" style={{ height: '14px', width: '95%', marginBottom: '4px', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div></li>
+            <li><div className="skeleton-line" style={{ height: '14px', width: '85%', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (loading) {
+    return (
+      <div className="container page-content">
+        <div style={{ maxWidth: '1600px', margin: '0 auto', padding: '2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))', gap: '1.5rem' }}>
+          {[...Array(6)].map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="sublevel-layer-wrapper">
