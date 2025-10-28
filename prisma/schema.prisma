@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Concert {
+  id                Int       @id @default(autoincrement())
+  concertNumber     Int       @unique
+  date              String
+  venue             String
+  conductor         String
+  cancelled         Boolean   @default(false)
+  status            String?   @default("completed") // "upcoming" or "completed"
+  chorus            String?
+  soprano           String?
+  soprano2          String?
+  mezzoSoprano      String?
+  alto              String?
+  tenor             String?
+  bassBaritone      String?
+  soloist           String?
+  soloistInstrument String?
+  ticketUrl         String?
+  pieces            String[]  // Array of strings
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  images ConcertImage[]
+  
+  @@index([concertNumber])
+}
+
+model ConcertImage {
+  id            Int      @id @default(autoincrement())
+  concertId     Int
+  concert       Concert  @relation(fields: [concertId], references: [id], onDelete: Cascade)
+  imagePath     String
+  imageType     String   // "poster" or "fallback"
+  composerName  String?  // For fallback images
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@unique([concertId, imagePath])
+  @@index([concertId])
+}
+
+model ExecutiveMember {
+  id          Int      @id @default(autoincrement())
+  name        String
+  position    String
+  imagePath   String?
+  order       Int      // For ordering display
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([order])
+}

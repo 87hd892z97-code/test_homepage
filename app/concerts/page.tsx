@@ -1,10 +1,11 @@
 'use client';
 
-import React, { Suspense, useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Skeleton from '../components/Skeleton';
 import { getConcertImagePath } from './past/imageMapping';
+import { adaptDbConcertToFrontend } from '../lib/concertAdapter';
 
 // カード専用のスケルトンコンポーネント
 function ConcertCardSkeleton() {
@@ -71,23 +72,30 @@ function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: boolea
             </div>
           )}
         </div>
-        <p className="concert-description">{concert.description}</p>
-        {isUpcoming && (
-          <div className="concert-actions">
-            {concert.id === 1 ? (
-              <a 
-                href="https://teket.jp/4833/51547" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="btn-primary"
+        <div className="concert-pieces">
+          {concert.pieces && concert.pieces.length > 0 ? (
+            concert.pieces.map((piece: string, index: number) => (
+              <p 
+                key={index} 
+                className={index === 0 ? 'concert-piece concert-piece-main' : 'concert-piece'}
               >
-                チケット購入
-              </a>
-            ) : (
-              <Link href="/contact" className="btn-primary">
-                お問い合わせ・予約
-              </Link>
-            )}
+                {piece}
+              </p>
+            ))
+          ) : (
+            <p className="concert-description">{concert.description}</p>
+          )}
+        </div>
+        {isUpcoming && concert.ticketUrl && (
+          <div className="concert-actions">
+            <a 
+              href={concert.ticketUrl} 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
+              チケット購入
+            </a>
           </div>
         )}
         <button 
@@ -102,6 +110,7 @@ function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: boolea
   );
 }
 
+// ハードコーディングされたデータ（フォールバック用、今後削除予定）
 const upcomingConcerts = [
   {
     id: 1,
@@ -127,16 +136,6 @@ const pastConcerts = [
     conductor: '指揮：栗原翼',
     status: 'completed',
     description: 'シューマンの交響曲第3番「ライン」を中心としたプログラム。シベリウスの「フィンランディア」、ビゼーの「カルメン」組曲も演奏。'
-  },
-  {
-    id: 5,
-    title: '第123回定期演奏会',
-    subtitle: 'チャイコフスキー：交響曲第6番「悲愴」',
-    date: '2024年12月29日（日）',
-    venue: '横浜みなとみらいホール 大ホール',
-    conductor: '指揮：佐々木新平',
-    status: 'completed',
-    description: 'チャイコフスキーの交響曲第6番「悲愴」を中心としたプログラム。イタリア奇想曲、バレエ組曲「くるみ割り人形」も演奏。'
   },
   {
     id: 6,
@@ -220,70 +219,107 @@ const pastConcerts = [
   }
 ];
 
-// 今後の演奏会リスト
-function UpcomingConcertsList() {
-  return (
-    <div className="concerts-grid">
-      {upcomingConcerts.map((concert) => (
-        <Suspense key={concert.id} fallback={<ConcertCardSkeleton />}>
-          <ConcertCard concert={concert} isUpcoming={true} />
-        </Suspense>
-      ))}
-    </div>
-  );
-}
-
-// 過去の演奏会リスト
-function PastConcertsList() {
-  return (
-    <div className="concerts-grid">
-      {pastConcerts.map((concert) => (
-        <Suspense key={concert.id} fallback={<ConcertCardSkeleton />}>
-          <ConcertCard concert={concert} isUpcoming={false} />
-        </Suspense>
-      ))}
-    </div>
-  );
-}
-
 export default function ConcertsPage() {
+  const [upcomingConcertList, setUpcomingConcertList] = useState<any[]>([]);
+  const [pastConcertList, setPastConcertList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/concerts');
+      if (response.ok) {
+        const data = await response.json();
+        const adaptedConcerts = data.map((concert: any) => adaptDbConcertToFrontend(concert));
+        
+        // データベースのstatusフィールドで分類
+        const upcoming = adaptedConcerts
+          .filter((c: any) => c.status === 'upcoming')
+          .sort((a: any, b: any) => {
+            const numA = parseInt(a.title.match(/\d+/)?.[0] || '0');
+            const numB = parseInt(b.title.match(/\d+/)?.[0] || '0');
+            return numB - numA; // 降順
+          });
+        
+        const past = adaptedConcerts
+          .filter((c: any) => c.status === 'completed')
+          .sort((a: any, b: any) => {
+            const numA = parseInt(a.title.match(/\d+/)?.[0] || '0');
+            const numB = parseInt(b.title.match(/\d+/)?.[0] || '0');
+            return numB - numA; // 降順
+          });
+
+        setUpcomingConcertList(upcoming);
+        setPastConcertList(past.slice(0, 5)); // 最新5件のみ表示
+      }
+    } catch (error) {
+      console.error('Failed to fetch concerts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="container page-content">
+        <Skeleton />
+      </div>
+    );
+  }
+
   return (
     <div className="container page-content">
       <h1>演奏会情報</h1>
 
-        <section className="upcoming-concerts">
-          <h2>今後の演奏会</h2>
-          <UpcomingConcertsList />
-        </section>
+      <section className="upcoming-concerts">
+        <h2>今後の演奏会</h2>
+        <div className="concerts-grid">
+          {upcomingConcertList.length > 0 ? (
+            upcomingConcertList.map((concert) => (
+              <ConcertCard key={concert.id} concert={concert} isUpcoming={true} />
+            ))
+          ) : (
+            <p>今後の演奏会予定はありません。</p>
+          )}
+        </div>
+      </section>
 
-        <section className="past-concerts">
-          <div className="past-concerts-header-wrapper">
-            <h2>過去の演奏会</h2>
-            <Link href="/concerts/past" className="btn-secondary past-concerts-link">
-              過去の演奏会一覧を見る →
-            </Link>
-          </div>
-          <PastConcertsList />
-        </section>
+      <section className="past-concerts">
+        <div className="past-concerts-header-wrapper">
+          <h2>過去の演奏会</h2>
+          <Link href="/concerts/past" className="btn-secondary past-concerts-link">
+            過去の演奏会一覧を見る →
+          </Link>
+        </div>
+        <div className="concerts-grid">
+          {pastConcertList.length > 0 ? (
+            pastConcertList.map((concert) => (
+              <ConcertCard key={concert.id} concert={concert} isUpcoming={false} />
+            ))
+          ) : (
+            <p>過去の演奏会情報はありません。</p>
+          )}
+        </div>
+      </section>
 
-        <section className="concert-info">
-          <h2>演奏会について</h2>
-          <div className="info-grid">
-            <div className="info-card">
-              <h3>チケット予約</h3>
-              <p>演奏会のチケットは事前予約制です。お問い合わせページからご連絡ください。</p>
-              <Link href="/contact" className="btn-secondary">お問い合わせ</Link>
-            </div>
-            <div className="info-card">
-              <h3>会場アクセス</h3>
-              <p>各会場へのアクセス方法や駐車場情報は、演奏会案内でご確認ください。</p>
-            </div>
-            <div className="info-card">
-              <h3>演奏会プログラム</h3>
-              <p>詳細なプログラムは演奏会の2週間前に発表いたします。</p>
-            </div>
+      <section className="concert-info">
+        <h2>演奏会について</h2>
+        <div className="info-grid">
+          <div className="info-card">
+            <h3>チケット予約</h3>
+            <p>演奏会のチケットは事前予約制です。お問い合わせページからご連絡ください。</p>
+            <Link href="/contact" className="btn-secondary">お問い合わせ</Link>
           </div>
-        </section>
+          <div className="info-card">
+            <h3>会場アクセス</h3>
+            <p>各会場へのアクセス方法や駐車場情報は、演奏会案内でご確認ください。</p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

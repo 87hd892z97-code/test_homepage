@@ -7,6 +7,7 @@ import Image from 'next/image';
 // データファイルをインポート（将来的には別ファイルに移動可能）
 import { getAllPastConcerts } from './data';
 import { getConcertImagePath } from './imageMapping';
+import { adaptDbConcertToPastConcert } from '../../lib/concertAdapter';
 
 
 // 曲目から楽器を特定する関数
@@ -224,8 +225,30 @@ export default function PastConcertsPage() {
   };
   
 
-  // 全演奏会データを取得（第1回から）
-  const allConcerts = useMemo(() => getAllPastConcerts().reverse(), []);
+  // 全演奏会データをデータベースから取得
+  const [allConcerts, setAllConcerts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchConcerts();
+  }, []);
+
+  const fetchConcerts = async () => {
+    try {
+      const response = await fetch('/api/concerts/past');
+      if (response.ok) {
+        const data = await response.json();
+        const adaptedConcerts = data.map((concert: any) => adaptDbConcertToPastConcert(concert));
+        setAllConcerts(adaptedConcerts.reverse());
+      }
+    } catch (error) {
+      console.error('Failed to fetch concerts:', error);
+      // フォールバック: ハードコーディングされたデータを使用
+      setAllConcerts(getAllPastConcerts().reverse());
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // 10回ごとにグループ化（第1回から開始）
   const concertsByDecade = useMemo(() => {
