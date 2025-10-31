@@ -177,6 +177,7 @@ export default function PastConcertsPage() {
   const [expandedGroups, setExpandedGroups] = useState<Record<number, boolean>>({});
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const hasInitialized = useRef(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Add class to body when image modal is open to keep header visible
   useEffect(() => {
@@ -284,6 +285,45 @@ export default function PastConcertsPage() {
     return `第${lastConcert}回～第${firstConcert}回`;
   };
 
+  // 検索フィルタリング
+  const filteredConcertsByDecade = useMemo(() => {
+    if (!searchQuery) return concertsByDecade;
+    
+    const filtered: Record<number, typeof allConcerts> = {};
+    
+    Object.keys(concertsByDecade).forEach((decadeKey) => {
+      const decade = Number(decadeKey);
+      const concerts = concertsByDecade[decade];
+      
+      const filteredConcerts = concerts.filter((concert: typeof allConcerts[0]) => {
+        const query = searchQuery.toLowerCase();
+        const concertNumber = concert.concert.match(/\d+/)?.[0] || '';
+        const date = concert.date.toLowerCase();
+        const venue = concert.venue.toLowerCase();
+        const conductor = concert.conductor?.toLowerCase() || '';
+        const pieces = concert.pieces?.join(' ').toLowerCase() || '';
+        
+        return (
+          concertNumber.includes(query) ||
+          date.includes(query) ||
+          venue.includes(query) ||
+          conductor.includes(query) ||
+          pieces.includes(query)
+        );
+      });
+      
+      if (filteredConcerts.length > 0) {
+        filtered[decade] = filteredConcerts;
+      }
+    });
+    
+    return filtered;
+  }, [concertsByDecade, searchQuery]);
+
+  const filteredDecades = useMemo(() => {
+    return Object.keys(filteredConcertsByDecade).map(Number).sort((a, b) => b - a);
+  }, [filteredConcertsByDecade]);
+
   // スケルトンコンポーネント
   const SkeletonCard = () => (
     <div className="past-concert-card">
@@ -326,9 +366,24 @@ export default function PastConcertsPage() {
       <div className="sublevel-layer-wrapper">
         <aside className="sublevel-layer">
         <h2 className="sidebar-title">演奏会グループ</h2>
+        <input
+          type="text"
+          placeholder="演奏会を検索..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '0.75rem',
+            marginBottom: '1rem',
+            fontSize: '0.9rem',
+            border: '1px solid #e0e0e0',
+            borderRadius: '6px',
+            outline: 'none'
+          }}
+        />
         <div className="sidebar-groups">
-          {decades.map(decade => {
-            const concerts = [...concertsByDecade[decade]].reverse();
+          {(searchQuery ? filteredDecades : decades).map(decade => {
+            const concerts = [...(searchQuery ? filteredConcertsByDecade[decade] : concertsByDecade[decade])].reverse();
             const isExpanded = expandedGroups[decade] ?? false;
             
             return (
@@ -373,8 +428,8 @@ export default function PastConcertsPage() {
         </div>
 
         <div className="concerts-by-decade">
-          {decades.map(decade => {
-          const concerts = [...concertsByDecade[decade]].reverse();
+          {(searchQuery ? filteredDecades : decades).map(decade => {
+          const concerts = [...(searchQuery ? filteredConcertsByDecade[decade] : concertsByDecade[decade])].reverse();
           const isExpanded = expandedGroups[decade] ?? false;
           
           return (

@@ -23,7 +23,7 @@ export default function AboutPage() {
         <div className="executive-committee">
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="顧問 杉山 久仁子"
               width={80}
               height={80}
@@ -35,7 +35,7 @@ export default function AboutPage() {
           </div>
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="学生責任者 永田 光佑"
               width={80}
               height={80}
@@ -46,7 +46,7 @@ export default function AboutPage() {
           </div>
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="コンサートマスター 橋本 大輝"
               width={80}
               height={80}
@@ -57,7 +57,7 @@ export default function AboutPage() {
           </div>
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="技術委員長 森本 湧大"
               width={80}
               height={80}
@@ -68,7 +68,7 @@ export default function AboutPage() {
           </div>
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="定演委員長 中園 拓也"
               width={80}
               height={80}
@@ -79,7 +79,7 @@ export default function AboutPage() {
           </div>
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="運営委員長 鈴木 是雄"
               width={80}
               height={80}
@@ -90,7 +90,7 @@ export default function AboutPage() {
           </div>
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="選曲委員長 吉江 ひめ杏"
               width={80}
               height={80}
@@ -101,7 +101,7 @@ export default function AboutPage() {
           </div>
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="移動音楽会委員長 朝見 美嘉"
               width={80}
               height={80}
@@ -112,7 +112,7 @@ export default function AboutPage() {
           </div>
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="機関誌委員長 佐野 汐梨"
               width={80}
               height={80}
@@ -123,7 +123,7 @@ export default function AboutPage() {
           </div>
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="執行委員 今泉 くるみ"
               width={80}
               height={80}
@@ -134,7 +134,7 @@ export default function AboutPage() {
           </div>
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="執行委員 鈴木 颯太"
               width={80}
               height={80}
@@ -145,7 +145,7 @@ export default function AboutPage() {
           </div>
           <div className="committee-member">
             <Image
-              src="/committee-member-optimized.png"
+              src="/RegularConcertPoster/ynuorch-icon.jpg"
               alt="執行委員 林 貴美"
               width={80}
               height={80}
