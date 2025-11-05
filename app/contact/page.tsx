@@ -4,7 +4,7 @@ export default function ContactPage() {
   return (
     <div className="container page-content">
       <h1>お問い合わせ</h1>
-      
+
       <section>
         <p>公演依頼、演奏会について等、当団に関するお問い合わせは以下のフォームよりお願いいたします。</p>
         <ContactForm />

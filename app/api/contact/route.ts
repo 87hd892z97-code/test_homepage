@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     console.log('メール送信開始...');
     await transporter.sendMail(confirmMailOptions);
     console.log('確認メール送信完了');
-    
+
     await transporter.sendMail(adminMailOptions);
     console.log('管理者メール送信完了');
 

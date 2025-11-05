@@ -25,7 +25,7 @@ function SearchContent() {
 
   const performSearch = async (searchQuery: string) => {
     setLoading(true);
-    
+
     // 模擬的な検索結果（実際の実装では、APIやデータベースから検索）
     const mockResults: SearchResult[] = [
       {
@@ -79,7 +79,7 @@ function SearchContent() {
     <div className="container">
       <div className="search-results">
         <h1>検索結果</h1>
-        
+
         {query && (
           <div className="search-query">
             「{query}」の検索結果
