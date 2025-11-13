@@ -6,7 +6,7 @@ export default function NavigationEffect() {
   useEffect(() => {
     const nav = document.querySelector('.main-nav') as HTMLElement;
     const navLinks = document.querySelectorAll('.main-nav a:not(.search-container a)') as NodeListOf<HTMLElement>;
-    
+
     if (!nav || navLinks.length === 0) return;
 
     let lastHoveredLink: HTMLElement | null = null;
@@ -18,13 +18,13 @@ export default function NavigationEffect() {
           nav.style.setProperty('--underline-opacity', '0');
           return;
         }
-        
+
         const navRect = nav.getBoundingClientRect();
         const linkRect = targetLink.getBoundingClientRect();
-        
+
         const left = linkRect.left - navRect.left;
         const width = linkRect.width;
-        
+
         nav.style.setProperty('--underline-left', `${left}px`);
         nav.style.setProperty('--underline-width', `${width}px`);
         nav.style.setProperty('--underline-opacity', '1');

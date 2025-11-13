@@ -32,11 +32,11 @@ export default function SearchBar() {
         aria-label="検索を開く"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="11" cy="11" r="8"/>
-          <path d="m21 21-4.35-4.35"/>
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
         </svg>
       </button>
-      
+
       {isOpen && (
         <div className="search-overlay" onClick={() => setIsOpen(false)}>
           <div className="search-modal" onClick={(e) => e.stopPropagation()}>
@@ -53,8 +53,8 @@ export default function SearchBar() {
                 />
                 <button type="submit" className="search-submit">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="m21 21-4.35-4.35"/>
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
                   </svg>
                 </button>
               </div>

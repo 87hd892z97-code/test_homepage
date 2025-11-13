@@ -13,7 +13,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  
+
   const isPastConcertsPage = pathname?.startsWith('/concerts/past');
 
   const handleLogoKeyDown = (e: React.KeyboardEvent) => {
@@ -82,7 +82,7 @@ export default function Header() {
     } else {
       document.body.style.overflow = 'unset';
     }
-    
+
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -100,10 +100,10 @@ export default function Header() {
       <header className={headerClasses}>
         <div className="main-navigation container">
           <div className="header-left">
-            <Link 
-              href="/" 
-              className="site-title logo-button" 
-              role="button" 
+            <Link
+              href="/"
+              className="site-title logo-button"
+              role="button"
               aria-label="ホームページに戻る"
               tabIndex={0}
               onKeyDown={handleLogoKeyDown}
@@ -118,40 +118,40 @@ export default function Header() {
               />
             </Link>
           </div>
-          
+
           <nav className="main-nav">
-            <Link 
-              href="/about" 
+            <Link
+              href="/about"
               className={pathname === '/about' ? 'active' : ''}
             >
               楽団紹介
             </Link>
-            <Link 
-              href="/concerts" 
+            <Link
+              href="/concerts"
               className={pathname === '/concerts' ? 'active' : ''}
             >
               演奏会情報
             </Link>
-            <Link 
-              href="/donation" 
+            <Link
+              href="/donation"
               className={pathname === '/donation' ? 'active' : ''}
             >
               寄付について
             </Link>
-            <Link 
-              href="/recruit" 
+            <Link
+              href="/recruit"
               className={pathname === '/recruit' ? 'active' : ''}
             >
               団員募集
             </Link>
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               className={pathname === '/contact' ? 'active' : ''}
             >
               お問い合わせ
             </Link>
           </nav>
-          
+
           {/* Sidebar toggle button for past concerts page - on the right */}
           {isPastConcertsPage && (
             <button
@@ -172,9 +172,9 @@ export default function Header() {
               </span>
             </button>
           )}
-          
+
           {/* Mobile menu button */}
-          <button 
+          <button
             className="mobile-menu-button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="メニューを開く"
@@ -185,27 +185,27 @@ export default function Header() {
               <span></span>
             </span>
           </button>
-          
+
           <NavigationEffect />
         </div>
       </header>
 
       {/* Mobile menu overlay */}
       {isMobileMenuOpen && (
-        <div 
+        <div
           className="mobile-menu-overlay"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <nav className="mobile-menu" onClick={(e) => e.stopPropagation()}>
             {/* Close button */}
-            <button 
+            <button
               className="mobile-menu-close"
               onClick={() => setIsMobileMenuOpen(false)}
               aria-label="メニューを閉じる"
             >
               ×
             </button>
-            
+
             <Link href="/about" className="mobile-menu-link">楽団紹介</Link>
             <Link href="/concerts" className="mobile-menu-link">演奏会情報</Link>
             <Link href="/donation" className="mobile-menu-link">寄付について</Link>

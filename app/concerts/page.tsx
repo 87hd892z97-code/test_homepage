@@ -29,11 +29,11 @@ function ConcertCardSkeleton() {
 // 個別のカードコンポーネント
 function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: boolean }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  
+
   // 画像の読み込みを待つ
   const concertNumber = concert.title.match(/第(\d+)回/)?.[1] || '';
   let imageSrc = getConcertImagePath(`第${concertNumber}回`, undefined, concert.subtitle) || "/RegularConcertPoster/ynuorch-icon.jpg";
-  
+
   return (
     <div className="concert-card">
       <div className="concert-image">
@@ -75,8 +75,8 @@ function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: boolea
         <div className="concert-pieces">
           {concert.pieces && concert.pieces.length > 0 ? (
             concert.pieces.map((piece: string, index: number) => (
-              <p 
-                key={index} 
+              <p
+                key={index}
                 className={index === 0 ? 'concert-piece concert-piece-main' : 'concert-piece'}
               >
                 {piece}
@@ -88,8 +88,8 @@ function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: boolea
         </div>
         {isUpcoming && concert.ticketUrl && (
           <div className="concert-actions">
-            <a 
-              href={concert.ticketUrl} 
+            <a
+              href={concert.ticketUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -98,7 +98,7 @@ function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: boolea
             </a>
           </div>
         )}
-        <button 
+        <button
           className="mobile-expand-button"
           onClick={() => setIsExpanded(!isExpanded)}
           aria-expanded={isExpanded}
@@ -235,7 +235,7 @@ export default function ConcertsPage() {
       if (response.ok) {
         const data = await response.json();
         const adaptedConcerts = data.map((concert: any) => adaptDbConcertToFrontend(concert));
-        
+
         // データベースのstatusフィールドで分類
         const upcoming = adaptedConcerts
           .filter((c: any) => c.status === 'upcoming')
@@ -244,7 +244,7 @@ export default function ConcertsPage() {
             const numB = parseInt(b.title.match(/\d+/)?.[0] || '0');
             return numB - numA; // 降順
           });
-        
+
         const past = adaptedConcerts
           .filter((c: any) => c.status === 'completed')
           .sort((a: any, b: any) => {

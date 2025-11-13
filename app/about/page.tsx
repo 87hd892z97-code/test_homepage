@@ -4,7 +4,7 @@ export default function AboutPage() {
   return (
     <div className="container page-content">
       <h1>楽団紹介</h1>
-      
+
       <section>
         <h2>横浜国立大学管弦楽団</h2>
         <p>Yokohama National University Orchestra (YNU Orchestra)</p>

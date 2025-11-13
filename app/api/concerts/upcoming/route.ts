@@ -5,7 +5,7 @@ import { prisma } from '../../../../lib/prisma';
 export async function GET() {
   try {
     const today = new Date();
-    
+
     const concerts = await prisma.concert.findMany({
       where: {
         cancelled: false,

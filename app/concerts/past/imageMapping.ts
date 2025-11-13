@@ -1,7 +1,7 @@
 // 演奏会画像のマッピング
 export function getConcertImagePath(concertNumber: string, pieces?: string[], subtitle?: string): string | null {
   const number = parseInt(concertNumber.match(/\d+/)?.[0] || '0');
-  
+
   const posterImageMap: Record<number, string> = {
     113: '/RegularConcertPoster/113RegularConcertPoster.jpg',
     115: '/RegularConcertPoster/115RegularConcertPoster.jpg',
@@ -15,12 +15,12 @@ export function getConcertImagePath(concertNumber: string, pieces?: string[], su
     124: '/RegularConcertPoster/124RegularCocertPoster.jpg', // タイポ対応
     125: '/RegularConcertPoster/125RegularConcertPoster.jpg',
   };
-  
+
   // ポスター画像があればそれを優先
   if (posterImageMap[number]) {
     return posterImageMap[number];
   }
-  
+
   // ポスター画像がない場合は、メイン曲の作曲家に基づいてデフォルト画像を返す
   // まずpiecesから、なければsubtitleから
   let composerText = '';
@@ -29,7 +29,7 @@ export function getConcertImagePath(concertNumber: string, pieces?: string[], su
   } else if (subtitle) {
     composerText = subtitle;
   }
-  
+
   if (composerText) {
     // 作曲家名からデフォルト画像を選択
     if (composerText.includes('チャイコフスキー') || composerText.includes('Tchaikovsky')) {
@@ -90,7 +90,7 @@ export function getConcertImagePath(concertNumber: string, pieces?: string[], su
       return '/RegularConcertPoster/ynuorch-icon.jpg';
     }
   }
-  
+
   // デフォルトの画像
   return '/RegularConcertPoster/ynuorch-icon.jpg';
 }
