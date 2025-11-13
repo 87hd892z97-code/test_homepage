@@ -2430,7 +2430,7 @@ body:not(.sidebar-hidden) .sidebar-toggle-nav .hamburger span:nth-child(2) {
 
   .concert-list li{ padding:0.65rem 0; }
   .member-card{ gap:0.6rem; padding:0.6rem; }
-  .avatar{ width:44px; height:44px; border-radius:6px; }
+  .avatar{ width:44px; height:44px; border-radius:var(--radius-sm); }
   .skeleton-avatar{ width:44px; height:44px; }
   .skeleton-line{ height:10px; }
 
