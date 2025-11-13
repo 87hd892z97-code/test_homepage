@@ -21,12 +21,12 @@ export default function NewsSection() {
   ];
 
   return (
-    <div className="news-list">
+    <div className="flex flex-col gap-4">
       {news.map(item => (
-        <div key={item.id} className="news-item">
-          <span className="news-date">{item.date}</span>
-          <span className="news-category">{item.category}</span>
-          <h4 className="news-title">{item.title}</h4>
+        <div key={item.id} className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm border-b border-gray-200">
+          <span className="text-sm text-muted font-medium min-w-[100px]">{item.date}</span>
+          <span className="text-xs text-accent font-semibold uppercase px-2 py-1 bg-accent/10 rounded">{item.category}</span>
+          <h4 className="text-lg font-medium text-text-secondary m-0">{item.title}</h4>
         </div>
       ))}
     </div>

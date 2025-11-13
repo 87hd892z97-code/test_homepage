@@ -76,46 +76,46 @@ function SearchContent() {
   };
 
   return (
-    <div className="container">
-      <div className="search-results">
-        <h1>検索結果</h1>
+    <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden">
+      <div className="py-8">
+        <h1 className="text-accent mb-4">検索結果</h1>
 
         {query && (
-          <div className="search-query">
+          <div className="text-lg text-muted mb-8 p-4 bg-gray-light rounded-sm">
             「{query}」の検索結果
           </div>
         )}
 
         {loading ? (
-          <div className="search-loading">
-            <div className="loading-spinner"></div>
-            <p>検索中...</p>
+          <div className="text-center py-12">
+            <div className="w-10 h-10 border-4 border-gray-200 border-t-accent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-muted">検索中...</p>
           </div>
         ) : results.length > 0 ? (
-          <div className="results-list">
+          <div className="flex flex-col gap-6">
             {results.map((result, index) => (
-              <div key={index} className="result-item">
-                <div className="result-type">
+              <div key={index} className="bg-white p-6 rounded-lg shadow-md border-l-4 border-accent">
+                <div className="text-xs text-accent font-semibold uppercase mb-2">
                   {getTypeLabel(result.type)}
                 </div>
-                <h3 className="result-title">
-                  <Link href={result.url}>{result.title}</Link>
+                <h3 className="m-0 mb-2 text-xl">
+                  <Link href={result.url} className="text-text-secondary no-underline hover:text-accent">{result.title}</Link>
                 </h3>
-                <p className="result-description">{result.description}</p>
-                <div className="result-url">
-                  <Link href={result.url}>{result.url}</Link>
+                <p className="text-muted m-0 mb-2 leading-relaxed">{result.description}</p>
+                <div className="text-sm">
+                  <Link href={result.url} className="text-accent no-underline hover:underline">{result.url}</Link>
                 </div>
               </div>
             ))}
           </div>
         ) : query ? (
-          <div className="no-results">
-            <p>「{query}」に一致する結果が見つかりませんでした。</p>
-            <p>別のキーワードで検索してみてください。</p>
+          <div className="text-center py-12 text-muted">
+            <p className="my-2">「{query}」に一致する結果が見つかりませんでした。</p>
+            <p className="my-2">別のキーワードで検索してみてください。</p>
           </div>
         ) : (
-          <div className="no-query">
-            <p>検索キーワードを入力してください。</p>
+          <div className="text-center py-12 text-muted">
+            <p className="my-2">検索キーワードを入力してください。</p>
           </div>
         )}
       </div>
@@ -125,7 +125,12 @@ function SearchContent() {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<div className="search-loading"><div className="loading-spinner"></div><p>読み込み中...</p></div>}>
+    <Suspense fallback={
+      <div className="text-center py-12">
+        <div className="w-10 h-10 border-4 border-gray-200 border-t-accent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-muted">読み込み中...</p>
+      </div>
+    }>
       <SearchContent />
     </Suspense>
   );

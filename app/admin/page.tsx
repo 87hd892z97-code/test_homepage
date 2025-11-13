@@ -112,9 +112,9 @@ export default function AdminPage() {
     return (
       <>
         <Header />
-        <main className="page-content">
-          <div className="container">
-            <p>読み込み中...</p>
+        <main className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
+          <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden">
+            <p className="text-base leading-loose">読み込み中...</p>
           </div>
         </main>
       </>
@@ -124,71 +124,42 @@ export default function AdminPage() {
   return (
     <>
       <Header />
-      <main className="page-content">
-        <div className="container">
-          <h1>管理者ページ</h1>
+      <main className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
+        <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden">
+          <h1 className="text-4xl text-accent mb-8 pb-2 border-b border-accent">管理者ページ</h1>
 
-          <div
-            className="admin-tabs"
-            style={{
-              marginTop: '2rem',
-              borderBottom: '2px solid var(--accent)',
-              display: 'flex',
-              gap: '2rem',
-            }}
-          >
+          <div className="mt-8 border-b-2 border-accent flex gap-8">
             <button
               onClick={() => setActiveTab('concerts')}
-              style={{
-                padding: '1rem 2rem',
-                background: 'transparent',
-                border: 'none',
-                borderBottom: activeTab === 'concerts' ? '3px solid var(--accent)' : '3px solid transparent',
-                color: activeTab === 'concerts' ? 'var(--accent)' : 'var(--text)',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                fontWeight: activeTab === 'concerts' ? 'bold' : 'normal',
-                transition: 'all 0.3s ease',
-              }}
+              className={`px-8 py-4 bg-transparent border-0 cursor-pointer text-base transition-all duration-300 ease ${
+                activeTab === 'concerts' 
+                  ? 'border-b-[3px] border-accent text-accent font-bold' 
+                  : 'border-b-[3px] border-transparent text-text font-normal'
+              }`}
             >
               演奏会情報
             </button>
             <button
               onClick={() => setActiveTab('members')}
-              style={{
-                padding: '1rem 2rem',
-                background: 'transparent',
-                border: 'none',
-                borderBottom: activeTab === 'members' ? '3px solid var(--accent)' : '3px solid transparent',
-                color: activeTab === 'members' ? 'var(--accent)' : 'var(--text)',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                fontWeight: activeTab === 'members' ? 'bold' : 'normal',
-                transition: 'all 0.3s ease',
-              }}
+              className={`px-8 py-4 bg-transparent border-0 cursor-pointer text-base transition-all duration-300 ease ${
+                activeTab === 'members' 
+                  ? 'border-b-[3px] border-accent text-accent font-bold' 
+                  : 'border-b-[3px] border-transparent text-text font-normal'
+              }`}
             >
               執行部情報
             </button>
           </div>
 
-          <div style={{ marginTop: '2rem' }}>
+          <div className="mt-8">
             {activeTab === 'concerts' && (
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                  <h2>演奏会情報の管理</h2>
+                <div className="flex justify-between items-center mb-8">
+                  <h2 className="text-2xl mb-4 text-text-secondary m-0">演奏会情報の管理</h2>
                   {!isEditing && (
                     <button
                       onClick={handleAdd}
-                      style={{
-                        padding: '0.75rem 1.5rem',
-                        background: 'var(--accent)',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '0.9rem',
-                        fontWeight: 'bold',
-                      }}
+                      className="px-6 py-3 bg-accent text-white border-0 rounded cursor-pointer text-sm font-bold transition-opacity duration-fast hover:opacity-90"
                     >
                       + 新規追加
                     </button>
@@ -207,23 +178,17 @@ export default function AdminPage() {
                   />
                 ) : (
                   <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                      <p>現在 {concerts?.length || 0} 件の演奏会が登録されています。</p>
+                    <div className="flex justify-between items-center mb-6">
+                      <p className="text-base leading-loose">現在 {concerts?.length || 0} 件の演奏会が登録されています。</p>
                       <input
                         type="text"
                         placeholder="検索..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        style={{
-                          padding: '0.75rem 1rem',
-                          borderRadius: '8px',
-                          border: '1px solid var(--border)',
-                          fontSize: '1rem',
-                          minWidth: '300px',
-                        }}
+                        className="px-4 py-3 rounded-lg border border-border text-base min-w-[300px] outline-none transition-colors duration-fast focus:border-accent"
                       />
                     </div>
-                    <div style={{ marginTop: '1.5rem' }}>
+                    <div className="mt-6">
                       {(Array.isArray(concerts) ? concerts : [])
                         .filter((concert) => {
                           if (!searchQuery) return true;
@@ -247,66 +212,44 @@ export default function AdminPage() {
                         .map((concert) => (
                         <div
                           key={concert.id}
-                          style={{
-                            padding: '1.5rem',
-                            marginBottom: '1rem',
-                            background: 'var(--background-secondary)',
-                            borderRadius: '8px',
-                            border: '1px solid var(--border)',
-                          }}
+                          className="p-6 mb-4 bg-gray-lightest rounded-lg border border-border"
                         >
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+                          <div className="flex justify-between items-start">
                             <div>
-                              <h3 style={{ margin: '0 0 0.5rem 0' }}>
+                              <h3 className="m-0 mb-2 text-xl font-semibold text-accent">
                                 第{concert.concertNumber}回定期演奏会
                               </h3>
-                              <p style={{ margin: '0.25rem 0', color: 'var(--text-secondary)' }}>
+                              <p className="my-1 text-text-secondary">
                                 {concert.date} @ {concert.venue}
                               </p>
                               {concert.conductor && (
-                                <p style={{ margin: '0.25rem 0', color: 'var(--text-secondary)' }}>
+                                <p className="my-1 text-text-secondary">
                                   指揮: {concert.conductor}
                                 </p>
                               )}
                               {concert.pieces && concert.pieces.length > 0 && (
-                                <div style={{ marginTop: '0.5rem' }}>
-                                  <p style={{ margin: '0.25rem 0', color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+                                <div className="mt-2">
+                                  <p className="my-1 text-text-secondary text-sm font-bold">
                                     曲目:
                                   </p>
                                   {concert.pieces.map((piece: string, idx: number) => (
-                                    <p key={idx} style={{ margin: '0.1rem 0 0.1rem 1rem', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+                                    <p key={idx} className="my-0.5 ml-4 text-text-secondary text-sm">
                                       • {piece}
                                     </p>
                                   ))}
                                 </div>
                               )}
                             </div>
-                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                            <div className="flex gap-2">
                               <button
                                 onClick={() => handleEdit(concert)}
-                                style={{
-                                  padding: '0.5rem 1rem',
-                                  background: 'var(--accent)',
-                                  color: 'white',
-                                  border: 'none',
-                                  borderRadius: '4px',
-                                  cursor: 'pointer',
-                                  fontSize: '0.9rem',
-                                }}
+                                className="px-4 py-2 bg-accent text-white border-0 rounded cursor-pointer text-sm transition-opacity duration-fast hover:opacity-90"
                               >
                                 編集
                               </button>
                               <button
                                 onClick={() => handleDelete(concert.id)}
-                                style={{
-                                  padding: '0.5rem 1rem',
-                                  background: '#dc3545',
-                                  color: 'white',
-                                  border: 'none',
-                                  borderRadius: '4px',
-                                  cursor: 'pointer',
-                                  fontSize: '0.9rem',
-                                }}
+                                className="px-4 py-2 bg-red-600 text-white border-0 rounded cursor-pointer text-sm transition-opacity duration-fast hover:opacity-90"
                               >
                                 削除
                               </button>
@@ -315,7 +258,7 @@ export default function AdminPage() {
                         </div>
                       ))}
                       {concerts.length === 0 && (
-                        <p style={{ color: 'var(--text-secondary)' }}>演奏会がまだ登録されていません。</p>
+                        <p className="text-text-secondary">演奏会がまだ登録されていません。</p>
                       )}
                     </div>
                   </div>
@@ -325,17 +268,9 @@ export default function AdminPage() {
 
             {activeTab === 'members' && (
               <div>
-                <h2>執行部メンバーの管理</h2>
-                <div
-                  style={{
-                    marginTop: '2rem',
-                    padding: '2rem',
-                    background: 'var(--background-secondary)',
-                    borderRadius: '8px',
-                    border: '2px dashed var(--accent)',
-                  }}
-                >
-                  <p>この機能は現在開発中です。</p>
+                <h2 className="text-2xl mb-4 text-text-secondary">執行部メンバーの管理</h2>
+                <div className="mt-8 p-8 bg-gray-lightest rounded-lg border-2 border-dashed border-accent">
+                  <p className="text-base leading-loose">この機能は現在開発中です。</p>
                 </div>
               </div>
             )}
@@ -454,18 +389,13 @@ function ConcertEditForm({
   return (
     <form
       onSubmit={handleSubmit}
-      style={{
-        padding: '2rem',
-        background: 'var(--background-secondary)',
-        borderRadius: '8px',
-        border: '1px solid var(--border)',
-      }}
+      className="p-8 bg-gray-lightest rounded-lg border border-border"
     >
-      <h3>{concert ? '演奏会情報の編集' : '新規演奏会の追加'}</h3>
+      <h3 className="text-2xl mb-4 text-text-secondary">{concert ? '演奏会情報の編集' : '新規演奏会の追加'}</h3>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1.5rem' }}>
+      <div className="grid grid-cols-2 gap-4 mt-6">
         <div>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+          <label className="block mb-2 font-bold text-base">
             演奏会番号 *
           </label>
           <input
@@ -473,18 +403,12 @@ function ConcertEditForm({
             required
             value={formData.concertNumber}
             onChange={(e) => setFormData({ ...formData, concertNumber: parseInt(e.target.value) })}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              borderRadius: '4px',
-              border: '1px solid var(--border)',
-              fontSize: '1rem',
-            }}
+            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
           />
         </div>
 
         <div>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+          <label className="block mb-2 font-bold text-base">
             日付 *
           </label>
           <input
@@ -493,18 +417,12 @@ function ConcertEditForm({
             value={formData.date}
             onChange={(e) => setFormData({ ...formData, date: e.target.value })}
             placeholder="例: 2025年12月21日（日）"
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              borderRadius: '4px',
-              border: '1px solid var(--border)',
-              fontSize: '1rem',
-            }}
+            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
           />
         </div>
 
-        <div style={{ gridColumn: '1 / -1' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+        <div className="col-span-2">
+          <label className="block mb-2 font-bold text-base">
             会場 *
           </label>
           <input
@@ -512,18 +430,12 @@ function ConcertEditForm({
             required
             value={formData.venue}
             onChange={(e) => setFormData({ ...formData, venue: e.target.value })}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              borderRadius: '4px',
-              border: '1px solid var(--border)',
-              fontSize: '1rem',
-            }}
+            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
           />
         </div>
 
         <div>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+          <label className="block mb-2 font-bold text-base">
             指揮者 *
           </label>
           <input
@@ -531,38 +443,26 @@ function ConcertEditForm({
             required
             value={formData.conductor}
             onChange={(e) => setFormData({ ...formData, conductor: e.target.value })}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              borderRadius: '4px',
-              border: '1px solid var(--border)',
-              fontSize: '1rem',
-            }}
+            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
           />
         </div>
 
         <div>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+          <label className="block mb-2 font-bold text-base">
             ステータス
           </label>
           <select
             value={formData.status}
             onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              borderRadius: '4px',
-              border: '1px solid var(--border)',
-              fontSize: '1rem',
-            }}
+            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
           >
             <option value="completed">開催済み</option>
             <option value="upcoming">開催予定</option>
           </select>
         </div>
 
-        <div style={{ gridColumn: '1 / -1' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+        <div className="col-span-2">
+          <label className="block mb-2 font-bold text-base">
             チケット販売URL
           </label>
           <input
@@ -570,94 +470,54 @@ function ConcertEditForm({
             value={formData.ticketUrl}
             onChange={(e) => setFormData({ ...formData, ticketUrl: e.target.value })}
             placeholder="https://teket.jp/..."
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              borderRadius: '4px',
-              border: '1px solid var(--border)',
-              fontSize: '1rem',
-            }}
+            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
           />
         </div>
 
-        <div style={{ gridColumn: '1 / -1' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+        <div className="col-span-2">
+          <label className="block mb-2 font-bold text-base">
             合唱団
           </label>
           <input
             type="text"
             value={formData.chorus}
             onChange={(e) => setFormData({ ...formData, chorus: e.target.value })}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              borderRadius: '4px',
-              border: '1px solid var(--border)',
-              fontSize: '1rem',
-            }}
+            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
           />
         </div>
 
-        <div style={{ gridColumn: '1 / -1', marginBottom: '1rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <label style={{ fontWeight: 'bold' }}>ソリスト</label>
+        <div className="col-span-2 mb-4">
+          <div className="flex justify-between items-center mb-2">
+            <label className="font-bold text-base">ソリスト</label>
             <button
               type="button"
               onClick={handleAddSoloist}
-              style={{
-                padding: '0.5rem 1rem',
-                background: 'var(--accent)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '0.9rem',
-              }}
+              className="px-4 py-2 bg-accent text-white border-0 rounded cursor-pointer text-sm transition-opacity duration-fast hover:opacity-90"
             >
               + 追加
             </button>
           </div>
           {soloists.map((soloist, index) => (
-            <div key={index} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', alignItems: 'start' }}>
+            <div key={index} className="flex gap-2 mb-2 items-start">
               <input
                 type="text"
                 value={soloist.name}
                 onChange={(e) => handleSoloistChange(index, 'name', e.target.value)}
                 placeholder="名前"
-                style={{
-                  flex: 1,
-                  padding: '0.75rem',
-                  borderRadius: '4px',
-                  border: '1px solid var(--border)',
-                  fontSize: '1rem',
-                }}
+                className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
               />
               <input
                 type="text"
                 value={soloist.instrument}
                 onChange={(e) => handleSoloistChange(index, 'instrument', e.target.value)}
                 placeholder="楽器（例: チェロ、オルガン）"
-                style={{
-                  flex: 1,
-                  padding: '0.75rem',
-                  borderRadius: '4px',
-                  border: '1px solid var(--border)',
-                  fontSize: '1rem',
-                }}
+                className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
               />
               {soloists.length > 1 && (
                 <button
                   type="button"
                   onClick={() => handleRemoveSoloist(index)}
-                  style={{
-                    padding: '0.75rem 1rem',
-                    background: '#dc3545',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '1rem',
-                  }}
+                  className="px-4 py-3 bg-red-600 text-white border-0 rounded cursor-pointer text-base transition-opacity duration-fast hover:opacity-90"
                 >
                   削除
                 </button>
@@ -666,21 +526,15 @@ function ConcertEditForm({
           ))}
         </div>
 
-        <div style={{ gridColumn: '1 / -1', marginTop: '1rem', marginBottom: '1rem' }}>
+        <div className="col-span-2 mt-4 mb-4">
           <button
             type="button"
             onClick={() => setShowSingers(!showSingers)}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              background: showSingers ? '#e9ecef' : 'var(--accent)',
-              color: showSingers ? 'var(--text)' : 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-            }}
+            className={`w-full p-3 border-0 rounded cursor-pointer text-base font-bold transition-colors duration-fast ${
+              showSingers 
+                ? 'bg-gray-lighter text-text' 
+                : 'bg-accent text-white hover:bg-accent-dark'
+            }`}
           >
             {showSingers ? '独唱者セクションを閉じる ↑' : '独唱者を追加 ↓'}
           </button>
@@ -688,318 +542,195 @@ function ConcertEditForm({
 
         {showSingers && (
           <>
-            <div style={{ gridColumn: '1 / -1', marginBottom: '1rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                <label style={{ fontWeight: 'bold' }}>ソプラノ</label>
-            <button
-              type="button"
-              onClick={sopranoHandlers.add}
-              style={{
-                padding: '0.5rem 1rem',
-                background: 'var(--accent)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '0.9rem',
-              }}
-            >
-              + 追加
-            </button>
-          </div>
-          {sopranos.map((soprano, index) => (
-            <div key={index} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', alignItems: 'start' }}>
-              <input
-                type="text"
-                value={soprano}
-                onChange={(e) => sopranoHandlers.change(index, e.target.value)}
-                placeholder="名前を入力"
-                style={{
-                  flex: 1,
-                  padding: '0.75rem',
-                  borderRadius: '4px',
-                  border: '1px solid var(--border)',
-                  fontSize: '1rem',
-                }}
-              />
-              {sopranos.length > 1 && (
+            <div className="col-span-2 mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <label className="font-bold text-base">ソプラノ</label>
                 <button
                   type="button"
-                  onClick={() => sopranoHandlers.remove(index)}
-                  style={{
-                    padding: '0.75rem 1rem',
-                    background: '#dc3545',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '1rem',
-                  }}
+                  onClick={sopranoHandlers.add}
+                  className="px-4 py-2 bg-accent text-white border-0 rounded cursor-pointer text-sm transition-opacity duration-fast hover:opacity-90"
                 >
-                  削除
+                  + 追加
                 </button>
-              )}
+              </div>
+              {sopranos.map((soprano, index) => (
+                <div key={index} className="flex gap-2 mb-2 items-start">
+                  <input
+                    type="text"
+                    value={soprano}
+                    onChange={(e) => sopranoHandlers.change(index, e.target.value)}
+                    placeholder="名前を入力"
+                    className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                  />
+                  {sopranos.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => sopranoHandlers.remove(index)}
+                      className="px-4 py-3 bg-red-600 text-white border-0 rounded cursor-pointer text-base transition-opacity duration-fast hover:opacity-90"
+                    >
+                      削除
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div style={{ gridColumn: '1 / -1', marginBottom: '1rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <label style={{ fontWeight: 'bold' }}>メゾソプラノ</label>
-            <button
-              type="button"
-              onClick={mezzoSopranoHandlers.add}
-              style={{
-                padding: '0.5rem 1rem',
-                background: 'var(--accent)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '0.9rem',
-              }}
-            >
-              + 追加
-            </button>
-          </div>
-          {mezzoSopranos.map((mezzoSoprano, index) => (
-            <div key={index} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', alignItems: 'start' }}>
-              <input
-                type="text"
-                value={mezzoSoprano}
-                onChange={(e) => mezzoSopranoHandlers.change(index, e.target.value)}
-                placeholder="名前を入力"
-                style={{
-                  flex: 1,
-                  padding: '0.75rem',
-                  borderRadius: '4px',
-                  border: '1px solid var(--border)',
-                  fontSize: '1rem',
-                }}
-              />
-              {mezzoSopranos.length > 1 && (
+            <div className="col-span-2 mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <label className="font-bold text-base">メゾソプラノ</label>
                 <button
                   type="button"
-                  onClick={() => mezzoSopranoHandlers.remove(index)}
-                  style={{
-                    padding: '0.75rem 1rem',
-                    background: '#dc3545',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '1rem',
-                  }}
+                  onClick={mezzoSopranoHandlers.add}
+                  className="px-4 py-2 bg-accent text-white border-0 rounded cursor-pointer text-sm transition-opacity duration-fast hover:opacity-90"
                 >
-                  削除
+                  + 追加
                 </button>
-              )}
+              </div>
+              {mezzoSopranos.map((mezzoSoprano, index) => (
+                <div key={index} className="flex gap-2 mb-2 items-start">
+                  <input
+                    type="text"
+                    value={mezzoSoprano}
+                    onChange={(e) => mezzoSopranoHandlers.change(index, e.target.value)}
+                    placeholder="名前を入力"
+                    className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                  />
+                  {mezzoSopranos.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => mezzoSopranoHandlers.remove(index)}
+                      className="px-4 py-3 bg-red-600 text-white border-0 rounded cursor-pointer text-base transition-opacity duration-fast hover:opacity-90"
+                    >
+                      削除
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div style={{ gridColumn: '1 / -1', marginBottom: '1rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <label style={{ fontWeight: 'bold' }}>アルト</label>
-            <button
-              type="button"
-              onClick={altoHandlers.add}
-              style={{
-                padding: '0.5rem 1rem',
-                background: 'var(--accent)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '0.9rem',
-              }}
-            >
-              + 追加
-            </button>
-          </div>
-          {altos.map((alto, index) => (
-            <div key={index} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', alignItems: 'start' }}>
-              <input
-                type="text"
-                value={alto}
-                onChange={(e) => altoHandlers.change(index, e.target.value)}
-                placeholder="名前を入力"
-                style={{
-                  flex: 1,
-                  padding: '0.75rem',
-                  borderRadius: '4px',
-                  border: '1px solid var(--border)',
-                  fontSize: '1rem',
-                }}
-              />
-              {altos.length > 1 && (
+            <div className="col-span-2 mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <label className="font-bold text-base">アルト</label>
                 <button
                   type="button"
-                  onClick={() => altoHandlers.remove(index)}
-                  style={{
-                    padding: '0.75rem 1rem',
-                    background: '#dc3545',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '1rem',
-                  }}
+                  onClick={altoHandlers.add}
+                  className="px-4 py-2 bg-accent text-white border-0 rounded cursor-pointer text-sm transition-opacity duration-fast hover:opacity-90"
                 >
-                  削除
+                  + 追加
                 </button>
-              )}
+              </div>
+              {altos.map((alto, index) => (
+                <div key={index} className="flex gap-2 mb-2 items-start">
+                  <input
+                    type="text"
+                    value={alto}
+                    onChange={(e) => altoHandlers.change(index, e.target.value)}
+                    placeholder="名前を入力"
+                    className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                  />
+                  {altos.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => altoHandlers.remove(index)}
+                      className="px-4 py-3 bg-red-600 text-white border-0 rounded cursor-pointer text-base transition-opacity duration-fast hover:opacity-90"
+                    >
+                      削除
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div style={{ gridColumn: '1 / -1', marginBottom: '1rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <label style={{ fontWeight: 'bold' }}>テノール</label>
-            <button
-              type="button"
-              onClick={tenorHandlers.add}
-              style={{
-                padding: '0.5rem 1rem',
-                background: 'var(--accent)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '0.9rem',
-              }}
-            >
-              + 追加
-            </button>
-          </div>
-          {tenors.map((tenor, index) => (
-            <div key={index} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', alignItems: 'start' }}>
-              <input
-                type="text"
-                value={tenor}
-                onChange={(e) => tenorHandlers.change(index, e.target.value)}
-                placeholder="名前を入力"
-                style={{
-                  flex: 1,
-                  padding: '0.75rem',
-                  borderRadius: '4px',
-                  border: '1px solid var(--border)',
-                  fontSize: '1rem',
-                }}
-              />
-              {tenors.length > 1 && (
+            <div className="col-span-2 mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <label className="font-bold text-base">テノール</label>
                 <button
                   type="button"
-                  onClick={() => tenorHandlers.remove(index)}
-                  style={{
-                    padding: '0.75rem 1rem',
-                    background: '#dc3545',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '1rem',
-                  }}
+                  onClick={tenorHandlers.add}
+                  className="px-4 py-2 bg-accent text-white border-0 rounded cursor-pointer text-sm transition-opacity duration-fast hover:opacity-90"
                 >
-                  削除
+                  + 追加
                 </button>
-              )}
+              </div>
+              {tenors.map((tenor, index) => (
+                <div key={index} className="flex gap-2 mb-2 items-start">
+                  <input
+                    type="text"
+                    value={tenor}
+                    onChange={(e) => tenorHandlers.change(index, e.target.value)}
+                    placeholder="名前を入力"
+                    className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                  />
+                  {tenors.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => tenorHandlers.remove(index)}
+                      className="px-4 py-3 bg-red-600 text-white border-0 rounded cursor-pointer text-base transition-opacity duration-fast hover:opacity-90"
+                    >
+                      削除
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div style={{ gridColumn: '1 / -1', marginBottom: '1rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <label style={{ fontWeight: 'bold' }}>バスバリトン</label>
-            <button
-              type="button"
-              onClick={bassBaritoneHandlers.add}
-              style={{
-                padding: '0.5rem 1rem',
-                background: 'var(--accent)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '0.9rem',
-              }}
-            >
-              + 追加
-            </button>
-          </div>
-          {bassBaritones.map((bassBaritone, index) => (
-            <div key={index} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', alignItems: 'start' }}>
-              <input
-                type="text"
-                value={bassBaritone}
-                onChange={(e) => bassBaritoneHandlers.change(index, e.target.value)}
-                placeholder="名前を入力"
-                style={{
-                  flex: 1,
-                  padding: '0.75rem',
-                  borderRadius: '4px',
-                  border: '1px solid var(--border)',
-                  fontSize: '1rem',
-                }}
-              />
-              {bassBaritones.length > 1 && (
+            <div className="col-span-2 mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <label className="font-bold text-base">バスバリトン</label>
                 <button
                   type="button"
-                  onClick={() => bassBaritoneHandlers.remove(index)}
-                  style={{
-                    padding: '0.75rem 1rem',
-                    background: '#dc3545',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '1rem',
-                  }}
+                  onClick={bassBaritoneHandlers.add}
+                  className="px-4 py-2 bg-accent text-white border-0 rounded cursor-pointer text-sm transition-opacity duration-fast hover:opacity-90"
                 >
-                  削除
+                  + 追加
                 </button>
-              )}
+              </div>
+              {bassBaritones.map((bassBaritone, index) => (
+                <div key={index} className="flex gap-2 mb-2 items-start">
+                  <input
+                    type="text"
+                    value={bassBaritone}
+                    onChange={(e) => bassBaritoneHandlers.change(index, e.target.value)}
+                    placeholder="名前を入力"
+                    className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                  />
+                  {bassBaritones.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => bassBaritoneHandlers.remove(index)}
+                      className="px-4 py-3 bg-red-600 text-white border-0 rounded cursor-pointer text-base transition-opacity duration-fast hover:opacity-90"
+                    >
+                      削除
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
           </>
         )}
 
-        <div style={{ gridColumn: '1 / -1' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+        <div className="col-span-2">
+          <label className="block mb-2 font-bold text-base">
             曲目 (改行区切り)
           </label>
           <textarea
             value={formData.pieces}
             onChange={(e) => setFormData({ ...formData, pieces: e.target.value })}
             rows={5}
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              borderRadius: '4px',
-              border: '1px solid var(--border)',
-              fontSize: '1rem',
-              fontFamily: 'inherit',
-            }}
+            className="w-full p-3 rounded border border-border text-base font-sans outline-none transition-colors duration-fast focus:border-accent resize-y"
           />
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+      <div className="flex gap-4 mt-8">
         <button
           type="submit"
           disabled={saving}
-          style={{
-            padding: '0.75rem 2rem',
-            background: saving ? '#ccc' : 'var(--accent)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: saving ? 'not-allowed' : 'pointer',
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            opacity: saving ? 0.6 : 1,
-          }}
+          className={`px-8 py-3 text-white border-0 rounded cursor-pointer text-base font-bold transition-opacity duration-fast ${
+            saving 
+              ? 'bg-gray-400 cursor-not-allowed opacity-60' 
+              : 'bg-accent hover:opacity-90'
+          }`}
         >
           {saving ? '保存中...' : '保存'}
         </button>
@@ -1007,16 +738,11 @@ function ConcertEditForm({
           type="button"
           onClick={onCancel}
           disabled={saving}
-          style={{
-            padding: '0.75rem 2rem',
-            background: 'transparent',
-            color: 'var(--text)',
-            border: '1px solid var(--border)',
-            borderRadius: '4px',
-            cursor: saving ? 'not-allowed' : 'pointer',
-            opacity: saving ? 0.6 : 1,
-            fontSize: '1rem',
-          }}
+          className={`px-8 py-3 bg-transparent text-text border border-border rounded transition-opacity duration-fast text-base ${
+            saving 
+              ? 'cursor-not-allowed opacity-60' 
+              : 'cursor-pointer hover:border-accent hover:text-accent'
+          }`}
         >
           キャンセル
         </button>

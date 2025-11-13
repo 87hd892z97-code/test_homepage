@@ -10,17 +10,17 @@ import { adaptDbConcertToFrontend } from '../lib/concertAdapter';
 // カード専用のスケルトンコンポーネント
 function ConcertCardSkeleton() {
   return (
-    <div className="concert-card">
-      <div className="concert-image">
-        <div className="skeleton-image" style={{ width: '100%', height: '250px', backgroundColor: '#e9ecef', borderRadius: '8px' }}></div>
+    <div className="bg-gradient-to-br from-gray-light to-gray-lighter border-0 rounded-xl shadow-[0_4px_20px_rgba(43,108,176,0.1)] overflow-hidden transition-transform duration-slow ease flex flex-col hover:-translate-y-[5px] hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)]">
+      <div className="relative w-full h-[250px] overflow-hidden">
+        <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer"></div>
       </div>
-      <div className="concert-content">
-        <div className="skeleton-line" style={{ height: '24px', width: '80%', marginBottom: '8px', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
-        <div className="skeleton-line" style={{ height: '20px', width: '60%', marginBottom: '16px', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
-        <div className="skeleton-line" style={{ height: '16px', width: '100%', marginBottom: '8px', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
-        <div className="skeleton-line" style={{ height: '16px', width: '90%', marginBottom: '8px', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
-        <div className="skeleton-line" style={{ height: '16px', width: '70%', marginBottom: '16px', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
-        <div className="skeleton-line" style={{ height: '40px', width: '100%', backgroundColor: '#e9ecef', borderRadius: '8px' }}></div>
+      <div className="p-6 bg-white flex flex-col flex-1">
+        <div className="h-6 w-4/5 mb-2 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div>
+        <div className="h-5 w-3/5 mb-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div>
+        <div className="h-4 w-full mb-2 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div>
+        <div className="h-4 w-[90%] mb-2 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div>
+        <div className="h-4 w-[70%] mb-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div>
+        <div className="h-10 w-full bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded-lg"></div>
       </div>
     </div>
   );
@@ -30,82 +30,102 @@ function ConcertCardSkeleton() {
 function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: boolean }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // 画像の読み込みを待つ
   const concertNumber = concert.title.match(/第(\d+)回/)?.[1] || '';
-  let imageSrc = getConcertImagePath(`第${concertNumber}回`, undefined, concert.subtitle) || "/RegularConcertPoster/ynuorch-icon.jpg";
+  const imageSrc = getConcertImagePath(`第${concertNumber}回`, undefined, concert.subtitle) || "/RegularConcertPoster/ynuorch-icon.jpg";
 
-  return (
-    <div className="concert-card">
-      <div className="concert-image">
-        <Image
-          src={imageSrc}
-          alt={concert.venue}
-          width={400}
-          height={250}
-          className="concert-img"
-          priority={concert.id === 1} // 最初のカードは優先読み込み
-        />
-        <div className={`concert-status ${isUpcoming ? 'upcoming' : 'completed'}`}>
-          {isUpcoming ? '開催予定' : '開催済み'}
-        </div>
+  const Poster = (
+    <div className="relative h-full w-full">
+      <Image
+        src={imageSrc}
+        alt={concert.venue}
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-slow ease md:group-hover:scale-105"
+        priority={concert.id === 1}
+      />
+      <div className={`absolute top-2 right-2 px-4 py-2 rounded-xl text-sm font-semibold text-white z-10 ${
+        isUpcoming ? 'bg-accent' : 'bg-text-tertiary'
+      }`}>
+        {isUpcoming ? '開催予定' : '開催済み'}
       </div>
-      <div className="concert-content">
-        <h3 className="concert-title">{concert.title}</h3>
-        <p className="concert-subtitle">{concert.subtitle}</p>
-        <div className={`concert-details ${isExpanded ? 'expanded' : ''}`}>
-          <div className="detail-item">
-            <span className="detail-label">日時</span>
-            <span className="detail-value">{concert.date} {concert.time || ''}</span>
-          </div>
-          <div className="detail-item">
-            <span className="detail-label">会場</span>
-            <span className="detail-value">{concert.venue}</span>
-          </div>
-          <div className="detail-item">
-            <span className="detail-label">指揮</span>
-            <span className="detail-value">{concert.conductor}</span>
-          </div>
-          {concert.price && (
-            <div className="detail-item">
-              <span className="detail-label">料金</span>
-              <span className="detail-value">{concert.price}</span>
-            </div>
-          )}
+    </div>
+  );
+
+  const Text = (
+    <div className="h-full w-full bg-white/95 flex flex-col p-6 overflow-y-auto">
+      <h3 className="text-2xl text-accent m-0 mb-2 font-bold">{concert.title}</h3>
+      <p className="text-lg text-muted m-0 mb-4 font-medium">{concert.subtitle}</p>
+      <div className="space-y-3 text-sm text-text-secondary">
+        <div className="flex justify-between items-start border-b border-border-lighter pb-2">
+          <span className="font-semibold min-w-[60px]">日時</span>
+          <span className="text-muted text-right">{concert.date} {concert.time || ''}</span>
         </div>
-        <div className="concert-pieces">
-          {concert.pieces && concert.pieces.length > 0 ? (
-            concert.pieces.map((piece: string, index: number) => (
-              <p
-                key={index}
-                className={index === 0 ? 'concert-piece concert-piece-main' : 'concert-piece'}
-              >
-                {piece}
-              </p>
-            ))
-          ) : (
-            <p className="concert-description">{concert.description}</p>
-          )}
+        <div className="flex justify-between items-start border-b border-border-lighter pb-2">
+          <span className="font-semibold min-w-[60px]">会場</span>
+          <span className="text-muted text-right">{concert.venue}</span>
         </div>
-        {isUpcoming && concert.ticketUrl && (
-          <div className="concert-actions">
-            <a
-              href={concert.ticketUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-            >
-              チケット購入
-            </a>
+        <div className="flex justify-between items-start border-b border-border-lighter pb-2">
+          <span className="font-semibold min-w-[60px]">指揮</span>
+          <span className="text-muted text-right">{concert.conductor}</span>
+        </div>
+        {concert.price && (
+          <div className="flex justify-between items-start border-b border-border-lighter pb-2">
+            <span className="font-semibold min-w-[60px]">料金</span>
+            <span className="text-muted text-right">{concert.price}</span>
           </div>
         )}
-        <button
-          className="mobile-expand-button"
-          onClick={() => setIsExpanded(!isExpanded)}
-          aria-expanded={isExpanded}
-        >
-          {isExpanded ? '詳細を閉じる' : '詳細を見る'}
-        </button>
       </div>
+      <div className="mt-4 space-y-2 text-sm text-muted leading-relaxed">
+        {concert.pieces && concert.pieces.length > 0 ? (
+          concert.pieces.map((piece: string, index: number) => (
+            <p key={index} className={index === 0 ? 'font-medium text-link-blue' : ''}>
+              {piece}
+            </p>
+          ))
+        ) : (
+          <p>{concert.description}</p>
+        )}
+      </div>
+      {isUpcoming && concert.ticketUrl && (
+        <div className="mt-auto pt-4">
+          <a
+            href={concert.ticketUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-accent text-white px-8 py-3 rounded-lg no-underline font-semibold transition-all duration-300 ease hover:bg-accent-dark hover:-translate-y-0.5"
+          >
+            チケット購入
+          </a>
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="group bg-gradient-to-br from-gray-light to-gray-lighter border-0 rounded-xl shadow-[0_4px_20px_rgba(43,108,176,0.1)] transition-transform duration-slow ease md:hover:-translate-y-[5px] md:hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] flex flex-col">
+      <div className="relative w-full aspect-[210/297] overflow-hidden rounded-xl">
+        {/* Mobile toggle */}
+        <div className="h-full w-full md:hidden">
+          {isExpanded ? Text : Poster}
+        </div>
+        {/* Desktop hover */}
+        <div className="hidden md:block h-full w-full">
+          <div className="absolute inset-0 transition-opacity duration-300 ease md:group-hover:opacity-0 md:group-hover:pointer-events-none">
+            {Poster}
+          </div>
+          <div className="absolute inset-0 transition-opacity duration-300 ease opacity-0 pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto">
+            {Text}
+          </div>
+        </div>
+      </div>
+      {/* 詳細ボタン - モバイルのみ表示 */}
+      <button
+        className="hidden max-mobile:block mt-3 w-full p-3 bg-accent text-white border-0 rounded-xl text-sm cursor-pointer transition-colors duration-fast hover:bg-accent-darker"
+        onClick={() => setIsExpanded(!isExpanded)}
+        aria-expanded={isExpanded}
+      >
+        {isExpanded ? 'ポスターを見る' : '詳細を見る'}
+      </button>
     </div>
   );
 }
@@ -265,58 +285,66 @@ export default function ConcertsPage() {
 
   if (loading) {
     return (
-      <div className="container page-content">
+      <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
         <Skeleton />
       </div>
     );
   }
 
   return (
-    <div className="container page-content">
-      <h1>演奏会情報</h1>
+    <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8">
+      <h1 className="text-4xl text-accent mb-8 pb-2 border-b border-accent">演奏会情報</h1>
 
-      <section className="upcoming-concerts">
-        <h2>今後の演奏会</h2>
-        <div className="concerts-grid">
+      <section className="mb-12">
+        <h2 className="text-2xl mb-4 text-text-secondary">今後の演奏会</h2>
+        <div className="grid grid-cols-2 gap-8 mb-12 max-mobile:grid-cols-1 max-mobile:gap-6">
           {upcomingConcertList.length > 0 ? (
             upcomingConcertList.map((concert) => (
               <ConcertCard key={concert.id} concert={concert} isUpcoming={true} />
             ))
           ) : (
-            <p>今後の演奏会予定はありません。</p>
+            <p className="text-muted">今後の演奏会予定はありません。</p>
           )}
         </div>
       </section>
 
-      <section className="past-concerts">
-        <div className="past-concerts-header-wrapper">
-          <h2>過去の演奏会</h2>
-          <Link href="/concerts/past" className="btn-secondary past-concerts-link">
+      <section className="mb-12">
+        <div className="flex justify-between items-center mb-6 max-mobile:flex-col max-mobile:items-start max-mobile:gap-4">
+          <h2 className="text-2xl mb-4 text-text-secondary m-0">過去の演奏会</h2>
+          <Link 
+            href="/concerts/past" 
+            className="text-sm px-5 py-2.5 rounded-sm transition-all duration-300 ease no-underline whitespace-nowrap bg-white text-accent border border-accent hover:bg-accent hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_8px_rgba(43,108,176,0.2)] max-mobile:w-full max-mobile:text-center"
+          >
             過去の演奏会一覧を見る →
           </Link>
         </div>
-        <div className="concerts-grid">
+        <div className="grid grid-cols-2 gap-8 mb-12 max-mobile:grid-cols-1 max-mobile:gap-6">
           {pastConcertList.length > 0 ? (
             pastConcertList.map((concert) => (
               <ConcertCard key={concert.id} concert={concert} isUpcoming={false} />
             ))
           ) : (
-            <p>過去の演奏会情報はありません。</p>
+            <p className="text-muted">過去の演奏会情報はありません。</p>
           )}
         </div>
       </section>
 
-      <section className="concert-info">
-        <h2>演奏会について</h2>
-        <div className="info-grid">
-          <div className="info-card">
-            <h3>チケット予約</h3>
-            <p>演奏会のチケットは事前予約制です。お問い合わせページからご連絡ください。</p>
-            <Link href="/contact" className="btn-secondary">お問い合わせ</Link>
+      <section className="mt-16">
+        <h2 className="text-2xl mb-4 text-text-secondary">演奏会について</h2>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8 mt-8 max-mobile:grid-cols-1 max-mobile:gap-6">
+          <div className="bg-white p-8 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.1)] text-center max-mobile:p-6">
+            <h3 className="text-accent mb-4 text-2xl max-mobile:text-lg">チケット予約</h3>
+            <p className="text-muted leading-relaxed mb-6 max-mobile:text-sm">演奏会のチケットは事前予約制です。お問い合わせページからご連絡ください。</p>
+            <Link 
+              href="/contact" 
+              className="inline-block bg-transparent text-accent border border-accent px-6 py-2.5 rounded-lg no-underline font-normal transition-all duration-300 ease hover:bg-accent hover:text-white hover:-translate-y-0.5"
+            >
+              お問い合わせ
+            </Link>
           </div>
-          <div className="info-card">
-            <h3>会場アクセス</h3>
-            <p>各会場へのアクセス方法や駐車場情報は、演奏会案内でご確認ください。</p>
+          <div className="bg-white p-8 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.1)] text-center max-mobile:p-6">
+            <h3 className="text-accent mb-4 text-2xl max-mobile:text-lg">会場アクセス</h3>
+            <p className="text-muted leading-relaxed mb-6 max-mobile:text-sm">各会場へのアクセス方法や駐車場情報は、演奏会案内でご確認ください。</p>
           </div>
         </div>
       </section>

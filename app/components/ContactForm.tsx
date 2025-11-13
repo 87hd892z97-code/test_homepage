@@ -74,47 +74,63 @@ export default function ContactForm() {
   };
 
   return (
-    <form className="contact-form" onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label>
+    <form className="grid gap-2 mt-2 max-mobile:max-w-full" onSubmit={handleSubmit}>
+      <div className="mb-4">
+        <label className="flex flex-col text-sm text-muted">
           お名前
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={errors.name ? 'error' : ''}
+            className={`p-2 border rounded-sm mt-1 text-base max-mobile:p-3 max-[480px]:text-base ${
+              errors.name 
+                ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                : 'border-border focus:border-accent focus:ring-2 focus:ring-accent/30'
+            } outline-none transition-colors duration-fast`}
           />
         </label>
-        {errors.name && <span className="error-message">{errors.name}</span>}
+        {errors.name && <span className="text-red-500 text-xs mt-1 block">{errors.name}</span>}
       </div>
 
-      <div className="form-group">
-        <label>
+      <div className="mb-4">
+        <label className="flex flex-col text-sm text-muted">
           メールアドレス
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={errors.email ? 'error' : ''}
+            className={`p-2 border rounded-sm mt-1 text-base max-mobile:p-3 max-[480px]:text-base ${
+              errors.email 
+                ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                : 'border-border focus:border-accent focus:ring-2 focus:ring-accent/30'
+            } outline-none transition-colors duration-fast`}
           />
         </label>
-        {errors.email && <span className="error-message">{errors.email}</span>}
+        {errors.email && <span className="text-red-500 text-xs mt-1 block">{errors.email}</span>}
       </div>
 
-      <div className="form-group">
-        <label>
+      <div className="mb-4">
+        <label className="flex flex-col text-sm text-muted">
           メッセージ
           <textarea
             rows={4}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className={errors.message ? 'error' : ''}
+            className={`p-2 border rounded-sm mt-1 text-base max-mobile:p-3 max-[480px]:text-base ${
+              errors.message 
+                ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                : 'border-border focus:border-accent focus:ring-2 focus:ring-accent/30'
+            } outline-none transition-colors duration-fast resize-y`}
           />
         </label>
-        {errors.message && <span className="error-message">{errors.message}</span>}
+        {errors.message && <span className="text-red-500 text-xs mt-1 block">{errors.message}</span>}
       </div>
 
-      <button type="submit" disabled={submitting}>
+      <button 
+        type="submit" 
+        disabled={submitting}
+        className="w-[140px] max-mobile:w-full p-2.5 max-mobile:p-3 bg-accent text-white border-0 rounded-sm cursor-pointer transition-opacity duration-fast hover:opacity-95 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
         {submitting ? '送信中...' : '送信する'}
       </button>
     </form>

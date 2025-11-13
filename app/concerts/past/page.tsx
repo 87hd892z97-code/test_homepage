@@ -85,85 +85,99 @@ function PastConcertCard({ concert, date, venue, conductor, pieces, cancelled, c
   const imagePath = getConcertImagePath(concert, pieces, undefined);
   
   return (
-    <div className={`past-concert-card ${cancelled ? 'cancelled' : ''}`}>
-      <div className="past-concert-header">
-        <h3 className="past-concert-title">{concert}定期演奏会 {cancelled && '(中止)'}</h3>
+    <div className={`bg-card rounded-lg p-6 shadow-sm transition-shadow duration-slow ease flex-1 flex flex-col h-full hover:shadow-lg max-mobile:p-5 max-[480px]:p-4 ${
+      cancelled ? 'opacity-60 relative' : ''
+    }`}>
+      {cancelled && (
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 0, 0, 0.03) 10px, rgba(0, 0, 0, 0.03) 20px)'
+          }}
+        />
+      )}
+      <div className="border-b border-border-lighter pb-3 mb-4">
+        <h3 className="text-2xl font-medium text-accent m-0 max-mobile:text-lg max-[480px]:text-base" style={{ letterSpacing: '-0.01em' }}>
+          {concert}定期演奏会 {cancelled && '(中止)'}
+        </h3>
       </div>
       {imagePath && (
         <div 
-          className="past-concert-image-wrapper"
+          className="relative w-full h-[200px] mb-4 overflow-hidden rounded-lg cursor-pointer"
           onClick={() => onImageClick?.(imagePath)}
-          style={{ cursor: 'pointer' }}
         >
           <Image
             src={imagePath}
             alt={`${concert}定期演奏会の画像`}
             width={400}
             height={300}
-            className="past-concert-image"
+            className="w-full h-full object-cover transition-transform duration-slow ease hover:scale-105"
             loading="lazy"
           />
-          <div className="past-concert-image-overlay">
-            <span>画像をクリック</span>
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 transition-opacity duration-slow ease hover:opacity-100">
+            <span className="text-white text-sm font-medium">画像をクリック</span>
           </div>
         </div>
       )}
-      <div className="past-concert-body">
-        <div className="past-concert-info">
-          <p className="past-concert-date">{date}</p>
-          <p className="past-concert-venue">{venue}</p>
+      <div className="flex flex-col gap-4 flex-1">
+        <div className="flex flex-col gap-2">
+          <p className="font-medium text-text-secondary text-base m-0 max-mobile:text-sm">{date}</p>
+          <p className="text-muted text-sm m-0 max-mobile:text-sm">{venue}</p>
           {conductor && (
-            <p className="past-concert-conductor">指揮：{conductor}</p>
+            <p className="text-accent text-sm font-medium m-0">指揮：{conductor}</p>
           )}
           {chorus && (
-            <p className="past-concert-choir">合唱：{chorus}</p>
+            <p className="text-accent text-sm font-medium m-0">合唱：{chorus}</p>
           )}
           {soprano && (
-            <p className="past-concert-soprano">ソプラノ：{soprano}</p>
+            <p className="text-accent text-sm font-medium m-0">ソプラノ：{soprano}</p>
           )}
           {soprano2 && (
-            <p className="past-concert-soprano">ソプラノ：{soprano2}</p>
+            <p className="text-accent text-sm font-medium m-0">ソプラノ：{soprano2}</p>
           )}
           {mezzoSoprano && (
-            <p className="past-concert-mezzo-soprano">メゾソプラノ：{mezzoSoprano}</p>
+            <p className="text-accent text-sm font-medium m-0">メゾソプラノ：{mezzoSoprano}</p>
           )}
           {alto && (
-            <p className="past-concert-alto">アルト：{alto}</p>
+            <p className="text-accent text-sm font-medium m-0">アルト：{alto}</p>
           )}
           {tenor && (
-            <p className="past-concert-tenor">テノール：{tenor}</p>
+            <p className="text-accent text-sm font-medium m-0">テノール：{tenor}</p>
           )}
           {bassBaritone && (
-            <p className="past-concert-bass-baritone">バス・バリトン：{bassBaritone}</p>
+            <p className="text-accent text-sm font-medium m-0">バス・バリトン：{bassBaritone}</p>
           )}
           {soloist && (
-            <div className="past-concert-soloist">
+            <div className="m-0">
               {(() => {
                 // soloistに既に楽器名が含まれている場合はそのまま表示
                 if (soloist.includes('、') || soloist.includes('独奏：') || soloist.includes('：')) {
                   return soloist.split('、').map((item, index) => (
-                    <div key={index}>{item}</div>
+                    <div key={index} className="text-accent text-sm font-medium m-0">{item}</div>
                   ));
                 }
                 
                 const instrument = getInstrumentFromPieces(pieces);
                 if (instrument) {
                   if (instrument === 'オルガン') {
-                    return <div>オルガン：{soloist}</div>;
+                    return <div className="text-accent text-sm font-medium m-0">オルガン：{soloist}</div>;
                   }
-                  return <div>{instrument}独奏：{soloist}</div>;
+                  return <div className="text-accent text-sm font-medium m-0">{instrument}独奏：{soloist}</div>;
                 }
-                return <div>独奏：{soloist}</div>;
+                return <div className="text-accent text-sm font-medium m-0">独奏：{soloist}</div>;
               })()}
             </div>
           )}
         </div>
         {pieces && pieces.length > 0 && (
-          <div className="past-concert-pieces">
-            <p className="past-concert-pieces-label">曲目：</p>
-            <ul className="past-concert-pieces-list">
+          <div className="mt-2">
+            <p className="font-medium mb-2 text-text-secondary text-sm">曲目：</p>
+            <ul className="list-none p-0 m-0">
               {sortPieces(pieces).map((piece, index) => (
-                <li key={`${piece}-${index}`} className="past-concert-piece">{piece}</li>
+                <li key={`${piece}-${index}`} className="text-muted text-sm leading-loose pl-0 relative max-mobile:text-xs" style={{ paddingLeft: '0' }}>
+                  <span className="absolute -left-3">・</span>
+                  {piece}
+                </li>
               ))}
             </ul>
           </div>
@@ -326,23 +340,23 @@ export default function PastConcertsPage() {
 
   // スケルトンコンポーネント
   const SkeletonCard = () => (
-    <div className="past-concert-card">
-      <div className="past-concert-header">
-        <div className="skeleton-line" style={{ height: '24px', width: '80%', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
+    <div className="bg-card rounded-lg p-6 shadow-sm transition-shadow duration-slow ease flex-1 flex flex-col h-full">
+      <div className="border-b border-border-lighter pb-3 mb-4">
+        <div className="h-6 w-4/5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div>
       </div>
-      <div style={{ backgroundColor: '#e9ecef', height: '200px', borderRadius: '8px', marginBottom: '12px' }}></div>
-      <div className="past-concert-body">
-        <div className="past-concert-info">
-          <div className="skeleton-line" style={{ height: '16px', width: '70%', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
-          <div className="skeleton-line" style={{ height: '16px', width: '90%', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
-          <div className="skeleton-line" style={{ height: '16px', width: '60%', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
+      <div className="bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer h-[200px] rounded-lg mb-3"></div>
+      <div className="flex flex-col gap-4 flex-1">
+        <div className="flex flex-col gap-2">
+          <div className="h-4 w-[70%] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div>
+          <div className="h-4 w-[90%] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div>
+          <div className="h-4 w-[60%] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div>
         </div>
-        <div className="past-concert-pieces">
-          <div className="skeleton-line" style={{ height: '16px', width: '50px', marginBottom: '8px', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-            <li><div className="skeleton-line" style={{ height: '14px', width: '100%', marginBottom: '4px', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div></li>
-            <li><div className="skeleton-line" style={{ height: '14px', width: '95%', marginBottom: '4px', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div></li>
-            <li><div className="skeleton-line" style={{ height: '14px', width: '85%', backgroundColor: '#e9ecef', borderRadius: '4px' }}></div></li>
+        <div className="mt-2">
+          <div className="h-4 w-[50px] mb-2 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div>
+          <ul className="list-none p-0 m-0">
+            <li><div className="h-3.5 w-full mb-1 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div></li>
+            <li><div className="h-3.5 w-[95%] mb-1 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div></li>
+            <li><div className="h-3.5 w-[85%] bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div></li>
           </ul>
         </div>
       </div>
@@ -351,8 +365,8 @@ export default function PastConcertsPage() {
 
   if (loading) {
     return (
-      <div className="container page-content">
-        <div style={{ maxWidth: '1600px', margin: '0 auto', padding: '2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))', gap: '1.5rem' }}>
+      <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
+        <div className="max-w-[1600px] mx-auto p-8 grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-6">
           {[...Array(6)].map((_, i) => (
             <SkeletonCard key={i} />
           ))}
@@ -363,110 +377,123 @@ export default function PastConcertsPage() {
 
   return (
     <>
-      <div className="sublevel-layer-wrapper">
-        <aside className="sublevel-layer">
-        <h2 className="sidebar-title">演奏会グループ</h2>
-        <input
-          type="text"
-          placeholder="演奏会を検索..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '0.75rem',
-            marginBottom: '1rem',
-            fontSize: '0.9rem',
-            border: '1px solid #e0e0e0',
-            borderRadius: '6px',
-            outline: 'none'
-          }}
-        />
-        <div className="sidebar-groups">
-          {(searchQuery ? filteredDecades : decades).map(decade => {
-            const concerts = [...(searchQuery ? filteredConcertsByDecade[decade] : concertsByDecade[decade])].reverse();
-            const isExpanded = expandedGroups[decade] ?? false;
-            
-            return (
-              <button
-                key={decade}
-                onClick={() => handleGroupClick(decade)}
-                className={`sidebar-group-button ${isExpanded ? 'active' : ''}`}
-              >
-                <span>{getConcertRange(concerts)}</span>
-                <span className="sidebar-toggle-icon">{isExpanded ? '−' : '+'}</span>
-              </button>
-            );
-          })}
-        </div>
-      </aside>
+      <div className="fixed top-[100px] right-4 z-[100] pointer-events-none max-mobile:hidden">
+        <aside className={`sticky top-[100px] w-[280px] bg-card rounded-lg p-6 h-fit max-h-[calc(100vh-120px)] overflow-y-auto overflow-x-hidden transition-opacity duration-fast shadow-[0_4px_16px_rgba(0,0,0,0.1)] flex flex-col min-h-[200px] pointer-events-auto ${
+          document.body.classList.contains('sidebar-hidden') ? 'opacity-0 pointer-events-none' : ''
+        }`}>
+          <h2 className="text-xl font-semibold text-accent mb-4 pb-2 border-b-2 border-accent">演奏会グループ</h2>
+          <input
+            type="text"
+            placeholder="演奏会を検索..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full p-3 mb-4 text-sm border border-border-lighter rounded-md outline-none transition-colors duration-fast focus:border-accent"
+          />
+          <div className="flex flex-col gap-2">
+            {(searchQuery ? filteredDecades : decades).map(decade => {
+              const concerts = [...(searchQuery ? filteredConcertsByDecade[decade] : concertsByDecade[decade])].reverse();
+              const isExpanded = expandedGroups[decade] ?? false;
+              
+              return (
+                <button
+                  key={decade}
+                  onClick={() => handleGroupClick(decade)}
+                  className={`flex justify-between items-center px-4 py-3 bg-transparent border border-border rounded-lg text-text-secondary text-sm cursor-pointer transition-all duration-fast ease text-left w-full ${
+                    isExpanded 
+                      ? 'text-accent border-accent translate-x-2 font-semibold bg-accent/12 shadow-[0_6px_16px_rgba(43,108,176,0.2)]' 
+                      : 'hover:border-accent hover:translate-x-1 hover:bg-accent/8 hover:shadow-[0_4px_12px_rgba(43,108,176,0.15)]'
+                  }`}
+                >
+                  <span>{getConcertRange(concerts)}</span>
+                  <span className="text-xl font-semibold flex-shrink-0">{isExpanded ? '−' : '+'}</span>
+                </button>
+              );
+            })}
+          </div>
+        </aside>
       </div>
       
       {selectedImage && (
         <div 
-          className="image-modal"
+          className="fixed inset-0 bg-black/90 flex items-center justify-center z-[1000] animate-fade-in"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="absolute -top-10 max-mobile:-top-12 right-0 max-mobile:right-4 bg-transparent border-0 text-white text-3xl cursor-pointer w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-slow ease hover:bg-white/20"
+              onClick={() => setSelectedImage(null)}
+            >
+              ×
+            </button>
             <Image
               src={selectedImage}
               alt="拡大画像"
               width={1200}
               height={900}
-              className="image-modal-image"
+              className="max-w-full max-h-[90vh] object-contain"
               unoptimized
             />
           </div>
         </div>
       )}
       
-      <div className="container page-content past-concerts-content">
-        <div className="past-concerts-header">
-          <h1>過去の演奏会記録</h1>
-          <p className="past-concerts-intro">
+      <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
+        <div className="mb-12">
+          <h1 className="text-4xl text-accent mb-8 pb-2 border-b border-accent max-mobile:text-3xl">過去の演奏会記録</h1>
+          <p className="mt-2 text-muted text-lg max-mobile:text-sm">
             横浜国立大学管弦楽団がこれまでに開催してきた定期演奏会の記録です。
           </p>
         </div>
 
-        <div className="concerts-by-decade">
+        <div className="flex flex-col gap-12 flex-1 max-mobile:gap-6">
           {(searchQuery ? filteredDecades : decades).map(decade => {
           const concerts = [...(searchQuery ? filteredConcertsByDecade[decade] : concertsByDecade[decade])].reverse();
           const isExpanded = expandedGroups[decade] ?? false;
           
           return (
-            <div key={decade} id={`decade-${decade}`} className="decade-section">
+            <div key={decade} id={`decade-${decade}`} className="flex flex-col gap-6 transition-all duration-slow ease max-mobile:gap-3">
               <button
                 onClick={() => handleGroupClick(decade)}
-                className="decade-toggle"
+                className="flex justify-between items-center bg-transparent border-0 cursor-pointer p-0 text-left w-full hover:opacity-80 focus:outline-2 focus:outline-accent focus:outline-offset-2 focus:rounded"
               >
-                <h2 className="decade-heading">{getConcertRange(concerts)}</h2>
-                <span className="toggle-icon">{isExpanded ? '−' : '+'}</span>
+                <h2 className="text-3xl font-medium text-accent border-b-2 border-accent pb-2 mb-0 max-mobile:text-xl max-mobile:pb-1 max-[480px]:text-base">{getConcertRange(concerts)}</h2>
+                <span className="text-3xl font-semibold text-accent ml-4 flex-shrink-0 max-mobile:text-xl max-[480px]:text-base">{isExpanded ? '−' : '+'}</span>
               </button>
-              <div className={`past-concerts-grid expandable ${isExpanded ? 'expanded' : ''}`}>
+              <div className={`grid grid-cols-2 gap-6 mb-12 overflow-hidden max-w-container mx-auto max-mobile:grid-cols-1 max-mobile:gap-5 max-mobile:p-0 ${
+                isExpanded 
+                  ? 'max-h-[100000px] mb-12 overflow-visible' 
+                  : 'max-h-0 mb-0 overflow-hidden'
+              }`}
+              style={{
+                transition: 'max-height 0.4s ease-out, margin-bottom 0.3s ease-out'
+              }}>
                 {concerts.map((item, index) => (
                   <div
                     key={`decade-${decade}-${index}`}
-                    className="card-wrapper"
+                    className={`opacity-0 -translate-y-2.5 transition-all duration-slow ease-out flex ${
+                      isExpanded ? 'opacity-100 translate-y-0' : ''
+                    }`}
                     style={{
                       transitionDelay: `${index * 30}ms`
                     }}
                   >
-                       <PastConcertCard
-                             concert={item.concert}
-                             date={item.date}
-                             venue={item.venue}
-                             conductor={item.conductor}
-                             pieces={item.pieces}
-                             cancelled={item.cancelled}
-                             chorus={item.chorus}
-                             soprano={item.soprano}
-                             soprano2={item.soprano2}
-                             mezzoSoprano={item.mezzoSoprano}
-                             alto={item.alto}
-                             tenor={item.tenor}
-                             bassBaritone={item.bassBaritone}
-                             soloist={item.soloist}
-                             onImageClick={setSelectedImage}
-                           />
+                    <PastConcertCard
+                      concert={item.concert}
+                      date={item.date}
+                      venue={item.venue}
+                      conductor={item.conductor}
+                      pieces={item.pieces}
+                      cancelled={item.cancelled}
+                      chorus={item.chorus}
+                      soprano={item.soprano}
+                      soprano2={item.soprano2}
+                      mezzoSoprano={item.mezzoSoprano}
+                      alto={item.alto}
+                      tenor={item.tenor}
+                      bassBaritone={item.bassBaritone}
+                      soloist={item.soloist}
+                      onImageClick={setSelectedImage}
+                    />
                   </div>
                 ))}
               </div>
@@ -475,8 +502,11 @@ export default function PastConcertsPage() {
         })}
         </div>
 
-        <div className="past-concerts-footer">
-          <Link href="/concerts" className="btn-secondary">
+        <div className="text-center mt-12">
+          <Link 
+            href="/concerts" 
+            className="inline-block bg-transparent text-accent border border-accent px-6 py-2.5 rounded-lg no-underline font-normal transition-all duration-300 ease hover:bg-accent hover:text-white hover:-translate-y-0.5"
+          >
             演奏会情報に戻る
           </Link>
         </div>
