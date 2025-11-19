@@ -23,34 +23,34 @@ export default function LoginForm() {
       <div className="space-y-6">
         <div>
           <label
-            className="block mb-2 font-bold text-base text-text-secondary"
+            className="block mb-2 font-bold text-base text-text-secondary dark:text-[#d4d4d4]"
             htmlFor="email"
           >
             メールアドレス
           </label>
           <div className="relative">
             <input
-              className="peer block w-full rounded-lg border border-border py-3 pl-10 pr-4 text-base outline-none transition-colors duration-fast focus:border-accent placeholder:text-text-tertiary"
+              className="peer block w-full rounded-lg border border-border dark:border-[#3e3e42] py-3 pl-10 pr-4 text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7] placeholder:text-text-tertiary dark:placeholder:text-[#858585]"
               id="email"
               type="email"
               name="email"
               placeholder="メールアドレスを入力"
               required
             />
-            <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-text-tertiary peer-focus:text-accent transition-colors duration-fast" />
+            <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-text-tertiary dark:text-[#858585] peer-focus:text-accent dark:peer-focus:text-[#4fc3f7] transition-colors duration-fast" />
           </div>
         </div>
         
         <div>
           <label
-            className="block mb-2 font-bold text-base text-text-secondary"
+            className="block mb-2 font-bold text-base text-text-secondary dark:text-[#d4d4d4]"
             htmlFor="password"
           >
             パスワード
           </label>
           <div className="relative">
             <input
-              className="peer block w-full rounded-lg border border-border py-3 pl-10 pr-4 text-base outline-none transition-colors duration-fast focus:border-accent placeholder:text-text-tertiary"
+              className="peer block w-full rounded-lg border border-border dark:border-[#3e3e42] py-3 pl-10 pr-4 text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7] placeholder:text-text-tertiary dark:placeholder:text-[#858585]"
               id="password"
               type="password"
               name="password"
@@ -58,7 +58,7 @@ export default function LoginForm() {
               required
               minLength={6}
             />
-            <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-text-tertiary peer-focus:text-accent transition-colors duration-fast" />
+            <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-text-tertiary dark:text-[#858585] peer-focus:text-accent dark:peer-focus:text-[#4fc3f7] transition-colors duration-fast" />
           </div>
         </div>
 

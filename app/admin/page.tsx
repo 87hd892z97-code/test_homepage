@@ -115,7 +115,7 @@ export default function AdminPage() {
         <Header />
         <main className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
           <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden">
-            <p className="text-base leading-loose">読み込み中...</p>
+            <p className="text-base leading-loose dark:text-[#cccccc]">読み込み中...</p>
           </div>
         </main>
       </>
@@ -127,8 +127,8 @@ export default function AdminPage() {
       <Header />
       <main className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
         <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden">
-          <div className="flex justify-between items-center mb-8 pb-2 border-b border-accent">
-            <h1 className="text-4xl text-accent m-0">管理者ページ</h1>
+          <div className="flex justify-between items-center mb-8 pb-2 border-b border-accent dark:border-[#4fc3f7]">
+            <h1 className="text-4xl text-accent dark:text-[#4fc3f7] m-0">管理者ページ</h1>
             <form action={logout}>
               <button
                 type="submit"
@@ -144,8 +144,8 @@ export default function AdminPage() {
               onClick={() => setActiveTab('concerts')}
               className={`px-8 py-4 bg-transparent border-0 cursor-pointer text-base transition-all duration-300 ease ${
                 activeTab === 'concerts' 
-                  ? 'border-b-[3px] border-accent text-accent font-bold' 
-                  : 'border-b-[3px] border-transparent text-text font-normal'
+                  ? 'border-b-[3px] border-accent dark:border-[#4fc3f7] text-accent dark:text-[#4fc3f7] font-bold' 
+                  : 'border-b-[3px] border-transparent text-text dark:text-[#cccccc] font-normal'
               }`}
             >
               演奏会情報
@@ -154,8 +154,8 @@ export default function AdminPage() {
               onClick={() => setActiveTab('members')}
               className={`px-8 py-4 bg-transparent border-0 cursor-pointer text-base transition-all duration-300 ease ${
                 activeTab === 'members' 
-                  ? 'border-b-[3px] border-accent text-accent font-bold' 
-                  : 'border-b-[3px] border-transparent text-text font-normal'
+                  ? 'border-b-[3px] border-accent dark:border-[#4fc3f7] text-accent dark:text-[#4fc3f7] font-bold' 
+                  : 'border-b-[3px] border-transparent text-text dark:text-[#cccccc] font-normal'
               }`}
             >
               執行部情報
@@ -166,7 +166,7 @@ export default function AdminPage() {
             {activeTab === 'concerts' && (
               <div>
                 <div className="flex justify-between items-center mb-8">
-                  <h2 className="text-2xl mb-4 text-text-secondary m-0">演奏会情報の管理</h2>
+                  <h2 className="text-2xl mb-4 text-text-secondary dark:text-[#d4d4d4] m-0">演奏会情報の管理</h2>
                   {!isEditing && (
                     <button
                       onClick={handleAdd}
@@ -190,13 +190,13 @@ export default function AdminPage() {
                 ) : (
                   <div>
                     <div className="flex justify-between items-center mb-6">
-                      <p className="text-base leading-loose">現在 {concerts?.length || 0} 件の演奏会が登録されています。</p>
+                      <p className="text-base leading-loose dark:text-[#cccccc]">現在 {concerts?.length || 0} 件の演奏会が登録されています。</p>
                       <input
                         type="text"
                         placeholder="検索..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="px-4 py-3 rounded-lg border border-border text-base min-w-[300px] outline-none transition-colors duration-fast focus:border-accent"
+                        className="px-4 py-3 rounded-lg border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] min-w-[300px] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
                       />
                     </div>
                     <div className="mt-6">
@@ -223,28 +223,28 @@ export default function AdminPage() {
                         .map((concert) => (
                         <div
                           key={concert.id}
-                          className="p-6 mb-4 bg-gray-lightest rounded-lg border border-border"
+                          className="p-6 mb-4 bg-gray-lightest dark:bg-[#252526] rounded-lg border border-border dark:border-[#3e3e42]"
                         >
                           <div className="flex justify-between items-start">
                             <div>
-                              <h3 className="m-0 mb-2 text-xl font-semibold text-accent">
+                              <h3 className="m-0 mb-2 text-xl font-semibold text-accent dark:text-[#4fc3f7]">
                                 第{concert.concertNumber}回定期演奏会
                               </h3>
-                              <p className="my-1 text-text-secondary">
+                              <p className="my-1 text-text-secondary dark:text-[#cccccc]">
                                 {concert.date} @ {concert.venue}
                               </p>
                               {concert.conductor && (
-                                <p className="my-1 text-text-secondary">
+                                <p className="my-1 text-text-secondary dark:text-[#cccccc]">
                                   指揮: {concert.conductor}
                                 </p>
                               )}
                               {concert.pieces && concert.pieces.length > 0 && (
                                 <div className="mt-2">
-                                  <p className="my-1 text-text-secondary text-sm font-bold">
+                                  <p className="my-1 text-text-secondary dark:text-[#cccccc] text-sm font-bold">
                                     曲目:
                                   </p>
                                   {concert.pieces.map((piece: string, idx: number) => (
-                                    <p key={idx} className="my-0.5 ml-4 text-text-secondary text-sm">
+                                    <p key={idx} className="my-0.5 ml-4 text-text-secondary dark:text-[#cccccc] text-sm">
                                       • {piece}
                                     </p>
                                   ))}
@@ -269,7 +269,7 @@ export default function AdminPage() {
                         </div>
                       ))}
                       {concerts.length === 0 && (
-                        <p className="text-text-secondary">演奏会がまだ登録されていません。</p>
+                        <p className="text-text-secondary dark:text-[#cccccc]">演奏会がまだ登録されていません。</p>
                       )}
                     </div>
                   </div>
@@ -279,9 +279,9 @@ export default function AdminPage() {
 
             {activeTab === 'members' && (
               <div>
-                <h2 className="text-2xl mb-4 text-text-secondary">執行部メンバーの管理</h2>
-                <div className="mt-8 p-8 bg-gray-lightest rounded-lg border-2 border-dashed border-accent">
-                  <p className="text-base leading-loose">この機能は現在開発中です。</p>
+                <h2 className="text-2xl mb-4 text-text-secondary dark:text-[#d4d4d4]">執行部メンバーの管理</h2>
+                <div className="mt-8 p-8 bg-gray-lightest dark:bg-[#252526] rounded-lg border-2 border-dashed border-accent dark:border-[#4fc3f7]">
+                  <p className="text-base leading-loose dark:text-[#cccccc]">この機能は現在開発中です。</p>
                 </div>
               </div>
             )}
@@ -400,13 +400,13 @@ function ConcertEditForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-8 bg-gray-lightest rounded-lg border border-border"
+      className="p-8 bg-gray-lightest dark:bg-[#252526] rounded-lg border border-border dark:border-[#3e3e42]"
     >
-      <h3 className="text-2xl mb-4 text-text-secondary">{concert ? '演奏会情報の編集' : '新規演奏会の追加'}</h3>
+      <h3 className="text-2xl mb-4 text-text-secondary dark:text-[#d4d4d4]">{concert ? '演奏会情報の編集' : '新規演奏会の追加'}</h3>
 
       <div className="grid grid-cols-2 gap-4 mt-6">
         <div>
-          <label className="block mb-2 font-bold text-base">
+          <label className="block mb-2 font-bold text-base dark:text-[#d4d4d4]">
             演奏会番号 *
           </label>
           <input
@@ -414,12 +414,12 @@ function ConcertEditForm({
             required
             value={formData.concertNumber}
             onChange={(e) => setFormData({ ...formData, concertNumber: parseInt(e.target.value) })}
-            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+            className="w-full p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
           />
         </div>
 
         <div>
-          <label className="block mb-2 font-bold text-base">
+          <label className="block mb-2 font-bold text-base dark:text-[#d4d4d4]">
             日付 *
           </label>
           <input
@@ -428,12 +428,12 @@ function ConcertEditForm({
             value={formData.date}
             onChange={(e) => setFormData({ ...formData, date: e.target.value })}
             placeholder="例: 2025年12月21日（日）"
-            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+            className="w-full p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
           />
         </div>
 
         <div className="col-span-2">
-          <label className="block mb-2 font-bold text-base">
+          <label className="block mb-2 font-bold text-base dark:text-[#d4d4d4]">
             会場 *
           </label>
           <input
@@ -441,12 +441,12 @@ function ConcertEditForm({
             required
             value={formData.venue}
             onChange={(e) => setFormData({ ...formData, venue: e.target.value })}
-            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+            className="w-full p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
           />
         </div>
 
         <div>
-          <label className="block mb-2 font-bold text-base">
+          <label className="block mb-2 font-bold text-base dark:text-[#d4d4d4]">
             指揮者 *
           </label>
           <input
@@ -454,18 +454,18 @@ function ConcertEditForm({
             required
             value={formData.conductor}
             onChange={(e) => setFormData({ ...formData, conductor: e.target.value })}
-            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+            className="w-full p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
           />
         </div>
 
         <div>
-          <label className="block mb-2 font-bold text-base">
+          <label className="block mb-2 font-bold text-base dark:text-[#d4d4d4]">
             ステータス
           </label>
           <select
             value={formData.status}
             onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+            className="w-full p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
           >
             <option value="completed">開催済み</option>
             <option value="upcoming">開催予定</option>
@@ -473,7 +473,7 @@ function ConcertEditForm({
         </div>
 
         <div className="col-span-2">
-          <label className="block mb-2 font-bold text-base">
+          <label className="block mb-2 font-bold text-base dark:text-[#d4d4d4]">
             チケット販売URL
           </label>
           <input
@@ -481,25 +481,25 @@ function ConcertEditForm({
             value={formData.ticketUrl}
             onChange={(e) => setFormData({ ...formData, ticketUrl: e.target.value })}
             placeholder="https://teket.jp/..."
-            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+            className="w-full p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
           />
         </div>
 
         <div className="col-span-2">
-          <label className="block mb-2 font-bold text-base">
+          <label className="block mb-2 font-bold text-base dark:text-[#d4d4d4]">
             合唱団
           </label>
           <input
             type="text"
             value={formData.chorus}
             onChange={(e) => setFormData({ ...formData, chorus: e.target.value })}
-            className="w-full p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+            className="w-full p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
           />
         </div>
 
         <div className="col-span-2 mb-4">
           <div className="flex justify-between items-center mb-2">
-            <label className="font-bold text-base">ソリスト</label>
+            <label className="font-bold text-base dark:text-[#d4d4d4]">ソリスト</label>
             <button
               type="button"
               onClick={handleAddSoloist}
@@ -515,14 +515,14 @@ function ConcertEditForm({
                 value={soloist.name}
                 onChange={(e) => handleSoloistChange(index, 'name', e.target.value)}
                 placeholder="名前"
-                className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                className="flex-1 p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
               />
               <input
                 type="text"
                 value={soloist.instrument}
                 onChange={(e) => handleSoloistChange(index, 'instrument', e.target.value)}
                 placeholder="楽器（例: チェロ、オルガン）"
-                className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                className="flex-1 p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
               />
               {soloists.length > 1 && (
                 <button
@@ -555,7 +555,7 @@ function ConcertEditForm({
           <>
             <div className="col-span-2 mb-4">
               <div className="flex justify-between items-center mb-2">
-                <label className="font-bold text-base">ソプラノ</label>
+                <label className="font-bold text-base dark:text-[#d4d4d4]">ソプラノ</label>
                 <button
                   type="button"
                   onClick={sopranoHandlers.add}
@@ -571,7 +571,7 @@ function ConcertEditForm({
                     value={soprano}
                     onChange={(e) => sopranoHandlers.change(index, e.target.value)}
                     placeholder="名前を入力"
-                    className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                    className="flex-1 p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
                   />
                   {sopranos.length > 1 && (
                     <button
@@ -604,7 +604,7 @@ function ConcertEditForm({
                     value={mezzoSoprano}
                     onChange={(e) => mezzoSopranoHandlers.change(index, e.target.value)}
                     placeholder="名前を入力"
-                    className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                    className="flex-1 p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
                   />
                   {mezzoSopranos.length > 1 && (
                     <button
@@ -637,7 +637,7 @@ function ConcertEditForm({
                     value={alto}
                     onChange={(e) => altoHandlers.change(index, e.target.value)}
                     placeholder="名前を入力"
-                    className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                    className="flex-1 p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
                   />
                   {altos.length > 1 && (
                     <button
@@ -670,7 +670,7 @@ function ConcertEditForm({
                     value={tenor}
                     onChange={(e) => tenorHandlers.change(index, e.target.value)}
                     placeholder="名前を入力"
-                    className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                    className="flex-1 p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
                   />
                   {tenors.length > 1 && (
                     <button
@@ -703,7 +703,7 @@ function ConcertEditForm({
                     value={bassBaritone}
                     onChange={(e) => bassBaritoneHandlers.change(index, e.target.value)}
                     placeholder="名前を入力"
-                    className="flex-1 p-3 rounded border border-border text-base outline-none transition-colors duration-fast focus:border-accent"
+                    className="flex-1 p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7]"
                   />
                   {bassBaritones.length > 1 && (
                     <button
@@ -721,14 +721,14 @@ function ConcertEditForm({
         )}
 
         <div className="col-span-2">
-          <label className="block mb-2 font-bold text-base">
+          <label className="block mb-2 font-bold text-base dark:text-[#d4d4d4]">
             曲目 (改行区切り)
           </label>
           <textarea
             value={formData.pieces}
             onChange={(e) => setFormData({ ...formData, pieces: e.target.value })}
             rows={5}
-            className="w-full p-3 rounded border border-border text-base font-sans outline-none transition-colors duration-fast focus:border-accent resize-y"
+            className="w-full p-3 rounded border border-border dark:border-[#3e3e42] text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] font-sans outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#4fc3f7] resize-y"
           />
         </div>
       </div>
@@ -749,10 +749,10 @@ function ConcertEditForm({
           type="button"
           onClick={onCancel}
           disabled={saving}
-          className={`px-8 py-3 bg-transparent text-text border border-border rounded transition-opacity duration-fast text-base ${
+          className={`px-8 py-3 bg-transparent text-text dark:text-[#cccccc] border border-border dark:border-[#3e3e42] rounded transition-opacity duration-fast text-base ${
             saving 
               ? 'cursor-not-allowed opacity-60' 
-              : 'cursor-pointer hover:border-accent hover:text-accent'
+              : 'cursor-pointer hover:border-accent dark:hover:border-[#4fc3f7] hover:text-accent dark:hover:text-[#4fc3f7]'
           }`}
         >
           キャンセル

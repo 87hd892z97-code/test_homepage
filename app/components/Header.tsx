@@ -88,8 +88,8 @@ export default function Header() {
   
   // Header background and text color based on state
   const headerStyleClasses = isHomePage && !isScrolled
-    ? "bg-gradient-to-b from-black to-transparent text-white"
-    : "bg-white text-text-secondary shadow-[0_2px_10px_rgba(0,0,0,0.1)]";
+    ? "glass-header-dark text-white"
+    : "glass-header text-text-secondary";
   
   // Header visibility (only hide on mobile when scrolling)
   const headerVisibilityClasses = !headerVisible ? "max-nav-break:-translate-y-full" : "";
@@ -102,7 +102,7 @@ export default function Header() {
     if (isHomePage && !isScrolled) {
       return `${baseClasses} text-white ${isActive ? 'text-white' : ''}`;
     }
-    return `${baseClasses} ${isActive ? 'text-accent' : 'text-text-secondary hover:text-accent'}`;
+    return `${baseClasses} ${isActive ? 'text-accent dark:text-[#4fc3f7]' : 'text-text-secondary dark:text-[#cccccc] hover:text-accent dark:hover:text-[#4fc3f7]'}`;
   };
 
   return (
@@ -237,7 +237,12 @@ export default function Header() {
       {/* Mobile menu overlay */}
       {menuOpen && (
         <div
-          className="max-nav-break:fixed max-nav-break:inset-0 max-nav-break:bg-black/50 max-nav-break:z-[1000] max-nav-break:flex max-nav-break:items-center max-nav-break:justify-center max-nav-break:animate-fade-in hidden"
+          className="max-nav-break:fixed max-nav-break:inset-0 max-nav-break:z-[1000] max-nav-break:flex max-nav-break:items-center max-nav-break:justify-center max-nav-break:animate-fade-in hidden"
+          style={{
+            background: 'rgba(0, 0, 0, 0.4)',
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          }}
           onClick={() => setMenuOpen(false)}
         >
           <nav className="flex flex-col items-center gap-8 text-center relative" onClick={(e) => e.stopPropagation()}>

@@ -1,5 +1,6 @@
 import './globals.css';
 import Header from './components/Header';
+import ThemeToggle from './components/ThemeToggle';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -23,10 +24,11 @@ export default function RootLayout({
       </head>
       <body>
         <Header />
+        <ThemeToggle />
 
         <main>{children}</main>
 
-        <footer className="py-4 text-muted">
+        <footer className="py-4 text-muted dark:text-[#858585]">
           <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden">
             <div className="flex justify-between items-center gap-4 flex-wrap max-mobile:flex-col max-mobile:text-center max-mobile:gap-4">
               <p className="text-sm">© {new Date().getFullYear()} 横浜国立大学管弦楽団</p>

@@ -76,54 +76,54 @@ export default function ContactForm() {
   return (
     <form className="grid gap-2 mt-2 max-mobile:max-w-full" onSubmit={handleSubmit}>
       <div className="mb-4">
-        <label className="flex flex-col text-sm text-muted">
+        <label className="flex flex-col text-sm text-muted dark:text-[#858585]">
           お名前
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`p-2 border rounded-sm mt-1 text-base max-mobile:p-3 max-[480px]:text-base ${
+            className={`p-2 border rounded-sm mt-1 text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] max-mobile:p-3 max-[480px]:text-base ${
               errors.name 
                 ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
-                : 'border-border focus:border-accent focus:ring-2 focus:ring-accent/30'
+                : 'border-border dark:border-[#3e3e42] focus:border-accent dark:focus:border-[#4fc3f7] focus:ring-2 focus:ring-accent/30 dark:focus:ring-[#4fc3f7]/30'
             } outline-none transition-colors duration-fast`}
           />
         </label>
-        {errors.name && <span className="text-red-500 text-xs mt-1 block">{errors.name}</span>}
+        {errors.name && <span className="text-red-500 dark:text-red-400 text-xs mt-1 block">{errors.name}</span>}
       </div>
 
       <div className="mb-4">
-        <label className="flex flex-col text-sm text-muted">
+        <label className="flex flex-col text-sm text-muted dark:text-[#858585]">
           メールアドレス
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`p-2 border rounded-sm mt-1 text-base max-mobile:p-3 max-[480px]:text-base ${
+            className={`p-2 border rounded-sm mt-1 text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] max-mobile:p-3 max-[480px]:text-base ${
               errors.email 
                 ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
-                : 'border-border focus:border-accent focus:ring-2 focus:ring-accent/30'
+                : 'border-border dark:border-[#3e3e42] focus:border-accent dark:focus:border-[#4fc3f7] focus:ring-2 focus:ring-accent/30 dark:focus:ring-[#4fc3f7]/30'
             } outline-none transition-colors duration-fast`}
           />
         </label>
-        {errors.email && <span className="text-red-500 text-xs mt-1 block">{errors.email}</span>}
+        {errors.email && <span className="text-red-500 dark:text-red-400 text-xs mt-1 block">{errors.email}</span>}
       </div>
 
       <div className="mb-4">
-        <label className="flex flex-col text-sm text-muted">
+        <label className="flex flex-col text-sm text-muted dark:text-[#858585]">
           メッセージ
           <textarea
             rows={4}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className={`p-2 border rounded-sm mt-1 text-base max-mobile:p-3 max-[480px]:text-base ${
+            className={`p-2 border rounded-sm mt-1 text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] max-mobile:p-3 max-[480px]:text-base ${
               errors.message 
                 ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
-                : 'border-border focus:border-accent focus:ring-2 focus:ring-accent/30'
+                : 'border-border dark:border-[#3e3e42] focus:border-accent dark:focus:border-[#4fc3f7] focus:ring-2 focus:ring-accent/30 dark:focus:ring-[#4fc3f7]/30'
             } outline-none transition-colors duration-fast resize-y`}
           />
         </label>
-        {errors.message && <span className="text-red-500 text-xs mt-1 block">{errors.message}</span>}
+        {errors.message && <span className="text-red-500 dark:text-red-400 text-xs mt-1 block">{errors.message}</span>}
       </div>
 
       <button 
