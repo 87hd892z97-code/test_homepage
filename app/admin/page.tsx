@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
+import { logout } from '@/app/lib/actions';
 
 interface Concert {
   id: number;
@@ -126,7 +127,17 @@ export default function AdminPage() {
       <Header />
       <main className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
         <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden">
-          <h1 className="text-4xl text-accent mb-8 pb-2 border-b border-accent">管理者ページ</h1>
+          <div className="flex justify-between items-center mb-8 pb-2 border-b border-accent">
+            <h1 className="text-4xl text-accent m-0">管理者ページ</h1>
+            <form action={logout}>
+              <button
+                type="submit"
+                className="px-6 py-3 bg-gray-600 text-white border-0 rounded cursor-pointer text-sm font-bold transition-opacity duration-fast hover:opacity-90"
+              >
+                ログアウト
+              </button>
+            </form>
+          </div>
 
           <div className="mt-8 border-b-2 border-accent flex gap-8">
             <button
