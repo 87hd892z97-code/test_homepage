@@ -6,6 +6,14 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: '横浜国立大学管弦楽団',
   description: '横浜国立大学管弦楽団の公式ウェブサイトです。',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.ico', sizes: 'any' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/icon.ico',
+  },
 };
 
 export default function RootLayout({

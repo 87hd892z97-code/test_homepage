@@ -1,13 +1,17 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { useDebouncedCallback } from 'use-debounce';
 
 // データファイルをインポート（将来的には別ファイルに移動可能）
 import { getAllPastConcerts } from './data';
 import { getConcertImagePath } from './imageMapping';
 import { adaptDbConcertToPastConcert } from '../../lib/concertAdapter';
+
+const ITEMS_PER_PAGE = 10;
 
 
 // 曲目から楽器を特定する関数
@@ -187,11 +191,25 @@ function PastConcertCard({ concert, date, venue, conductor, pieces, cancelled, c
   );
 }
 
-export default function PastConcertsPage() {
-  const [expandedGroups, setExpandedGroups] = useState<Record<number, boolean>>({});
+function PastConcertsContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const hasInitialized = useRef(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [allConcerts, setAllConcerts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  // URLパラメータから値を取得
+  const currentPage = parseInt(searchParams.get('page') || '1', 10);
+  const searchQuery = searchParams.get('search') || '';
+  
+  // 検索入力値をローカルstateで管理（入力中はURLを更新しない）
+  const [searchInputValue, setSearchInputValue] = useState(searchQuery);
+  
+  // URLパラメータが変更されたときにローカルstateを同期
+  useEffect(() => {
+    setSearchInputValue(searchQuery);
+  }, [searchQuery]);
 
   // Add class to body when image modal is open to keep header visible
   useEffect(() => {
@@ -204,46 +222,8 @@ export default function PastConcertsPage() {
       document.body.classList.remove('image-modal-open');
     };
   }, [selectedImage]);
-  
-  // グループを展開してトップへスクロール
-  const handleGroupClick = (decade: number) => {
-    setExpandedGroups(prev => {
-      const wasExpanded = prev[decade] ?? false;
-      const newState = { ...prev, [decade]: !wasExpanded };
-      
-      // 展開する時だけスクロール（折りたたむ時はスクロールしない）
-      if (!wasExpanded) {
-        setTimeout(() => {
-          const elementId = `decade-${decade}`;
-          const element = document.getElementById(elementId);
-          if (element) {
-            // ヘッダーの高さとページコンテンツの余白を考慮してオフセット
-            const header = document.querySelector('.site-header');
-            const headerHeight = header ? header.getBoundingClientRect().height : 80;
-            
-            // ページコンテンツのh1とheaderの余白に合わせる（3rem = 48px）
-            const contentSpacing = 48;
-            
-            const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-            const offsetPosition = elementPosition - headerHeight - contentSpacing;
-            
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          }
-        }, 100);
-      }
-      
-      return newState;
-    });
-  };
-  
 
   // 全演奏会データをデータベースから取得
-  const [allConcerts, setAllConcerts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     fetchConcerts();
   }, []);
@@ -254,89 +234,231 @@ export default function PastConcertsPage() {
       if (response.ok) {
         const data = await response.json();
         const adaptedConcerts = data.map((concert: any) => adaptDbConcertToPastConcert(concert));
-        setAllConcerts(adaptedConcerts.reverse());
+        // APIは既に降順（新しいものが先）で取得されているため、reverse()は不要
+        setAllConcerts(adaptedConcerts);
       }
     } catch (error) {
       console.error('Failed to fetch concerts:', error);
       // フォールバック: ハードコーディングされたデータを使用
-      setAllConcerts(getAllPastConcerts().reverse());
+      setAllConcerts(getAllPastConcerts());
     } finally {
       setLoading(false);
     }
   };
 
-  // 10回ごとにグループ化（第1回から開始）
-  const concertsByDecade = useMemo(() => {
-    return allConcerts.reduce((acc, concert, index) => {
-      const groupIndex = Math.floor(index / 10);
-      if (!acc[groupIndex]) {
-        acc[groupIndex] = [];
+  // 文字列内にキーワードの文字が順番に含まれているかチェック（数文字飛ばされてもOK）
+  // 5文字以上一致している場合は表記揺れとしてマッチ
+  const fuzzyMatch = (text: string, keyword: string): boolean => {
+    if (keyword.length === 0) return true;
+    if (text.includes(keyword)) return true; // 完全一致または部分一致の場合は即座にtrue
+    
+    // キーワードが5文字未満の場合は、従来の柔軟なマッチングを使用
+    if (keyword.length < 5) {
+      let keywordIndex = 0;
+      for (let i = 0; i < text.length && keywordIndex < keyword.length; i++) {
+        if (text[i] === keyword[keywordIndex]) {
+          keywordIndex++;
+        }
       }
-      acc[groupIndex].push(concert);
-      return acc;
-    }, {} as Record<number, typeof allConcerts>);
-  }, [allConcerts]);
-
-  const decades = useMemo(() => {
-    return Object.keys(concertsByDecade).map(Number).sort((a, b) => b - a);
-  }, [concertsByDecade]);
-
-  // 初期状態で最初のグループ（最新）を展開
-  useEffect(() => {
-    if (!hasInitialized.current && decades.length > 0) {
-      setExpandedGroups({ [decades[0]]: true });
-      hasInitialized.current = true;
+      return keywordIndex === keyword.length;
     }
-  }, [decades]);
-
-  // 第○回～第○回の範囲を取得する関数
-  const getConcertRange = (concerts: typeof allConcerts) => {
-    if (concerts.length === 0) return '';
-    // reverse()しているので、第1回が最初、第124回が最後
-    const firstConcert = concerts[0].concert.match(/\d+/)?.[0] || '';
-    const lastConcert = concerts[concerts.length - 1].concert.match(/\d+/)?.[0] || '';
-    // 日付の降順（新しいものが先）なので、ラベルも降順に表示
-    return `第${lastConcert}回～第${firstConcert}回`;
+    
+    // キーワードが5文字以上の場合、連続する5文字以上の部分文字列が一致しているかをチェック
+    // キーワードから5文字以上の部分文字列を抽出して、テキスト内に含まれているか確認
+    for (let len = keyword.length; len >= 5; len--) {
+      for (let start = 0; start <= keyword.length - len; start++) {
+        const substring = keyword.substring(start, start + len);
+        if (text.includes(substring)) {
+          return true;
+        }
+      }
+    }
+    
+    // 5文字以上の一致がない場合、従来の柔軟なマッチングを試す
+    let keywordIndex = 0;
+    for (let i = 0; i < text.length && keywordIndex < keyword.length; i++) {
+      if (text[i] === keyword[keywordIndex]) {
+        keywordIndex++;
+      }
+    }
+    return keywordIndex === keyword.length;
   };
 
-  // 検索フィルタリング
-  const filteredConcertsByDecade = useMemo(() => {
-    if (!searchQuery) return concertsByDecade;
+  // 検索フィルタリング（空白で区切られた複数のキーワードに対応、柔軟なマッチング）
+  const filteredConcerts = useMemo(() => {
+    if (!searchQuery) return allConcerts;
     
-    const filtered: Record<number, typeof allConcerts> = {};
+    // 空白で区切って複数のキーワードに分割（空文字列を除外）
+    const keywords = searchQuery
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(keyword => keyword.length > 0);
     
-    Object.keys(concertsByDecade).forEach((decadeKey) => {
-      const decade = Number(decadeKey);
-      const concerts = concertsByDecade[decade];
+    if (keywords.length === 0) return allConcerts;
+    
+    return allConcerts.filter((concert) => {
+      // 検索対象の文字列を結合（日にちは除外）
+      const searchableText = [
+        concert.concert.match(/\d+/)?.[0] || '',
+        concert.venue.toLowerCase(),
+        concert.conductor?.toLowerCase() || '',
+        concert.pieces?.join(' ').toLowerCase() || '',
+        concert.soloist?.toLowerCase() || '',
+        concert.chorus?.toLowerCase() || '',
+        concert.soprano?.toLowerCase() || '',
+        concert.soprano2?.toLowerCase() || '',
+        concert.mezzoSoprano?.toLowerCase() || '',
+        concert.alto?.toLowerCase() || '',
+        concert.tenor?.toLowerCase() || '',
+        concert.bassBaritone?.toLowerCase() || '',
+      ].join(' ');
       
-      const filteredConcerts = concerts.filter((concert: typeof allConcerts[0]) => {
-        const query = searchQuery.toLowerCase();
-        const concertNumber = concert.concert.match(/\d+/)?.[0] || '';
-        const date = concert.date.toLowerCase();
-        const venue = concert.venue.toLowerCase();
-        const conductor = concert.conductor?.toLowerCase() || '';
-        const pieces = concert.pieces?.join(' ').toLowerCase() || '';
-        
-        return (
-          concertNumber.includes(query) ||
-          date.includes(query) ||
-          venue.includes(query) ||
-          conductor.includes(query) ||
-          pieces.includes(query)
-        );
-      });
-      
-      if (filteredConcerts.length > 0) {
-        filtered[decade] = filteredConcerts;
-      }
+      // すべてのキーワードが柔軟にマッチするかチェック（AND検索）
+      return keywords.every(keyword => fuzzyMatch(searchableText, keyword));
     });
-    
-    return filtered;
-  }, [concertsByDecade, searchQuery]);
+  }, [allConcerts, searchQuery]);
 
-  const filteredDecades = useMemo(() => {
-    return Object.keys(filteredConcertsByDecade).map(Number).sort((a, b) => b - a);
-  }, [filteredConcertsByDecade]);
+  // ページネーション計算
+  const totalPages = Math.ceil(filteredConcerts.length / ITEMS_PER_PAGE);
+  const validPage = Math.max(1, Math.min(currentPage, totalPages || 1));
+  const startIndex = (validPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const paginatedConcerts = filteredConcerts.slice(startIndex, endIndex);
+
+  // 検索ハンドラー（デバウンス処理付き）
+  const handleSearch = useDebouncedCallback((term: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', '1'); // 検索時は常にページを1にリセット
+    if (term) {
+      params.set('search', term);
+    } else {
+      params.delete('search');
+    }
+    router.replace(`${pathname}?${params.toString()}`);
+  }, 300);
+  
+  // 入力値の変更ハンドラー
+  const handleSearchInputChange = (value: string) => {
+    setSearchInputValue(value);
+    handleSearch(value);
+  };
+
+  // URLパラメータを更新する関数（ページネーション用）
+  const updateSearchParams = (updates: { page?: number; search?: string }) => {
+    const params = new URLSearchParams(searchParams.toString());
+    
+    if (updates.page !== undefined) {
+      if (updates.page === 1) {
+        params.delete('page');
+      } else {
+        params.set('page', updates.page.toString());
+      }
+    }
+    
+    if (updates.search !== undefined) {
+      if (updates.search === '') {
+        params.delete('search');
+        params.delete('page'); // 検索をクリアしたらページもリセット
+      } else {
+        params.set('search', updates.search);
+        params.delete('page'); // 新しい検索時はページをリセット
+      }
+    }
+    
+    router.push(`/concerts/past?${params.toString()}`);
+  };
+
+  // ページ変更のハンドラー
+  const handlePageChange = (page: number) => {
+    const validPageNum = Math.max(1, Math.min(page, totalPages || 1));
+    if (validPageNum >= 1 && validPageNum <= totalPages) {
+      updateSearchParams({ page: validPageNum });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // 無効なページ番号の場合、URLを修正
+  useEffect(() => {
+    if (!loading && totalPages > 0 && currentPage !== validPage) {
+      const params = new URLSearchParams(searchParams.toString());
+      if (validPage === 1) {
+        params.delete('page');
+      } else {
+        params.set('page', validPage.toString());
+      }
+      router.replace(`/concerts/past?${params.toString()}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, totalPages, currentPage, validPage]);
+
+  // ページネーションボタンを生成
+  const getPaginationButtons = () => {
+    const buttons = [];
+    const maxVisible = 5; // 表示する最大ページ数
+    const pageToUse = validPage;
+    
+    let startPage = Math.max(1, pageToUse - Math.floor(maxVisible / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+    
+    if (endPage - startPage < maxVisible - 1) {
+      startPage = Math.max(1, endPage - maxVisible + 1);
+    }
+    
+    // 最初のページ
+    if (startPage > 1) {
+      buttons.push(
+        <button
+          key={1}
+          onClick={() => handlePageChange(1)}
+          className="px-3 py-2 bg-white border border-border rounded-lg text-text-secondary text-sm cursor-pointer transition-all duration-fast ease hover:border-accent hover:bg-accent/8 hover:text-accent"
+        >
+          1
+        </button>
+      );
+      if (startPage > 2) {
+        buttons.push(
+          <span key="ellipsis-start" className="px-2 text-text-secondary">...</span>
+        );
+      }
+    }
+    
+    // ページ番号
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={`px-3 py-2 border rounded-lg text-sm cursor-pointer transition-all duration-fast ease ${
+            i === pageToUse
+              ? 'bg-accent text-white border-accent font-semibold'
+              : 'bg-white border-border text-text-secondary hover:border-accent hover:bg-accent/8 hover:text-accent'
+          }`}
+        >
+          {i}
+        </button>
+      );
+    }
+    
+    // 最後のページ
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        buttons.push(
+          <span key="ellipsis-end" className="px-2 text-text-secondary">...</span>
+        );
+      }
+      buttons.push(
+        <button
+          key={totalPages}
+          onClick={() => handlePageChange(totalPages)}
+          className="px-3 py-2 bg-white border border-border rounded-lg text-text-secondary text-sm cursor-pointer transition-all duration-fast ease hover:border-accent hover:bg-accent/8 hover:text-accent"
+        >
+          {totalPages}
+        </button>
+      );
+    }
+    
+    return buttons;
+  };
 
   // スケルトンコンポーネント
   const SkeletonCard = () => (
@@ -377,42 +499,6 @@ export default function PastConcertsPage() {
 
   return (
     <>
-      <div className="fixed top-[100px] right-4 z-[100] pointer-events-none max-mobile:hidden">
-        <aside className={`sticky top-[100px] w-[280px] bg-card rounded-lg p-6 h-fit max-h-[calc(100vh-120px)] overflow-y-auto overflow-x-hidden transition-opacity duration-fast shadow-[0_4px_16px_rgba(0,0,0,0.1)] flex flex-col min-h-[200px] pointer-events-auto ${
-          document.body.classList.contains('sidebar-hidden') ? 'opacity-0 pointer-events-none' : ''
-        }`}>
-          <h2 className="text-xl font-semibold text-accent mb-4 pb-2 border-b-2 border-accent">演奏会グループ</h2>
-          <input
-            type="text"
-            placeholder="演奏会を検索..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full p-3 mb-4 text-sm border border-border-lighter rounded-md outline-none transition-colors duration-fast focus:border-accent"
-          />
-          <div className="flex flex-col gap-2">
-            {(searchQuery ? filteredDecades : decades).map(decade => {
-              const concerts = [...(searchQuery ? filteredConcertsByDecade[decade] : concertsByDecade[decade])].reverse();
-              const isExpanded = expandedGroups[decade] ?? false;
-              
-              return (
-                <button
-                  key={decade}
-                  onClick={() => handleGroupClick(decade)}
-                  className={`flex justify-between items-center px-4 py-3 bg-transparent border border-border rounded-lg text-text-secondary text-sm cursor-pointer transition-all duration-fast ease text-left w-full ${
-                    isExpanded 
-                      ? 'text-accent border-accent translate-x-2 font-semibold bg-accent/12 shadow-[0_6px_16px_rgba(43,108,176,0.2)]' 
-                      : 'hover:border-accent hover:translate-x-1 hover:bg-accent/8 hover:shadow-[0_4px_12px_rgba(43,108,176,0.15)]'
-                  }`}
-                >
-                  <span>{getConcertRange(concerts)}</span>
-                  <span className="text-xl font-semibold flex-shrink-0">{isExpanded ? '−' : '+'}</span>
-                </button>
-              );
-            })}
-          </div>
-        </aside>
-      </div>
-      
       {selectedImage && (
         <div 
           className="fixed inset-0 bg-black/90 flex items-center justify-center z-[1000] animate-fade-in"
@@ -443,64 +529,93 @@ export default function PastConcertsPage() {
           <p className="mt-2 text-muted text-lg max-mobile:text-sm">
             横浜国立大学管弦楽団がこれまでに開催してきた定期演奏会の記録です。
           </p>
+          {/* 検索バー */}
+          <div className="mt-6">
+            <input
+              type="text"
+              placeholder="演奏会を検索..."
+              value={searchInputValue}
+              onChange={(e) => handleSearchInputChange(e.target.value)}
+              className="w-full p-3 text-sm border border-border-lighter rounded-md outline-none transition-colors duration-fast focus:border-accent"
+            />
+          </div>
+          {searchQuery && (
+            <p className="mt-2 text-sm text-muted">
+              「{searchQuery}」の検索結果: {filteredConcerts.length}件
+            </p>
+          )}
         </div>
 
-        <div className="flex flex-col gap-12 flex-1 max-mobile:gap-6">
-          {(searchQuery ? filteredDecades : decades).map(decade => {
-          const concerts = [...(searchQuery ? filteredConcertsByDecade[decade] : concertsByDecade[decade])].reverse();
-          const isExpanded = expandedGroups[decade] ?? false;
-          
-          return (
-            <div key={decade} id={`decade-${decade}`} className="flex flex-col gap-6 transition-all duration-slow ease max-mobile:gap-3">
-              <button
-                onClick={() => handleGroupClick(decade)}
-                className="flex justify-between items-center bg-transparent border-0 cursor-pointer p-0 text-left w-full hover:opacity-80 focus:outline-2 focus:outline-accent focus:outline-offset-2 focus:rounded"
+        {paginatedConcerts.length > 0 ? (
+          <>
+            <div className="grid grid-cols-2 gap-6 mb-12 max-w-container mx-auto max-mobile:grid-cols-1 max-mobile:gap-5 max-mobile:p-0">
+              {paginatedConcerts.map((item, index) => (
+              <div
+                key={`concert-${startIndex + index}`}
+                className="flex animate-fade-in"
+                style={{
+                  animationDelay: `${index * 30}ms`
+                }}
               >
-                <h2 className="text-3xl font-medium text-accent border-b-2 border-accent pb-2 mb-0 max-mobile:text-xl max-mobile:pb-1 max-[480px]:text-base">{getConcertRange(concerts)}</h2>
-                <span className="text-3xl font-semibold text-accent ml-4 flex-shrink-0 max-mobile:text-xl max-[480px]:text-base">{isExpanded ? '−' : '+'}</span>
-              </button>
-              <div className={`grid grid-cols-2 gap-6 mb-12 overflow-hidden max-w-container mx-auto max-mobile:grid-cols-1 max-mobile:gap-5 max-mobile:p-0 ${
-                isExpanded 
-                  ? 'max-h-[100000px] mb-12 overflow-visible' 
-                  : 'max-h-0 mb-0 overflow-hidden'
-              }`}
-              style={{
-                transition: 'max-height 0.4s ease-out, margin-bottom 0.3s ease-out'
-              }}>
-                {concerts.map((item, index) => (
-                  <div
-                    key={`decade-${decade}-${index}`}
-                    className={`opacity-0 -translate-y-2.5 transition-all duration-slow ease-out flex ${
-                      isExpanded ? 'opacity-100 translate-y-0' : ''
-                    }`}
-                    style={{
-                      transitionDelay: `${index * 30}ms`
-                    }}
-                  >
-                    <PastConcertCard
-                      concert={item.concert}
-                      date={item.date}
-                      venue={item.venue}
-                      conductor={item.conductor}
-                      pieces={item.pieces}
-                      cancelled={item.cancelled}
-                      chorus={item.chorus}
-                      soprano={item.soprano}
-                      soprano2={item.soprano2}
-                      mezzoSoprano={item.mezzoSoprano}
-                      alto={item.alto}
-                      tenor={item.tenor}
-                      bassBaritone={item.bassBaritone}
-                      soloist={item.soloist}
-                      onImageClick={setSelectedImage}
-                    />
-                  </div>
-                ))}
+                <PastConcertCard
+                  concert={item.concert}
+                  date={item.date}
+                  venue={item.venue}
+                  conductor={item.conductor}
+                  pieces={item.pieces}
+                  cancelled={item.cancelled}
+                  chorus={item.chorus}
+                  soprano={item.soprano}
+                  soprano2={item.soprano2}
+                  mezzoSoprano={item.mezzoSoprano}
+                  alto={item.alto}
+                  tenor={item.tenor}
+                  bassBaritone={item.bassBaritone}
+                  soloist={item.soloist}
+                  onImageClick={setSelectedImage}
+                />
               </div>
+            ))}
             </div>
-          );
-        })}
-        </div>
+
+            {/* ページネーション */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-2 mb-12 flex-wrap relative z-10">
+                <button
+                  onClick={() => handlePageChange(validPage - 1)}
+                  disabled={validPage === 1}
+                  className="px-4 py-2 bg-white border border-border rounded-lg text-text-secondary text-sm cursor-pointer transition-all duration-fast ease hover:border-accent hover:bg-accent/8 hover:text-accent disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-border disabled:hover:bg-white disabled:hover:text-text-secondary"
+                >
+                  前へ
+                </button>
+                {getPaginationButtons()}
+                <button
+                  onClick={() => handlePageChange(validPage + 1)}
+                  disabled={validPage === totalPages}
+                  className="px-4 py-2 bg-white border border-border rounded-lg text-text-secondary text-sm cursor-pointer transition-all duration-fast ease hover:border-accent hover:bg-accent/8 hover:text-accent disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-border disabled:hover:bg-white disabled:hover:text-text-secondary"
+                >
+                  次へ
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-muted text-lg">
+              {searchQuery ? '検索結果が見つかりませんでした' : '演奏会データがありません'}
+            </p>
+            {searchQuery && (
+              <button
+                onClick={() => {
+                  handleSearch('');
+                }}
+                className="mt-4 px-4 py-2 bg-transparent text-accent border border-accent rounded-lg cursor-pointer transition-all duration-300 ease hover:bg-accent hover:text-white"
+              >
+                検索をクリア
+              </button>
+            )}
+          </div>
+        )}
 
         <div className="text-center mt-12">
           <Link 
@@ -512,5 +627,24 @@ export default function PastConcertsPage() {
         </div>
       </div>
     </>
+  );
+}
+
+export default function PastConcertsPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
+        <div className="max-w-[1600px] mx-auto p-8 grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-6">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="bg-card rounded-lg p-6 shadow-sm">
+              <div className="h-6 w-4/5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded mb-4"></div>
+              <div className="bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer h-[200px] rounded-lg mb-3"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    }>
+      <PastConcertsContent />
+    </Suspense>
   );
 }

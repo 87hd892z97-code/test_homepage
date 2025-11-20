@@ -8,17 +8,59 @@ import HeroSlideshow from './components/HeroSlideshow';
 export default function Home() {
   return (
     <>
-      <section className="relative h-screen min-h-[600px] w-full flex items-center justify-center -mt-20 max-mobile:h-[60vh] max-mobile:min-h-[400px] max-mobile:-mt-[70px] max-[480px]:h-[50vh] max-[480px]:min-h-[300px] max-[480px]:-mt-[65px]">
+      <section className="relative h-screen min-h-[600px] w-full flex items-center justify-center -mt-20 max-mobile:h-[60vh] max-mobile:min-h-[400px] max-mobile:-mt-[70px] max-[480px]:h-[50vh] max-[480px]:min-h-[300px] max-[480px]:-mt-[65px] overflow-hidden">
         <HeroSlideshow />
-        <div className="absolute bottom-[10%] max-mobile:bottom-[5%] max-[480px]:bottom-[3%] left-1/2 -translate-x-1/2 text-center text-white z-10 p-8 max-mobile:p-6 max-[480px]:p-4 rounded-xl max-w-[500px] max-mobile:max-w-[calc(100%-2rem)] max-[480px]:max-w-[calc(100%-1rem)] glass-effect-dark">
-          <h2 className="text-5xl max-mobile:text-4xl max-[480px]:text-3xl mb-4 font-bold text-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]">2024シーズン</h2>
-          <p className="text-xl max-mobile:text-base max-[480px]:text-sm mb-8 text-shadow-[1px_1px_2px_rgba(0,0,0,0.8)]">音楽で描く、新しい物語</p>
-          <Link 
-            href="/concerts" 
-            className="inline-block bg-accent text-white px-8 py-4 max-mobile:px-5 max-mobile:py-2.5 max-[480px]:px-4 max-[480px]:py-2 rounded-lg no-underline font-normal text-lg max-mobile:text-sm max-[480px]:text-sm transition-all duration-300 ease shadow-[0_4px_15px_rgba(43,108,176,0.3)] hover:bg-accent-dark hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(43,108,176,0.4)]"
-          >
-            公演スケジュール
-          </Link>
+        <div className="absolute inset-x-0 bottom-[7%] max-mobile:bottom-[5%] max-[480px]:bottom-[3%] px-4 max-mobile:px-3 text-white z-10">
+          <div className="w-full max-w-[760px] mx-auto p-12 max-mobile:p-8 max-[480px]:p-6 rounded-[32px] glass-effect-dark shadow-[0_30px_90px_rgba(0,0,0,0.45)] border border-white/15 flex flex-col gap-8">
+            <div className="flex items-center justify-between flex-wrap gap-3 text-xs tracking-[0.35em] uppercase text-white/75">
+              <div className="flex items-center gap-3">
+                <span className="h-px w-12 bg-white/60 max-mobile:hidden" />
+                Upcoming Concert
+              </div>
+              <span className="tracking-[0.4em] text-white/60 max-mobile:w-full max-mobile:text-right">Season 2025</span>
+            </div>
+
+            <div className="space-y-2">
+              <span className="text-sm text-white/80 block">2025年12月21日（日）</span>
+              <h2 className="text-5xl max-mobile:text-4xl max-[480px]:text-3xl font-semibold leading-tight">第125回定期演奏会</h2>
+              <p className="text-lg max-mobile:text-base text-white/90 border-l border-white/30 pl-4 py-1">
+                マーラー：交響曲第1番「巨人」 / 指揮 永峰大輔
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm text-white/85">
+              <div className="relative pl-6">
+                <span className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-white/0 via-white/50 to-white/0" />
+                <p className="text-xs uppercase tracking-[0.3em] text-white/60 mb-1">会場</p>
+                <p className="font-semibold whitespace-nowrap">カルッツかわさき ホール</p>
+              </div>
+              <div className="relative pl-6">
+                <span className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-white/0 via-white/50 to-white/0" />
+                <p className="text-xs uppercase tracking-[0.3em] text-white/60 mb-1">開演</p>
+                <p className="font-semibold">13:30</p>
+              </div>
+              <div className="relative pl-6">
+                <span className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-white/0 via-white/50 to-white/0" />
+                <p className="text-xs uppercase tracking-[0.3em] text-white/60 mb-1">開場</p>
+                <p className="font-semibold">12:45</p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-4">
+              <Link 
+                href="/concerts" 
+                className="flex-1 min-w-[220px] text-center bg-accent text-white px-10 py-4 rounded-2xl no-underline text-base font-semibold tracking-wide transition-all duration-300 ease shadow-[0_18px_35px_rgba(43,108,176,0.5)] hover:bg-accent-dark hover:-translate-y-1"
+              >
+                詳細・チケット情報
+              </Link>
+              <Link 
+                href="/contact" 
+                className="flex-1 min-w-[220px] text-center bg-transparent/15 border border-white/40 text-white px-10 py-4 rounded-2xl no-underline text-base font-semibold tracking-wide transition-all duration-300 ease hover:bg-white/10 hover:border-white/70"
+              >
+                お問い合わせ
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
