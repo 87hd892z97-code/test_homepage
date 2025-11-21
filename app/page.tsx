@@ -80,7 +80,7 @@ export default function Home() {
         </section>
       </div>
 
-      <section id="contact" className="bg-card dark:bg-[#252526] rounded-lg p-4 mb-4 transition-colors duration-300">
+      <section id="contact" className="glass-card rounded-lg p-4 mb-4 transition-colors duration-300">
         <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden">
           <h3 className="mt-0">
             <Link href="/contact" className="text-accent dark:text-[#4fc3f7] no-underline hover:text-accent-dark dark:hover:text-[#81d4fa]">お問い合わせ</Link>

@@ -14,19 +14,19 @@ export default function RecruitPage() {
       <section className="mb-12">
         <h2 className="text-2xl mb-4 text-text-secondary">募集要項</h2>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6 mt-8 max-mobile:grid-cols-1 max-mobile:gap-4">
-          <div className="bg-white p-8 rounded-xl shadow-md text-center max-mobile:p-6">
+          <div className="glass-card p-8 rounded-xl text-center max-mobile:p-6">
             <h3 className="text-accent mb-4 text-xl">対象</h3>
             <p className="text-base leading-loose">横浜国立大学 常磐台キャンパスに通える大学生（学部生・大学院生）</p>
           </div>
-          <div className="bg-white p-8 rounded-xl shadow-md text-center max-mobile:p-6">
+          <div className="glass-card p-8 rounded-xl text-center max-mobile:p-6">
             <h3 className="text-accent mb-4 text-xl">楽器</h3>
             <p className="text-base leading-loose">弦楽器、管楽器、打楽器</p>
           </div>
-          <div className="bg-white p-8 rounded-xl shadow-md text-center max-mobile:p-6">
+          <div className="glass-card p-8 rounded-xl text-center max-mobile:p-6">
             <h3 className="text-accent mb-4 text-xl">経験</h3>
             <p className="text-base leading-loose">初心者から上級者まで歓迎</p>
           </div>
-          <div className="bg-white p-8 rounded-xl shadow-md text-center max-mobile:p-6">
+          <div className="glass-card p-8 rounded-xl text-center max-mobile:p-6">
             <h3 className="text-accent mb-4 text-xl">練習</h3>
             <p className="text-base leading-loose">週2回（水曜・土曜）</p>
           </div>
@@ -36,12 +36,12 @@ export default function RecruitPage() {
       <section className="mb-12">
         <h2 className="text-2xl mb-4 text-text-secondary">練習時間</h2>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-8 mt-4 max-mobile:grid-cols-1 max-mobile:gap-4">
-          <div className="bg-white p-6 rounded-lg shadow-sm max-mobile:p-4">
+          <div className="glass-card p-6 rounded-lg max-mobile:p-4">
             <h3 className="text-accent mb-4 max-mobile:text-lg">通常練習</h3>
             <p className="text-base leading-loose max-mobile:text-sm">毎週水曜日 17:00～21:00</p>
             <p className="text-base leading-loose max-mobile:text-sm">毎週土曜日 15:00～21:00</p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-sm max-mobile:p-4">
+          <div className="glass-card p-6 rounded-lg max-mobile:p-4">
             <h3 className="text-accent mb-4 max-mobile:text-lg">合宿</h3>
             <p className="text-base leading-loose max-mobile:text-sm">夏、春休みに年2回</p>
             <p className="text-base leading-loose max-mobile:text-sm">5泊6日程度</p>
@@ -58,7 +58,7 @@ export default function RecruitPage() {
       <section className="mb-12">
         <h2 className="text-2xl mb-4 text-text-secondary">募集パート</h2>
         <ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 list-none p-0 max-mobile:grid-cols-2 max-mobile:gap-3 max-[480px]:grid-cols-1 max-[480px]:gap-2.5">
-          <li className="bg-white p-3 rounded-lg text-center shadow-sm max-mobile:p-2.5 max-mobile:text-sm max-[480px]:p-2 max-[480px]:text-sm">ヴァイオリン</li>
+          <li className="glass-card p-3 rounded-lg text-center max-mobile:p-2.5 max-mobile:text-sm max-[480px]:p-2 max-[480px]:text-sm">ヴァイオリン</li>
           <li className="bg-white p-3 rounded-lg text-center shadow-sm max-mobile:p-2.5 max-mobile:text-sm max-[480px]:p-2 max-[480px]:text-sm">ヴィオラ</li>
           <li className="bg-white p-3 rounded-lg text-center shadow-sm max-mobile:p-2.5 max-mobile:text-sm max-[480px]:p-2 max-[480px]:text-sm">チェロ</li>
           <li className="bg-white p-3 rounded-lg text-center shadow-sm max-mobile:p-2.5 max-mobile:text-sm max-[480px]:p-2 max-[480px]:text-sm">コントラバス</li>
@@ -70,28 +70,28 @@ export default function RecruitPage() {
           <li className="bg-white p-3 rounded-lg text-center shadow-sm max-mobile:p-2.5 max-mobile:text-sm max-[480px]:p-2 max-[480px]:text-sm">トランペット</li>
           <li className="bg-white p-3 rounded-lg text-center shadow-sm max-mobile:p-2.5 max-mobile:text-sm max-[480px]:p-2 max-[480px]:text-sm">トロンボーン</li>
           <li className="bg-white p-3 rounded-lg text-center shadow-sm max-mobile:p-2.5 max-mobile:text-sm max-[480px]:p-2 max-[480px]:text-sm">チューバ</li>
-          <li className="bg-white p-3 rounded-lg text-center shadow-sm max-mobile:p-2.5 max-mobile:text-sm max-[480px]:p-2 max-[480px]:text-sm">打楽器</li>
+          <li className="glass-card p-3 rounded-lg text-center max-mobile:p-2.5 max-mobile:text-sm max-[480px]:p-2 max-[480px]:text-sm">打楽器</li>
         </ul>
       </section>
 
       <section className="mb-12">
         <h2 className="text-2xl mb-4 text-text-secondary">入団までの流れ</h2>
         <div className="flex flex-col gap-8 mt-8 max-mobile:gap-4">
-          <div className="flex items-start gap-6 p-6 bg-white rounded-xl shadow-md max-mobile:gap-6 max-mobile:p-4">
+          <div className="flex items-start gap-6 p-6 glass-card rounded-xl max-mobile:gap-6 max-mobile:p-4">
             <div className="bg-accent text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0">1</div>
             <div className="flex-1">
               <h3 className="text-accent mb-2">見学・体験</h3>
               <p className="text-base leading-loose max-mobile:text-sm">まずは練習を見学していただき、実際に楽器を体験していただけます。</p>
             </div>
           </div>
-          <div className="flex items-start gap-6 p-6 bg-white rounded-xl shadow-md max-mobile:gap-6 max-mobile:p-4">
+          <div className="flex items-start gap-6 p-6 glass-card rounded-xl max-mobile:gap-6 max-mobile:p-4">
             <div className="bg-accent text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0">2</div>
             <div className="flex-1">
               <h3 className="text-accent mb-2">面談</h3>
               <p className="text-base leading-loose max-mobile:text-sm">団の活動内容や練習スケジュールについて詳しくお話しします。</p>
             </div>
           </div>
-          <div className="flex items-start gap-6 p-6 bg-white rounded-xl shadow-md max-mobile:gap-6 max-mobile:p-4">
+          <div className="flex items-start gap-6 p-6 glass-card rounded-xl max-mobile:gap-6 max-mobile:p-4">
             <div className="bg-accent text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0">3</div>
             <div className="flex-1">
               <h3 className="text-accent mb-2">入団</h3>
@@ -104,22 +104,22 @@ export default function RecruitPage() {
       <section className="mb-12">
         <h2 className="text-2xl mb-4 text-text-secondary">入団のメリット</h2>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 mt-8 max-mobile:grid-cols-1 max-mobile:gap-4">
-          <div className="bg-white p-8 rounded-xl shadow-md max-mobile:p-6">
+          <div className="glass-card p-8 rounded-xl max-mobile:p-6">
             <h3 className="text-accent mb-4 text-xl">技術向上</h3>
             <p className="text-base leading-loose">個人レッスンやパート練習を通じて、演奏技術を向上させることができます。</p>
           </div>
-          <div className="bg-white p-8 rounded-xl shadow-md max-mobile:p-6">
+          <div className="glass-card p-8 rounded-xl max-mobile:p-6">
             <h3 className="text-accent mb-4 text-xl">仲間との交流</h3>
             <p className="text-base leading-loose">同じ音楽への情熱を持つ仲間と出会い、深い友情を築くことができます。</p>
           </div>
-          <div className="bg-white p-8 rounded-xl shadow-md max-mobile:p-6">
+          <div className="glass-card p-8 rounded-xl max-mobile:p-6">
             <h3 className="text-accent mb-4 text-xl">演奏会参加</h3>
             <p className="text-base leading-loose">定期演奏会や学外での演奏会に参加し、貴重な経験を積むことができます。</p>
           </div>
         </div>
       </section>
 
-      <section className="bg-gray-100 p-8 rounded-xl text-center max-mobile:p-6 max-[480px]:p-4">
+      <section className="glass-card p-8 rounded-xl text-center max-mobile:p-6 max-[480px]:p-4">
         <h2 className="text-2xl mb-4 text-text-secondary">お問い合わせ</h2>
         <p className="text-base leading-loose mb-6">入団にご興味のある方は、お気軽にお問い合わせください。</p>
         <div className="my-6">

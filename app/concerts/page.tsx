@@ -10,7 +10,7 @@ import { adaptDbConcertToFrontend } from '../lib/concertAdapter';
 // カード専用のスケルトンコンポーネント
 function ConcertCardSkeleton() {
   return (
-    <div className="bg-gradient-to-br from-gray-light to-gray-lighter border-0 rounded-xl shadow-[0_4px_20px_rgba(43,108,176,0.1)] overflow-hidden transition-transform duration-slow ease flex flex-col hover:-translate-y-[5px] hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)]">
+    <div className="glass-card border-0 rounded-xl overflow-hidden transition-transform duration-slow ease flex flex-col hover:-translate-y-[5px]">
       <div className="relative w-full h-[250px] overflow-hidden">
         <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer"></div>
       </div>
@@ -52,7 +52,7 @@ function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: boolea
   );
 
   const Text = (
-    <div className="h-full w-full bg-white/95 flex flex-col p-6 overflow-y-auto">
+    <div className="h-full w-full glass-card flex flex-col p-6 overflow-y-auto">
       <h3 className="text-2xl text-accent m-0 mb-2 font-bold">{concert.title}</h3>
       <p className="text-lg text-muted m-0 mb-4 font-medium">{concert.subtitle}</p>
       <div className="space-y-3 text-sm text-text-secondary">
@@ -102,7 +102,7 @@ function ConcertCard({ concert, isUpcoming }: { concert: any, isUpcoming: boolea
   );
 
   return (
-    <div className="group bg-gradient-to-br from-gray-light to-gray-lighter border-0 rounded-xl shadow-[0_4px_20px_rgba(43,108,176,0.1)] transition-transform duration-slow ease md:hover:-translate-y-[5px] md:hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] flex flex-col">
+    <div className="group glass-card border-0 rounded-xl transition-transform duration-slow ease md:hover:-translate-y-[5px] flex flex-col">
       <div className="relative w-full aspect-[210/297] overflow-hidden rounded-xl">
         {/* Mobile toggle */}
         <div className="h-full w-full md:hidden">
@@ -313,7 +313,7 @@ export default function ConcertsPage() {
           <h2 className="text-2xl mb-4 text-text-secondary m-0">過去の演奏会</h2>
           <Link 
             href="/concerts/past" 
-            className="text-sm px-5 py-2.5 rounded-sm transition-all duration-300 ease no-underline whitespace-nowrap bg-white text-accent border border-accent hover:bg-accent hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_8px_rgba(43,108,176,0.2)] max-mobile:w-full max-mobile:text-center"
+            className="glass-card text-sm px-5 py-2.5 rounded-lg transition-all duration-300 ease no-underline whitespace-nowrap text-accent hover:-translate-y-0.5 hover:bg-accent hover:text-white max-mobile:w-full max-mobile:text-center"
           >
             過去の演奏会一覧を見る →
           </Link>
@@ -332,17 +332,17 @@ export default function ConcertsPage() {
       <section className="mt-16">
         <h2 className="text-2xl mb-4 text-text-secondary">演奏会について</h2>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8 mt-8 max-mobile:grid-cols-1 max-mobile:gap-6">
-          <div className="bg-white p-8 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.1)] text-center max-mobile:p-6">
+          <div className="glass-card p-8 rounded-xl text-center max-mobile:p-6">
             <h3 className="text-accent mb-4 text-2xl max-mobile:text-lg">チケット予約</h3>
             <p className="text-muted leading-relaxed mb-6 max-mobile:text-sm">演奏会のチケットは事前予約制です。お問い合わせページからご連絡ください。</p>
             <Link 
               href="/contact" 
-              className="inline-block bg-transparent text-accent border border-accent px-6 py-2.5 rounded-lg no-underline font-normal transition-all duration-300 ease hover:bg-accent hover:text-white hover:-translate-y-0.5"
+              className="inline-block glass-card text-accent border border-accent/50 px-6 py-2.5 rounded-lg no-underline font-normal transition-all duration-300 ease hover:bg-accent hover:text-white hover:-translate-y-0.5"
             >
               お問い合わせ
             </Link>
           </div>
-          <div className="bg-white p-8 rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.1)] text-center max-mobile:p-6">
+          <div className="glass-card p-8 rounded-xl text-center max-mobile:p-6">
             <h3 className="text-accent mb-4 text-2xl max-mobile:text-lg">会場アクセス</h3>
             <p className="text-muted leading-relaxed mb-6 max-mobile:text-sm">各会場へのアクセス方法や駐車場情報は、演奏会案内でご確認ください。</p>
           </div>

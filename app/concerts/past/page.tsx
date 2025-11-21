@@ -89,7 +89,7 @@ function PastConcertCard({ concert, date, venue, conductor, pieces, cancelled, c
   const imagePath = getConcertImagePath(concert, pieces, undefined);
   
   return (
-    <div className={`bg-card rounded-lg p-6 shadow-sm transition-shadow duration-slow ease flex-1 flex flex-col h-full hover:shadow-lg max-mobile:p-5 max-[480px]:p-4 ${
+    <div className={`glass-card rounded-lg p-6 transition-shadow duration-slow ease flex-1 flex flex-col h-full max-mobile:p-5 max-[480px]:p-4 ${
       cancelled ? 'opacity-60 relative' : ''
     }`}>
       {cancelled && (
@@ -462,7 +462,7 @@ function PastConcertsContent() {
 
   // スケルトンコンポーネント
   const SkeletonCard = () => (
-    <div className="bg-card rounded-lg p-6 shadow-sm transition-shadow duration-slow ease flex-1 flex flex-col h-full">
+        <div className="glass-card rounded-lg p-6 transition-shadow duration-slow ease flex-1 flex flex-col h-full">
       <div className="border-b border-border-lighter pb-3 mb-4">
         <div className="h-6 w-4/5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded"></div>
       </div>
@@ -636,7 +636,7 @@ export default function PastConcertsPage() {
       <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
         <div className="max-w-[1600px] mx-auto p-8 grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-6">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="bg-card rounded-lg p-6 shadow-sm">
+            <div key={i} className="glass-card rounded-lg p-6">
               <div className="h-6 w-4/5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer rounded mb-4"></div>
               <div className="bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[200%_100%] animate-shimmer h-[200px] rounded-lg mb-3"></div>
             </div>
