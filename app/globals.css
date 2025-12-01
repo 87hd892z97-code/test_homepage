@@ -12,8 +12,8 @@
   }
 
   .dark {
-    /* Dark mode CSS Variables - Cursor theme inspired */
-    --accent-rgb: 79, 195, 247;
+    /* Dark mode accent color unified with main navigation blue */
+    --accent-rgb: 43, 108, 176;
   }
 
   * {
@@ -114,18 +114,23 @@
   .glass-card,
   .glass-header,
   .glass-header-dark {
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.16),
-      rgba(255, 255, 255, 0.04)
-    );
-    backdrop-filter: blur(2px) saturate(200%);
-    -webkit-backdrop-filter: blur(2px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.3), transparent 55%),
+      radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.16), transparent 38%),
+      linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.32),
+        rgba(169, 210, 245, 0.04),
+        rgba(15, 45, 110, 0.06),
+        rgba(255, 255, 255, 0.16)
+      );
+    backdrop-filter: blur(5px) saturate(135%);
+    -webkit-backdrop-filter: blur(5px) saturate(135%);
+    border: 0.5px solid rgba(255, 255, 255, 0.16);
     box-shadow:
-      0 30px 70px rgba(0, 0, 0, 0.35),
-      inset 0 1px 0 rgba(255, 255, 255, 0.45),
-      inset 0 -12px 40px rgba(255, 255, 255, 0.08);
+      0 10px 20px rgba(15, 23, 42, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 -12px 40px rgba(255, 255, 255, 0.06);
     transition: all 0.4s ease;
   }
 
@@ -153,7 +158,7 @@
       rgba(20, 20, 25, 0.55),
       rgba(15, 15, 18, 0.35)
     );
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 0.5px solid rgba(255, 255, 255, 0.18);
     box-shadow:
       0 30px 70px rgba(0, 0, 0, 0.45),
       inset 0 1px 0 rgba(255, 255, 255, 0.25),
