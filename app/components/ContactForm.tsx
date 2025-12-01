@@ -82,10 +82,10 @@ export default function ContactForm() {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`p-2 border rounded-sm mt-1 text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] max-mobile:p-3 max-[480px]:text-base ${
+            className={`p-2 border rounded-sm mt-1 text-base dark:text-[#d4d4d4] dark:bg-[#1e1e1e] max-mobile:p-3 max-[480px]:text-base ${
               errors.name 
                 ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
-                : 'border-border dark:border-[#3e3e42] focus:border-accent dark:focus:border-[#4fc3f7] focus:ring-2 focus:ring-accent/30 dark:focus:ring-[#4fc3f7]/30'
+                : 'border-border dark:border-[#3e3e42] focus:border-accent dark:focus:border-[#4aaaf0] focus:ring-2 focus:ring-accent/30 dark:focus:ring-[#4aaaf0]/30'
             } outline-none transition-colors duration-fast`}
           />
         </label>
@@ -99,10 +99,10 @@ export default function ContactForm() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`p-2 border rounded-sm mt-1 text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] max-mobile:p-3 max-[480px]:text-base ${
+            className={`p-2 border rounded-sm mt-1 text-base dark:text-[#d4d4d4] dark:bg-[#1e1e1e] max-mobile:p-3 max-[480px]:text-base ${
               errors.email 
                 ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
-                : 'border-border dark:border-[#3e3e42] focus:border-accent dark:focus:border-[#4fc3f7] focus:ring-2 focus:ring-accent/30 dark:focus:ring-[#4fc3f7]/30'
+                : 'border-border dark:border-[#3e3e42] focus:border-accent dark:focus:border-[#4aaaf0] focus:ring-2 focus:ring-accent/30 dark:focus:ring-[#4aaaf0]/30'
             } outline-none transition-colors duration-fast`}
           />
         </label>
@@ -116,10 +116,10 @@ export default function ContactForm() {
             rows={4}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className={`p-2 border rounded-sm mt-1 text-base dark:text-[#cccccc] dark:bg-[#1e1e1e] max-mobile:p-3 max-[480px]:text-base ${
+            className={`p-2 border rounded-sm mt-1 text-base dark:text-[#d4d4d4] dark:bg-[#1e1e1e] max-mobile:p-3 max-[480px]:text-base ${
               errors.message 
                 ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
-                : 'border-border dark:border-[#3e3e42] focus:border-accent dark:focus:border-[#4fc3f7] focus:ring-2 focus:ring-accent/30 dark:focus:ring-[#4fc3f7]/30'
+                : 'border-border dark:border-[#3e3e42] focus:border-accent dark:focus:border-[#4aaaf0] focus:ring-2 focus:ring-accent/30 dark:focus:ring-[#4aaaf0]/30'
             } outline-none transition-colors duration-fast resize-y`}
           />
         </label>

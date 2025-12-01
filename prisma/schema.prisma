@@ -71,3 +71,31 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Trainer {
+  id          Int      @id @default(autoincrement())
+  name        String
+  instrument  String
+  title       String?
+  description String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  images      TrainerImage[]
+
+  @@index([instrument])
+  @@index([order])
+}
+
+model TrainerImage {
+  id        Int      @id @default(autoincrement())
+  trainerId Int
+  trainer   Trainer  @relation(fields: [trainerId], references: [id], onDelete: Cascade)
+  imagePath String
+  isPrimary Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([trainerId, imagePath])
+  @@index([trainerId])
+}

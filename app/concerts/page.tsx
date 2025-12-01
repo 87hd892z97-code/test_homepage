@@ -252,30 +252,56 @@ export default function ConcertsPage() {
     setLoading(true);
     try {
       const response = await fetch('/api/concerts');
-      if (response.ok) {
-        const data = await response.json();
-        const adaptedConcerts = data.map((concert: any) => adaptDbConcertToFrontend(concert));
-
-        // データベースのstatusフィールドで分類
-        const upcoming = adaptedConcerts
-          .filter((c: any) => c.status === 'upcoming')
-          .sort((a: any, b: any) => {
-            const numA = parseInt(a.title.match(/\d+/)?.[0] || '0');
-            const numB = parseInt(b.title.match(/\d+/)?.[0] || '0');
-            return numB - numA; // 降順
-          });
-
-        const past = adaptedConcerts
-          .filter((c: any) => c.status === 'completed')
-          .sort((a: any, b: any) => {
-            const numA = parseInt(a.title.match(/\d+/)?.[0] || '0');
-            const numB = parseInt(b.title.match(/\d+/)?.[0] || '0');
-            return numB - numA; // 降順
-          });
-
-        setUpcomingConcertList(upcoming);
-        setPastConcertList(past.slice(0, 5)); // 最新5件のみ表示
+      if (!response.ok) {
+        console.error('Failed to fetch concerts: HTTP', response.status, response.statusText);
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        setLoading(false);
+        return;
       }
+
+      const data = await response.json();
+      console.log('Fetched concerts data:', data);
+      
+      if (!Array.isArray(data)) {
+        console.error('Expected array but got:', typeof data, data);
+        setLoading(false);
+        return;
+      }
+
+      const adaptedConcerts = data.map((concert: any) => {
+        try {
+          return adaptDbConcertToFrontend(concert);
+        } catch (error) {
+          console.error('Error adapting concert:', concert, error);
+          return null;
+        }
+      }).filter((concert: any) => concert !== null);
+
+      console.log('Adapted concerts:', adaptedConcerts);
+
+      // データベースのstatusフィールドで分類
+      const upcoming = adaptedConcerts
+        .filter((c: any) => c.status === 'upcoming')
+        .sort((a: any, b: any) => {
+          const numA = parseInt(a.title.match(/\d+/)?.[0] || '0');
+          const numB = parseInt(b.title.match(/\d+/)?.[0] || '0');
+          return numB - numA; // 降順
+        });
+
+      const past = adaptedConcerts
+        .filter((c: any) => c.status === 'completed')
+        .sort((a: any, b: any) => {
+          const numA = parseInt(a.title.match(/\d+/)?.[0] || '0');
+          const numB = parseInt(b.title.match(/\d+/)?.[0] || '0');
+          return numB - numA; // 降順
+        });
+
+      console.log('Upcoming concerts:', upcoming);
+      console.log('Past concerts:', past);
+
+      setUpcomingConcertList(upcoming);
+      setPastConcertList(past.slice(0, 5)); // 最新5件のみ表示
     } catch (error) {
       console.error('Failed to fetch concerts:', error);
     } finally {

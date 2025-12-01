@@ -5,13 +5,13 @@ interface DbConcert {
   concertNumber: number;
   date: string;
   venue: string;
-  conductor?: string | null;
-  studentConductor?: string | null;
+  conductor: string;
   cancelled?: boolean;
   status?: string | null;
-  pieces?: string[];
+  pieces?: string[] | null;
   chorus?: string | null;
   soprano?: string | null;
+  soprano2?: string | null;
   mezzoSoprano?: string | null;
   alto?: string | null;
   tenor?: string | null;
@@ -19,6 +19,7 @@ interface DbConcert {
   soloist?: string | null;
   soloistInstrument?: string | null;
   ticketUrl?: string | null;
+  images?: any[];
 }
 
 interface FrontendConcert {
@@ -48,13 +49,13 @@ export function adaptDbConcertToFrontend(dbConcert: DbConcert): FrontendConcert 
   return {
     id: dbConcert.id,
     title: `第${dbConcert.concertNumber}回定期演奏会`,
-    subtitle: dbConcert.pieces?.[0] || '',
+    subtitle: (dbConcert.pieces && dbConcert.pieces.length > 0) ? dbConcert.pieces[0] : '',
     date: dbConcert.date,
     venue: dbConcert.venue,
     conductor: dbConcert.conductor || '',
-    status: dbConcert.status === 'upcoming' ? 'upcoming' : 'completed',
-    description: dbConcert.pieces ? dbConcert.pieces.join('、') : '',
-    pieces: dbConcert.pieces,
+    status: (dbConcert.status === 'upcoming') ? 'upcoming' : 'completed',
+    description: (dbConcert.pieces && dbConcert.pieces.length > 0) ? dbConcert.pieces.join('、') : '',
+    pieces: dbConcert.pieces || [],
     chorus: dbConcert.chorus || undefined,
     soprano: dbConcert.soprano || undefined,
     mezzoSoprano: dbConcert.mezzoSoprano || undefined,
@@ -73,12 +74,11 @@ export function adaptDbConcertToPastConcert(dbConcert: DbConcert) {
     date: dbConcert.date,
     venue: dbConcert.venue,
     conductor: dbConcert.conductor || undefined,
-    studentConductor: dbConcert.studentConductor || undefined,
     pieces: dbConcert.pieces || [],
     cancelled: dbConcert.cancelled || false,
     chorus: dbConcert.chorus || undefined,
     soprano: dbConcert.soprano || undefined,
-    soprano2: undefined,
+    soprano2: dbConcert.soprano2 || undefined,
     mezzoSoprano: dbConcert.mezzoSoprano || undefined,
     alto: dbConcert.alto || undefined,
     tenor: dbConcert.tenor || undefined,

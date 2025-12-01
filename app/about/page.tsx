@@ -1,9 +1,10 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function AboutPage() {
   return (
     <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
-      <h1 className="text-4xl text-accent dark:text-[#4fc3f7] mb-8 pb-2 border-b border-accent dark:border-[#4fc3f7]">楽団紹介</h1>
+      <h1 className="text-4xl text-accent dark:text-[#4aaaf0] mb-8 pb-2 border-b border-accent dark:border-[#4aaaf0]">楽団紹介</h1>
 
       <section className="mb-12">
         <h2 className="text-2xl mb-4 text-text-secondary dark:text-[#d4d4d4]">横浜国立大学管弦楽団</h2>
@@ -27,9 +28,9 @@ export default function AboutPage() {
               alt="顧問 杉山 久仁子"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
-            <span className="block font-semibold text-accent dark:text-[#4fc3f7] text-sm mb-2 max-mobile:text-sm">顧問</span>
+            <span className="block font-semibold text-accent dark:text-[#4aaaf0] text-sm mb-2 max-mobile:text-sm">顧問</span>
             <p className="text-lg font-medium my-2 text-text-secondary dark:text-[#d4d4d4] max-mobile:text-base">杉山 久仁子</p>
             <p className="text-sm text-muted dark:text-[#858585] m-0 italic max-mobile:text-sm">（横浜国立大学教育学部教授）</p>
           </div>
@@ -39,9 +40,9 @@ export default function AboutPage() {
               alt="学生責任者 永田 光佑"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
-            <span className="block font-semibold text-accent dark:text-[#4fc3f7] text-sm mb-2 max-mobile:text-sm">学生責任者</span>
+            <span className="block font-semibold text-accent dark:text-[#4aaaf0] text-sm mb-2 max-mobile:text-sm">学生責任者</span>
             <p className="text-lg font-medium my-2 text-text-secondary dark:text-[#d4d4d4] max-mobile:text-base">永田 光佑</p>
           </div>
           <div className="glass-card p-6 rounded-lg text-center max-mobile:p-4">
@@ -50,7 +51,7 @@ export default function AboutPage() {
               alt="コンサートマスター 橋本 大輝"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
             <span className="block font-semibold text-accent text-sm mb-2 max-mobile:text-sm">コンサートマスター</span>
             <p className="text-lg font-medium my-2 text-text-secondary max-mobile:text-base">橋本 大輝</p>
@@ -61,7 +62,7 @@ export default function AboutPage() {
               alt="技術委員長 森本 湧大"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
             <span className="block font-semibold text-accent text-sm mb-2 max-mobile:text-sm">技術委員長</span>
             <p className="text-lg font-medium my-2 text-text-secondary max-mobile:text-base">森本 湧大</p>
@@ -72,7 +73,7 @@ export default function AboutPage() {
               alt="定演委員長 中園 拓也"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
             <span className="block font-semibold text-accent text-sm mb-2 max-mobile:text-sm">定演委員長</span>
             <p className="text-lg font-medium my-2 text-text-secondary max-mobile:text-base">中園 拓也</p>
@@ -83,7 +84,7 @@ export default function AboutPage() {
               alt="運営委員長 鈴木 是雄"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
             <span className="block font-semibold text-accent text-sm mb-2 max-mobile:text-sm">運営委員長</span>
             <p className="text-lg font-medium my-2 text-text-secondary max-mobile:text-base">鈴木 是雄</p>
@@ -94,7 +95,7 @@ export default function AboutPage() {
               alt="選曲委員長 吉江 ひめ杏"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
             <span className="block font-semibold text-accent text-sm mb-2 max-mobile:text-sm">選曲委員長</span>
             <p className="text-lg font-medium my-2 text-text-secondary max-mobile:text-base">吉江 ひめ杏</p>
@@ -105,7 +106,7 @@ export default function AboutPage() {
               alt="移動音楽会委員長 朝見 美嘉"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
             <span className="block font-semibold text-accent text-sm mb-2 max-mobile:text-sm">移動音楽会委員長</span>
             <p className="text-lg font-medium my-2 text-text-secondary max-mobile:text-base">朝見 美嘉</p>
@@ -116,7 +117,7 @@ export default function AboutPage() {
               alt="機関誌委員長 佐野 汐梨"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
             <span className="block font-semibold text-accent text-sm mb-2 max-mobile:text-sm">機関誌委員長</span>
             <p className="text-lg font-medium my-2 text-text-secondary max-mobile:text-base">佐野 汐梨</p>
@@ -127,7 +128,7 @@ export default function AboutPage() {
               alt="執行委員 今泉 くるみ"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
             <span className="block font-semibold text-accent text-sm mb-2 max-mobile:text-sm">執行委員</span>
             <p className="text-lg font-medium my-2 text-text-secondary max-mobile:text-base">今泉 くるみ</p>
@@ -138,7 +139,7 @@ export default function AboutPage() {
               alt="執行委員 鈴木 颯太"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
             <span className="block font-semibold text-accent text-sm mb-2 max-mobile:text-sm">執行委員</span>
             <p className="text-lg font-medium my-2 text-text-secondary max-mobile:text-base">鈴木 颯太</p>
@@ -149,12 +150,25 @@ export default function AboutPage() {
               alt="執行委員 林 貴美"
               width={80}
               height={80}
-              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4fc3f7] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
+              className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 block border-2 border-accent dark:border-[#4aaaf0] max-mobile:w-[60px] max-mobile:h-[60px] max-mobile:mb-3"
             />
             <span className="block font-semibold text-accent text-sm mb-2 max-mobile:text-sm">執行委員</span>
             <p className="text-lg font-medium my-2 text-text-secondary max-mobile:text-base">林 貴美</p>
           </div>
         </div>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="text-2xl mb-4 text-text-secondary dark:text-[#d4d4d4]">トレーナー紹介</h2>
+        <p className="text-base leading-loose dark:text-[#cccccc] mb-4">
+          横浜国立大学管弦楽団のトレーナー陣をご紹介します。
+        </p>
+        <Link
+          href="/about/trainers"
+          className="text-base text-accent dark:text-[#4aaaf0] hover:underline underline-offset-4 transition-colors duration-300 ease"
+        >
+          トレーナー紹介ページへ →
+        </Link>
       </section>
     </div>
   );

@@ -6,14 +6,6 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: '横浜国立大学管弦楽団',
   description: '横浜国立大学管弦楽団の公式ウェブサイトです。',
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.ico', sizes: 'any' },
-    ],
-    shortcut: '/favicon.ico',
-    apple: '/icon.ico',
-  },
 };
 
 export default function RootLayout({
@@ -32,11 +24,12 @@ export default function RootLayout({
       </head>
       <body>
         <Header />
-        <ThemeToggle />
 
         <main>{children}</main>
 
-        <footer className="py-4 text-muted dark:text-[#858585]">
+        <ThemeToggle />
+
+        <footer className="py-4 text-muted">
           <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden">
             <div className="flex justify-between items-center gap-4 flex-wrap max-mobile:flex-col max-mobile:text-center max-mobile:gap-4">
               <p className="text-sm">© {new Date().getFullYear()} 横浜国立大学管弦楽団</p>

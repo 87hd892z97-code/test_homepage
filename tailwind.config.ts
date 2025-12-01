@@ -13,9 +13,9 @@ const config: Config = {
         bg: '#f7f7fb',
         card: '#ffffff',
         accent: {
-          DEFAULT: '#2b6cb0',
-          dark: '#1e4a72',
-          darker: '#245a8f',
+          DEFAULT: '#4aaaf0',
+          dark: '#3a8ed7',
+          darker: '#2c6fb4',
         },
         muted: '#666',
         text: {

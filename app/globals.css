@@ -12,8 +12,8 @@
   }
 
   .dark {
-    /* Dark mode accent color unified with main navigation blue */
-    --accent-rgb: 43, 108, 176;
+    /* Dark mode accent color unified with SVG blue */
+    --accent-rgb: 74, 170, 240;
   }
 
   * {
@@ -31,7 +31,7 @@
   }
 
   body {
-    @apply font-sans m-0 bg-bg dark:bg-[#1e1e1e] text-text dark:text-[#cccccc] antialiased;
+    @apply font-sans m-0 bg-bg dark:bg-[#1e1e1e] text-text dark:text-[#d4d4d4] antialiased;
     @apply leading-relaxed font-light tracking-tight text-base;
     @apply pt-20 overflow-x-hidden;
     -webkit-font-smoothing: antialiased;
@@ -116,19 +116,11 @@
   .glass-header-dark {
     background:
       radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.3), transparent 55%),
-      radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.16), transparent 38%),
-      linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.32),
-        rgba(169, 210, 245, 0.04),
-        rgba(15, 45, 110, 0.06),
-        rgba(255, 255, 255, 0.16)
-      );
+      radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.16), transparent 38%);
     backdrop-filter: blur(5px) saturate(135%);
-    -webkit-backdrop-filter: blur(5px) saturate(135%);
     border: 0.5px solid rgba(255, 255, 255, 0.16);
     box-shadow:
-      0 10px 20px rgba(15, 23, 42, 0.15),
+      0 0px 5px rgba(15, 23, 42, 0.15),
       inset 0 1px 0 rgba(255, 255, 255, 0.35),
       inset 0 -12px 40px rgba(255, 255, 255, 0.06);
     transition: all 0.4s ease;
@@ -141,7 +133,7 @@
   .dark .glass-header-dark {
   .glass-card {
     box-shadow:
-      0 4px 10px rgba(0, 0, 0, 0.08),
+      0 0px 5px rgba(0, 0, 0, 0.08),
       inset 0 1px 0 rgba(255, 255, 255, 0.35),
       inset 0 -4px 18px rgba(255, 255, 255, 0.04);
   }
@@ -168,7 +160,6 @@
   .glass-header {
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 
       0 4px 24px 0 rgba(31, 38, 135, 0.1),
@@ -187,7 +178,6 @@
   .glass-header-dark {
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 
       0 4px 24px 0 rgba(0, 0, 0, 0.2),

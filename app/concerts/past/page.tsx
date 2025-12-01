@@ -100,7 +100,7 @@ function PastConcertCard({ concert, date, venue, conductor, pieces, cancelled, c
           }}
         />
       )}
-      <div className="border-b border-border-lighter pb-3 mb-4">
+      <div className="border-b border-border-lighter dark:border-[#505050] pb-3 mb-4">
         <h3 className="text-2xl font-medium text-accent m-0 max-mobile:text-lg max-[480px]:text-base" style={{ letterSpacing: '-0.01em' }}>
           {concert}定期演奏会 {cancelled && '(中止)'}
         </h3>
@@ -125,8 +125,8 @@ function PastConcertCard({ concert, date, venue, conductor, pieces, cancelled, c
       )}
       <div className="flex flex-col gap-4 flex-1">
         <div className="flex flex-col gap-2">
-          <p className="font-medium text-text-secondary text-base m-0 max-mobile:text-sm">{date}</p>
-          <p className="text-muted text-sm m-0 max-mobile:text-sm">{venue}</p>
+          <p className="font-medium text-text text-base m-0 max-mobile:text-sm dark:text-[#d4d4d4]">{date}</p>
+          <p className="text-text-secondary text-sm m-0 max-mobile:text-sm dark:text-[#d4d4d4]">{venue}</p>
           {conductor && (
             <p className="text-accent text-sm font-medium m-0">指揮：{conductor}</p>
           )}
@@ -175,10 +175,10 @@ function PastConcertCard({ concert, date, venue, conductor, pieces, cancelled, c
         </div>
         {pieces && pieces.length > 0 && (
           <div className="mt-2">
-            <p className="font-medium mb-2 text-text-secondary text-sm">曲目：</p>
-            <ul className="list-none p-0 m-0">
-              {sortPieces(pieces).map((piece, index) => (
-                <li key={`${piece}-${index}`} className="text-muted text-sm leading-loose pl-0 relative max-mobile:text-xs" style={{ paddingLeft: '0' }}>
+            <p className="font-medium mb-2 text-text text-sm dark:text-[#d4d4d4]">曲目：</p>
+                   <ul className="list-none p-0 m-0">
+                     {sortPieces(pieces).map((piece, index) => (
+                       <li key={`${piece}-${index}`} className="text-text-secondary text-sm leading-loose pl-0 relative max-mobile:text-xs dark:text-[#d4d4d4]" style={{ paddingLeft: '0' }}>
                   <span className="absolute -left-3">・</span>
                   {piece}
                 </li>
@@ -231,12 +231,39 @@ function PastConcertsContent() {
   const fetchConcerts = async () => {
     try {
       const response = await fetch('/api/concerts/past');
-      if (response.ok) {
-        const data = await response.json();
-        const adaptedConcerts = data.map((concert: any) => adaptDbConcertToPastConcert(concert));
-        // APIは既に降順（新しいものが先）で取得されているため、reverse()は不要
-        setAllConcerts(adaptedConcerts);
+      if (!response.ok) {
+        console.error('Failed to fetch past concerts: HTTP', response.status, response.statusText);
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        // フォールバック: ハードコーディングされたデータを使用
+        setAllConcerts(getAllPastConcerts());
+        setLoading(false);
+        return;
       }
+
+      const data = await response.json();
+      console.log('Fetched past concerts data:', data);
+      
+      if (!Array.isArray(data)) {
+        console.error('Expected array but got:', typeof data, data);
+        // フォールバック: ハードコーディングされたデータを使用
+        setAllConcerts(getAllPastConcerts());
+        setLoading(false);
+        return;
+      }
+
+      const adaptedConcerts = data.map((concert: any) => {
+        try {
+          return adaptDbConcertToPastConcert(concert);
+        } catch (error) {
+          console.error('Error adapting concert:', concert, error);
+          return null;
+        }
+      }).filter((concert: any) => concert !== null);
+
+      console.log('Adapted past concerts:', adaptedConcerts);
+      // APIは既に降順（新しいものが先）で取得されているため、reverse()は不要
+      setAllConcerts(adaptedConcerts);
     } catch (error) {
       console.error('Failed to fetch concerts:', error);
       // フォールバック: ハードコーディングされたデータを使用
@@ -410,14 +437,14 @@ function PastConcertsContent() {
         <button
           key={1}
           onClick={() => handlePageChange(1)}
-          className="px-3 py-2 bg-white border border-border rounded-lg text-text-secondary text-sm cursor-pointer transition-all duration-fast ease hover:border-accent hover:bg-accent/8 hover:text-accent"
+          className="px-3 py-2 bg-white dark:bg-[#1e1e1e] border border-border dark:border-[#3e3e42] rounded-lg text-text-secondary dark:text-[#d4d4d4] text-sm cursor-pointer transition-all duration-fast ease hover:border-accent dark:hover:border-[#2b6cb0] hover:bg-accent/8 dark:hover:bg-[#2b6cb0]/20 hover:text-accent dark:hover:text-[#2b6cb0]"
         >
           1
         </button>
       );
       if (startPage > 2) {
         buttons.push(
-          <span key="ellipsis-start" className="px-2 text-text-secondary">...</span>
+          <span key="ellipsis-start" className="px-2 text-text-secondary dark:text-[#d4d4d4]">...</span>
         );
       }
     }
@@ -430,8 +457,8 @@ function PastConcertsContent() {
           onClick={() => handlePageChange(i)}
           className={`px-3 py-2 border rounded-lg text-sm cursor-pointer transition-all duration-fast ease ${
             i === pageToUse
-              ? 'bg-accent text-white border-accent font-semibold'
-              : 'bg-white border-border text-text-secondary hover:border-accent hover:bg-accent/8 hover:text-accent'
+              ? 'bg-accent dark:bg-[#2b6cb0] text-white border-accent dark:border-[#2b6cb0] font-semibold'
+              : 'bg-white dark:bg-[#1e1e1e] border-border dark:border-[#3e3e42] text-text-secondary dark:text-[#d4d4d4] hover:border-accent dark:hover:border-[#2b6cb0] hover:bg-accent/8 dark:hover:bg-[#2b6cb0]/20 hover:text-accent dark:hover:text-[#2b6cb0]'
           }`}
         >
           {i}
@@ -443,14 +470,14 @@ function PastConcertsContent() {
     if (endPage < totalPages) {
       if (endPage < totalPages - 1) {
         buttons.push(
-          <span key="ellipsis-end" className="px-2 text-text-secondary">...</span>
+          <span key="ellipsis-end" className="px-2 text-text-secondary dark:text-[#d4d4d4]">...</span>
         );
       }
       buttons.push(
         <button
           key={totalPages}
           onClick={() => handlePageChange(totalPages)}
-          className="px-3 py-2 bg-white border border-border rounded-lg text-text-secondary text-sm cursor-pointer transition-all duration-fast ease hover:border-accent hover:bg-accent/8 hover:text-accent"
+          className="px-3 py-2 bg-white dark:bg-[#1e1e1e] border border-border dark:border-[#3e3e42] rounded-lg text-text-secondary dark:text-[#d4d4d4] text-sm cursor-pointer transition-all duration-fast ease hover:border-accent dark:hover:border-[#2b6cb0] hover:bg-accent/8 dark:hover:bg-[#2b6cb0]/20 hover:text-accent dark:hover:text-[#2b6cb0]"
         >
           {totalPages}
         </button>
@@ -525,8 +552,8 @@ function PastConcertsContent() {
       
       <div className="max-w-container mx-auto px-4 w-full overflow-x-hidden py-12 pt-8 max-w-2xl mx-auto">
         <div className="mb-12">
-          <h1 className="text-4xl text-accent mb-8 pb-2 border-b border-accent max-mobile:text-3xl">過去の演奏会記録</h1>
-          <p className="mt-2 text-muted text-lg max-mobile:text-sm">
+          <h1 className="text-4xl text-accent dark:text-[#2b6cb0] mb-8 pb-2 border-b border-accent dark:border-[#2b6cb0] max-mobile:text-3xl">過去の演奏会記録</h1>
+          <p className="mt-2 text-muted dark:text-[#858585] text-lg max-mobile:text-sm">
             横浜国立大学管弦楽団がこれまでに開催してきた定期演奏会の記録です。
           </p>
           {/* 検索バー */}
@@ -536,11 +563,11 @@ function PastConcertsContent() {
               placeholder="演奏会を検索..."
               value={searchInputValue}
               onChange={(e) => handleSearchInputChange(e.target.value)}
-              className="w-full p-3 text-sm border border-border-lighter rounded-md outline-none transition-colors duration-fast focus:border-accent"
+              className="w-full p-3 text-sm border border-border-lighter dark:border-[#3e3e42] rounded-md outline-none transition-colors duration-fast focus:border-accent dark:focus:border-[#2b6cb0] bg-white dark:bg-[#1e1e1e] text-text dark:text-[#d4d4d4] placeholder:text-muted dark:placeholder:text-[#858585]"
             />
           </div>
           {searchQuery && (
-            <p className="mt-2 text-sm text-muted">
+            <p className="mt-2 text-sm text-muted dark:text-[#858585]">
               「{searchQuery}」の検索結果: {filteredConcerts.length}件
             </p>
           )}
@@ -584,7 +611,7 @@ function PastConcertsContent() {
                 <button
                   onClick={() => handlePageChange(validPage - 1)}
                   disabled={validPage === 1}
-                  className="px-4 py-2 bg-white border border-border rounded-lg text-text-secondary text-sm cursor-pointer transition-all duration-fast ease hover:border-accent hover:bg-accent/8 hover:text-accent disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-border disabled:hover:bg-white disabled:hover:text-text-secondary"
+                  className="px-4 py-2 bg-white dark:bg-[#1e1e1e] border border-border dark:border-[#3e3e42] rounded-lg text-text-secondary dark:text-[#d4d4d4] text-sm cursor-pointer transition-all duration-fast ease hover:border-accent dark:hover:border-[#2b6cb0] hover:bg-accent/8 dark:hover:bg-[#2b6cb0]/20 hover:text-accent dark:hover:text-[#2b6cb0] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-border dark:disabled:hover:border-[#3e3e42] disabled:hover:bg-white dark:disabled:hover:bg-[#1e1e1e] disabled:hover:text-text-secondary dark:disabled:hover:text-[#d4d4d4]"
                 >
                   前へ
                 </button>
@@ -592,7 +619,7 @@ function PastConcertsContent() {
                 <button
                   onClick={() => handlePageChange(validPage + 1)}
                   disabled={validPage === totalPages}
-                  className="px-4 py-2 bg-white border border-border rounded-lg text-text-secondary text-sm cursor-pointer transition-all duration-fast ease hover:border-accent hover:bg-accent/8 hover:text-accent disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-border disabled:hover:bg-white disabled:hover:text-text-secondary"
+                  className="px-4 py-2 bg-white dark:bg-[#1e1e1e] border border-border dark:border-[#3e3e42] rounded-lg text-text-secondary dark:text-[#d4d4d4] text-sm cursor-pointer transition-all duration-fast ease hover:border-accent dark:hover:border-[#2b6cb0] hover:bg-accent/8 dark:hover:bg-[#2b6cb0]/20 hover:text-accent dark:hover:text-[#2b6cb0] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-border dark:disabled:hover:border-[#3e3e42] disabled:hover:bg-white dark:disabled:hover:bg-[#1e1e1e] disabled:hover:text-text-secondary dark:disabled:hover:text-[#d4d4d4]"
                 >
                   次へ
                 </button>
@@ -601,7 +628,7 @@ function PastConcertsContent() {
           </>
         ) : (
           <div className="text-center py-12">
-            <p className="text-muted text-lg">
+            <p className="text-muted dark:text-[#858585] text-lg">
               {searchQuery ? '検索結果が見つかりませんでした' : '演奏会データがありません'}
             </p>
             {searchQuery && (
@@ -609,7 +636,7 @@ function PastConcertsContent() {
                 onClick={() => {
                   handleSearch('');
                 }}
-                className="mt-4 px-4 py-2 bg-transparent text-accent border border-accent rounded-lg cursor-pointer transition-all duration-300 ease hover:bg-accent hover:text-white"
+                className="mt-4 px-4 py-2 bg-transparent text-accent dark:text-[#2b6cb0] border border-accent dark:border-[#2b6cb0] rounded-lg cursor-pointer transition-all duration-300 ease hover:bg-accent dark:hover:bg-[#2b6cb0] hover:text-white"
               >
                 検索をクリア
               </button>
@@ -620,7 +647,7 @@ function PastConcertsContent() {
         <div className="text-center mt-12">
           <Link 
             href="/concerts" 
-            className="inline-block bg-transparent text-accent border border-accent px-6 py-2.5 rounded-lg no-underline font-normal transition-all duration-300 ease hover:bg-accent hover:text-white hover:-translate-y-0.5"
+            className="inline-block bg-transparent text-accent dark:text-[#2b6cb0] border border-accent dark:border-[#2b6cb0] px-6 py-2.5 rounded-lg no-underline font-normal transition-all duration-300 ease hover:bg-accent dark:hover:bg-[#2b6cb0] hover:text-white hover:-translate-y-0.5"
           >
             演奏会情報に戻る
           </Link>

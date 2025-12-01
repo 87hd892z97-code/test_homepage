@@ -5,7 +5,9 @@
 type MaybePrisma = unknown | undefined;
 let prisma: MaybePrisma = undefined;
 
-if (process.env.USE_PRISMA === 'true') {
+const shouldUsePrisma = process.env.USE_PRISMA !== 'false';
+
+if (shouldUsePrisma) {
   try {
     // 動的 require して依存を必須にしない
     // eslint-disable-next-line @typescript-eslint/no-var-requires

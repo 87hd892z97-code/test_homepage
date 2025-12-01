@@ -8,7 +8,7 @@ async function main() {
   const password = '123456';
 
   // 既存のユーザーをチェック
-  const existingUser = await prisma.user.findUnique({
+  const existingUser = await (prisma as any).user.findUnique({
     where: { email },
   });
 
@@ -21,7 +21,7 @@ async function main() {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   // ユーザーを作成
-  const user = await prisma.user.create({
+  const user = await (prisma as any).user.create({
     data: {
       email,
       password: hashedPassword,
